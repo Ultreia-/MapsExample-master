@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MapsExample</string>
+    <string name="title_login_screen">Compass OS</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="joingame">Join Game</string>
+    <string name="newgame">New Game</string>
+    <string name="username">Username...</string>
+
+</resources>
