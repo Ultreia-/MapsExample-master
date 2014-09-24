@@ -10,11 +10,7 @@
 
         <activity android:name=".IntroScreen"
             android:label="@string/title_login_screen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name=".JoinGame"
@@ -29,11 +25,25 @@
         <activity
             android:name=".FunctionScreen"
             android:label="Functions">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
             android:name=".LoadingScreen"
             android:label="Loading">
+        </activity>
+
+        <activity android:name=".CameraLandingPage"
+            android:label="CameraScanner">
+        </activity>
+
+        <activity android:name=".InitiateCamera"
+            android:screenOrientation="landscape"
+            android:label="CameraActivity">
         </activity>
 
         <meta-data
@@ -44,6 +54,7 @@
             android:value="@string/google_maps_key" />
     </application>
 
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
