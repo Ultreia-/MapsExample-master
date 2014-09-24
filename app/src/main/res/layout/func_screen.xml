@@ -31,4 +31,13 @@
         android:text="Map Test"
         android:id="@+id/map_test"
         android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Camera Test"
+        android:id="@+id/cam_test"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

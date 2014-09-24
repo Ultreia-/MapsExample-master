@@ -15,6 +15,7 @@ public class FunctionScreen extends FragmentActivity {
 
     Button loadTest;
     Button mapTest;
+    Button camTest;
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class FunctionScreen extends FragmentActivity {
         TextView text = (TextView) findViewById(R.id.textView);
         loadTest = (Button) findViewById(R.id.loading_test);
         mapTest = (Button) findViewById(R.id.map_test);
+        camTest = (Button) findViewById(R.id.cam_test);
 
         text.setText("Welcome, " + IntroScreen.username);
 
@@ -35,6 +37,13 @@ public class FunctionScreen extends FragmentActivity {
         });
 
         mapTest.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(i);
+            }
+        });
+
+        camTest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivity(i);
