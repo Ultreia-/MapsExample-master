@@ -4,7 +4,10 @@
     <mapping directory="" vcs="" />
     <mapping directory="$USER_HOME$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+<<<<<<< HEAD
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+=======
+>>>>>>> FETCH_HEAD
   </component>
 </project>
 
