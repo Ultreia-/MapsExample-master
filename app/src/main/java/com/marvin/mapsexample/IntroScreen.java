@@ -32,7 +32,7 @@ public class IntroScreen extends FragmentActivity {
         newGame.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 username = inputField.getText().toString();
-                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                Intent i = new Intent(getApplicationContext(), FunctionScreen.class);
                 startActivity(i);
             }
         });
