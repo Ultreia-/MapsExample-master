@@ -22,6 +22,11 @@
             android:label="@string/title_activity_maps">
         </activity>
 
+        <activity
+            android:name=".LoadingScreen"
+            android:label="Loading">
+        </activity>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
