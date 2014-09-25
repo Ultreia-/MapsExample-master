@@ -5,18 +5,28 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/dickbutt"
-        android:layout_width="241dp"
-        android:layout_height="382dp"
+        android:id="@+id/compass"
+        android:layout_width="320dp"
+        android:layout_height="304dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/dickbutt"/>
+        android:src="@drawable/compass"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/downloading"
+        android:layout_below="@id/compass"
+        android:layout_marginTop="20dp"
+        android:typeface="monospace"
+        android:text="Downloading Compass OS v1.1.21"/>
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
-        android:layout_below="@id/dickbutt"
+        android:layout_below="@id/downloading"
+        android:layout_marginTop="10dp"
         android:progress="0"
         android:progressDrawable="@drawable/progressbar_white"/>
 

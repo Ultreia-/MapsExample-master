@@ -16,18 +16,11 @@ public class CameraLandingPage extends FragmentActivity{
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.landing_page);
-
-        String message = "Click the button below to start";
-        if(cameraNotDetected()){
-            message = "No camera detected, clicking the button below will have unexpected behaviour.";
-        }
-        TextView cameraDescriptionTextView = (TextView) findViewById(R.id.text_view_camera_description);
-        cameraDescriptionTextView.setText(message);
+        onUseCameraClick();
     }
 
 
-    public void onUseCameraClick(View button){
+    public void onUseCameraClick(){
         Intent intent = new Intent(this, InitiateCamera.class);
         startActivityForResult(intent, REQ_CAMERA_IMAGE);
     }
