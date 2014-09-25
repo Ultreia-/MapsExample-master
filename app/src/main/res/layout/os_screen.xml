@@ -7,6 +7,15 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="STOR FED PIK"/>
+        android:textSize="30sp"
+        android:gravity="center_horizontal"
+        android:text="The White Compass"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:text=""/>
 
 </RelativeLayout>

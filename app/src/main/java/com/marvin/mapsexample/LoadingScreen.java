@@ -54,9 +54,11 @@ public class LoadingScreen extends FragmentActivity{
                             Thread.sleep(50);
                         }
 
-                        if(progress == 100) {
+                        if(progress == 99) {
                             Thread.sleep(1500);
+                            progress += 2;
                             Intent i = new Intent(getApplicationContext(), OSScreen.class);
+                            startActivity(i);
                         }
                     }
                 } catch(InterruptedException e) {
