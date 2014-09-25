@@ -44,7 +44,7 @@ public class LoadingScreen extends FragmentActivity{
                         if(progress >= 80) {
                             progress += 3;
                             progressbar.setProgress(progress);
-                            Thread.sleep(75);
+                            Thread.sleep(1000);
                         }
                     }
                 } catch(InterruptedException e) {
