@@ -1,5 +1,6 @@
 package com.marvin.mapsexample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ProgressBar;
@@ -22,7 +23,7 @@ public class LoadingScreen extends FragmentActivity{
                 progressbar = (ProgressBar) findViewById(R.id.progressBar);
 
                 try {
-                    while (progress < 100) {
+                    while (progress < 101) {
                         if(progress < 25) {
                             progress += 7;
                             progressbar.setProgress(progress);
@@ -45,6 +46,17 @@ public class LoadingScreen extends FragmentActivity{
                             progress += 3;
                             progressbar.setProgress(progress);
                             Thread.sleep(75);
+                        }
+
+                        if(progress >= 90) {
+                            progress += 1;
+                            progressbar.setProgress(progress);
+                            Thread.sleep(50);
+                        }
+
+                        if(progress == 100) {
+                            Thread.sleep(1500);
+                            Intent i = new Intent(getApplicationContext(), OSScreen.class);
                         }
                     }
                 } catch(InterruptedException e) {
