@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 /**
  * Created by Nicklas on 24-09-2014.
@@ -11,6 +12,7 @@ import android.widget.ProgressBar;
 public class LoadingScreen extends FragmentActivity{
 
     private ProgressBar progressbar;
+    private TextView downloading;
     private int progress;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -21,12 +23,14 @@ public class LoadingScreen extends FragmentActivity{
 
             public void run() {
                 progressbar = (ProgressBar) findViewById(R.id.progressBar);
+                downloading = (TextView) findViewById(R.id.downloading);
 
                 try {
                     while (progress < 101) {
                         if(progress < 25) {
                             progress += 7;
                             progressbar.setProgress(progress);
+                            downloading.setText("");
                             Thread.sleep(200);
                         }
 
