@@ -14,7 +14,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements LocationListener {
 
@@ -48,6 +50,19 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             locationManager.requestLocationUpdates(provider, 3000, 0, this);
         }
 
+        addTestMarkerToMap();
+
+    }
+
+    private void addTestMarkerToMap() {
+        LatLng pos = new LatLng(56.1709909, 10.192562800000019);
+
+        googleMap.addMarker(new MarkerOptions()
+            .title("MalCorp")
+            .snippet("MalCorp HQ")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+            .position(pos)
+        );
     }
 
     @Override
