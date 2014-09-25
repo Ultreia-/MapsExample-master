@@ -30,19 +30,21 @@ public class LoadingScreen extends FragmentActivity{
                         if(progress < 25) {
                             progress += 7;
                             progressbar.setProgress(progress);
-                            downloading.setText("");
+                            setText();
                             Thread.sleep(200);
                         }
 
                         if(progress >= 25 && progress < 50) {
                             progress += 5;
                             progressbar.setProgress(progress);
+                            setText();
                             Thread.sleep(150);
                         }
 
                         if (progress >= 50 && progress < 80) {
                             progress += 4;
                             progressbar.setProgress(progress);
+                            setText();
                             Thread.sleep(100);
                         }
 
@@ -55,12 +57,15 @@ public class LoadingScreen extends FragmentActivity{
                         if(progress >= 90) {
                             progress += 1;
                             progressbar.setProgress(progress);
+                            setText();
                             Thread.sleep(50);
                         }
 
-                        if(progress == 99) {
+                        if(progress == 99 && progress < 101) {
+                            //progress += 1;
+                            setText();
+                            progress += 1;
                             Thread.sleep(1500);
-                            progress += 2;
                             Intent i = new Intent(getApplicationContext(), OSScreen.class);
                             startActivity(i);
                         }
@@ -71,5 +76,13 @@ public class LoadingScreen extends FragmentActivity{
             }
         }).start();
 
+    }
+
+    public void setText() {
+        downloading.post(new Runnable() {
+                          public void run() {
+                              downloading.setText("Downloading Compass OS v1.1.21 " + progress + "%");
+                          }
+                      });
     }
 }
