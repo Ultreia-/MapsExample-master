@@ -10,7 +10,11 @@
 
         <activity android:name=".IntroScreen"
             android:label="@string/title_login_screen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name=".JoinGame"
@@ -25,11 +29,6 @@
         <activity
             android:name=".FunctionScreen"
             android:label="Functions">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
