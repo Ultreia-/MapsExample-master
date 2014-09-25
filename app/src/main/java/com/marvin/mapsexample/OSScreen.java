@@ -14,8 +14,8 @@ public class OSScreen extends FragmentActivity{
         setContentView(R.layout.os_screen);
 
         TextView text = (TextView) findViewById(R.id.textView);
+        text.setText("Agent: " + IntroScreen.username);
 
 
-        text.setText("Agent " + IntroScreen.username);
     }
 }
