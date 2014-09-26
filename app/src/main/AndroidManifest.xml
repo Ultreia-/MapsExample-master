@@ -42,7 +42,9 @@
 
         <activity android:name=".InitiateCamera"
             android:screenOrientation="landscape"
-            android:label="CameraActivity">
+            android:label="CameraActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+
         </activity>
 
         <activity
