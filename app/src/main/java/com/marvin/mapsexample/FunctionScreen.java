@@ -15,6 +15,8 @@ public class FunctionScreen extends FragmentActivity {
     Button loadTest;
     Button mapTest;
     Button camTest;
+    Button restTest;
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class FunctionScreen extends FragmentActivity {
         loadTest = (Button) findViewById(R.id.loading_test);
         mapTest = (Button) findViewById(R.id.map_test);
         camTest = (Button) findViewById(R.id.cam_test);
+        restTest = (Button) findViewById(R.id.rest_test);
 
         text.setText("Welcome, " + IntroScreen.username);
 
@@ -48,5 +51,13 @@ public class FunctionScreen extends FragmentActivity {
                 startActivity(i);
             }
         });
+
+        restTest.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), RestfulTest.class);
+                startActivity(i);
+            }
+        });
+
     }
 }
