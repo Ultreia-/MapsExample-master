@@ -1,8 +1,12 @@
-package com.marvin.mapsexample;
+package com.marvin.mapsexample.CameraPackage;
 
 import android.app.Activity;
 import android.hardware.Camera;
 import android.os.Bundle;
+
+import com.marvin.mapsexample.CameraPackage.CameraHelper;
+import com.marvin.mapsexample.CameraPackage.CameraOverlay;
+import com.marvin.mapsexample.R;
 
 public class InitiateCamera extends Activity {// implements PictureCallback {
 

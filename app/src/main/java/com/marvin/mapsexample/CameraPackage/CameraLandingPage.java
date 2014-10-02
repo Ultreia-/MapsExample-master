@@ -1,11 +1,9 @@
-package com.marvin.mapsexample;
+package com.marvin.mapsexample.CameraPackage;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.View;
-import android.widget.TextView;
 
 /**
  * Created by Rasmus on 9/24/2014.

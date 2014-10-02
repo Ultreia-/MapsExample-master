@@ -1,4 +1,4 @@
-package com.marvin.mapsexample;
+package com.marvin.mapsexample.CameraPackage;
 
 import android.hardware.Camera;
 
