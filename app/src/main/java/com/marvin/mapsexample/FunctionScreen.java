@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 //import com.marvin.mapsexample.CameraPackage.CameraLandingPage;
+import com.marvin.mapsexample.ARView.ARView;
 import com.marvin.mapsexample.CameraPackage.CameraLandingPage;
 import com.marvin.mapsexample.CameraPackage.CameraOverlay;
 import com.marvin.mapsexample.DialClasses.DialTest;
@@ -39,7 +40,7 @@ public class FunctionScreen extends FragmentActivity {
 
         text.setText("Welcome, " + IntroScreen.username);
 
-        loadTest.setOnClickListener(new View.OnClickListener(){
+        loadTest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), LoadingScreen.class);
                 startActivity(i);
@@ -55,7 +56,7 @@ public class FunctionScreen extends FragmentActivity {
 
         camTest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), CameraLandingPage.class);
+                Intent i = new Intent(getApplicationContext(), ARView.class);
                 startActivity(i);
             }
         });
