@@ -1,4 +1,4 @@
-package com.marvin.mapsexample.CameraPackage;
+package com.marvin.mapsexample.DialClasses;
 
 import android.content.Context;
 import android.hardware.Camera;
@@ -8,23 +8,23 @@ import android.view.SurfaceView;
 
 /**
  *
-     * @author paul.blundell
+ * @author paul.blundell
  *
  */
-public class CameraOverlay extends SurfaceView implements SurfaceHolder.Callback {
+public class SineCurveOverlay extends SurfaceView implements SurfaceHolder.Callback {
 
     private Camera camera;
     private SurfaceHolder holder;
 
-    public CameraOverlay(Context context, AttributeSet attrs, int defStyle) {
+    public SineCurveOverlay(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public CameraOverlay(Context context, AttributeSet attrs) {
+    public SineCurveOverlay(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public CameraOverlay(Context context) {
+    public SineCurveOverlay(Context context) {
         super(context);
     }
 

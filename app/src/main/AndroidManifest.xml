@@ -58,7 +58,6 @@
             android:screenOrientation="landscape"
             android:label="CameraActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
-
         </activity>
 
         <activity
@@ -68,6 +67,12 @@
 
         <activity
             android:name=".DialClasses.DialTest"
+            android:screenOrientation="landscape"
+            android:label="Dial Test">
+        </activity>
+
+        <activity
+            android:name=".DialClasses.InitiateSineCurve"
             android:screenOrientation="landscape"
             android:label="Dial Test">
         </activity>
