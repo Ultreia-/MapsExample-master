@@ -16,7 +16,7 @@ import android.widget.TextView;
 public class OSScreen extends FragmentActivity{
 
     public static final String firstTime = "firstTime";
-    public static final String myPreferences = "MyPrefs" ;
+    public static final String myPreferences = "MyPrefs";
 
     SharedPreferences pref;
     SharedPreferences.Editor editor;

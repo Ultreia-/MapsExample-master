@@ -1,6 +1,7 @@
 package com.marvin.mapsexample;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,6 +22,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements LocationListener {
 
     GoogleMap googleMap;
+
+    public double latitude;
+    public double longitude;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +48,19 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             Location location = locationManager.getLastKnownLocation(provider);
             tvLocation.setText("Welcome, " + IntroScreen.username);
 
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+
+            LatLng latLng = new LatLng(latitude, longitude);
+            
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
 
             if(location != null) {
                 onLocationChanged(location);
             }
-            locationManager.requestLocationUpdates(provider, 10000, 0, this);
+            locationManager.requestLocationUpdates(provider, 1500, 0, this);
         }
 
         addTestMarkerToMap();
@@ -78,11 +91,8 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
-        LatLng latLng = new LatLng(latitude, longitude);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
     }
 
     @Override
