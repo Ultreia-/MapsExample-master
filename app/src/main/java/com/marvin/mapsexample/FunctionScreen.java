@@ -54,7 +54,7 @@ public class FunctionScreen extends FragmentActivity {
 
         restTest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), RestfulTest.class);
+                Intent i = new Intent(getApplicationContext(), restTestScreen.class);
                 startActivity(i);
             }
         });

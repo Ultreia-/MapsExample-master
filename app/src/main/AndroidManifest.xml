@@ -17,8 +17,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".RestfulTest"
-            android:label="Restful shit">
+        <activity android:name=".restTestScreen"
+            android:label="Restful">
         </activity>
 
         <activity android:name=".JoinGame"

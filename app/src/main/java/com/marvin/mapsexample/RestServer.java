@@ -1,7 +1,7 @@
 package com.marvin.mapsexample;
 
 /**
- * Created by Tobias on 29-09-2014.
+ * Created by Tobias on 02-10-2014.
  */
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,39 +31,64 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Activity;
 
-public class RestfulTest extends FragmentActivity {
+public class RestServer extends Activity {
 
-    EditText etResponse;
-    TextView tvIsConnected;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.restful_test_screen);
+    interface RestCallbackInterface {
 
-        // get reference to the views
-        etResponse = (EditText) findViewById(R.id.etResponse);
-        tvIsConnected = (TextView) findViewById(R.id.tvIsConnected);
+        void onEndRequest(String result);
+    }
 
-        // check if you are connected or not
-        if(isConnected()){
-            tvIsConnected.setBackgroundColor(0xFF00CC00);
-            tvIsConnected.setText("You are conncted");
-        }
-        else{
-            tvIsConnected.setText("You are NOT conncted");
-        }
+    public void requestGet(String url, final RestCallbackInterface callback) {
+            new HttpAsyncTask() {
+                @Override
+                protected String doInBackground(String... urls) {
+                    return GET(urls[0]);
+                }
+                @Override
+                protected void onPostExecute(String result) {
+                    callback.onEndRequest(result);
+                }
+            }.execute(url);
+    }
 
-        // call AsynTask to perform network operation on separate thread
-        new HttpAsyncTask().execute("http://marvin.idyia.dk/user/getdata/85");
+    public void requestPost(String url, final RestCallbackInterface callback) {
+        new HttpAsyncTask() {
+            @Override
+            protected String doInBackground(String... urls) {
+                return POST(urls[0]);
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                callback.onEndRequest(result);
+            }
+        }.execute(url);
     }
 
     public static String GET(String url){
 
-        HttpPost httppost = new HttpPost("http://marvin.idyia.dk/user/postdata");
-        InputStream inputStream = null;
         String result = "";
         try {
+            // create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
 
+            // make GET request to the given URL
+            HttpResponse httpResponse = httpclient.execute(new HttpGet(url));
+
+            result = executeHttpRequest(httpResponse);
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        return result;
+    }
+
+    public static String POST(String url){
+
+        String result = "";
+        HttpPost httppost = new HttpPost(url);
+
+        try {
             // create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -75,21 +100,27 @@ public class RestfulTest extends FragmentActivity {
             // Execute HTTP Post Request
             HttpResponse httpResponse = httpclient.execute(httppost);
 
-            // make GET request to the given URL
-            //HttpResponse httpResponse = httpclient.execute(new HttpGet(url));
-
-            // receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-            // convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
+            result = executeHttpRequest(httpResponse);
 
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
         }
+
+        return result;
+    }
+
+    private static String executeHttpRequest(HttpResponse httpResponse) throws Exception{
+        InputStream inputStream = null;
+        String result = "";
+
+        // receive response as inputStream
+        inputStream = httpResponse.getEntity().getContent();
+
+        // convert inputstream to string
+        if(inputStream != null)
+            result = convertInputStreamToString(inputStream);
+        else
+            result = "Did not work!";
 
         return result;
     }
@@ -126,7 +157,7 @@ public class RestfulTest extends FragmentActivity {
         protected void onPostExecute(String result) {
 
             Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
-            etResponse.setText(result);
+            //etResponse.setText(result);
         }
     }
 }
