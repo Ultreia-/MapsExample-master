@@ -3,6 +3,7 @@ package com.marvin.mapsexample;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -38,6 +39,10 @@ public class OSScreen extends FragmentActivity{
                         public void onClick(DialogInterface dialog, int which) {
                             editor.putBoolean(firstTime, false);
                             editor.commit();
+                            /*Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                            startActivity(i);
+                            MapsActivity setpos = new MapsActivity();
+                            setpos.addMarkerToMap(56.15674, 10.20112, "S2", "Kæmpe meget mission"); */
                         }
                     })
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

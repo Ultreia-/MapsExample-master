@@ -65,6 +65,17 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         );
     }
 
+    public void addMarkerToMap(double lat, double lng, String title, String snippet) {
+        LatLng pos = new LatLng(lat, lng);
+
+        MarkerOptions marker = new MarkerOptions()
+            .title(title)
+            .snippet(snippet)
+            .position(pos);
+        googleMap.addMarker(marker);
+
+    }
+
     @Override
     public void onLocationChanged(Location location) {
         double latitude = location.getLatitude();
