@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
 
-        <activity android:name=".IntroScreen"
+        <activity
+            android:name=".IntroScreen"
             android:label="@string/title_login_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,11 +18,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".RestfulTest"
+        <activity
+            android:name=".RestfulTest"
             android:label="Restful shit">
         </activity>
 
-        <activity android:name=".JoinGame"
+        <activity
+            android:name=".JoinGame"
             android:label="Join Game">
         </activity>
 
@@ -40,11 +43,13 @@
             android:label="Loading">
         </activity>
 
-        <activity android:name=".CameraLandingPage"
+        <activity
+            android:name=".CameraPackage.CameraLandingPage"
             android:label="CameraScanner">
         </activity>
 
-        <activity android:name=".InitiateCamera"
+        <activity
+            android:name=".CameraPackage.InitiateCamera"
             android:screenOrientation="landscape"
             android:label="CameraActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
@@ -54,7 +59,13 @@
         <activity
             android:name=".OSScreen"
             android:label="OS Screen">
-            </activity>
+        </activity>
+
+        <activity
+            android:name=".DialClasses.DialTest"
+            android:screenOrientation="landscape"
+            android:label="Dial Test">
+        </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"

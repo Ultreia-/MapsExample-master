@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+//import com.marvin.mapsexample.CameraPackage.CameraLandingPage;
+import com.marvin.mapsexample.CameraPackage.CameraLandingPage;
+import com.marvin.mapsexample.CameraPackage.CameraOverlay;
+import com.marvin.mapsexample.DialClasses.DialTest;
+
 /**
  * Created by christianheldingsrensen on 24/09/14.
  */
@@ -16,6 +21,7 @@ public class FunctionScreen extends FragmentActivity {
     Button mapTest;
     Button camTest;
     Button restTest;
+    Button dialTest;
 
 
     @Override
@@ -28,6 +34,8 @@ public class FunctionScreen extends FragmentActivity {
         mapTest = (Button) findViewById(R.id.map_test);
         camTest = (Button) findViewById(R.id.cam_test);
         restTest = (Button) findViewById(R.id.rest_test);
+        dialTest = (Button) findViewById(R.id.dial_test);
+
 
         text.setText("Welcome, " + IntroScreen.username);
 
@@ -55,6 +63,14 @@ public class FunctionScreen extends FragmentActivity {
         restTest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), RestfulTest.class);
+                startActivity(i);
+            }
+        });
+
+        dialTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), DialTest.class);
                 startActivity(i);
             }
         });
