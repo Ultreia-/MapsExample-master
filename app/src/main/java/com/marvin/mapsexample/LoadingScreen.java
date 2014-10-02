@@ -26,7 +26,7 @@ public class LoadingScreen extends FragmentActivity{
                 downloading = (TextView) findViewById(R.id.downloading);
 
                 try {
-                    while (progress < 101) {
+                    while (progress < 100) {
                         if(progress < 25) {
                             progress += 7;
                             progressbar.setProgress(progress);
@@ -61,8 +61,7 @@ public class LoadingScreen extends FragmentActivity{
                             Thread.sleep(50);
                         }
 
-                        if(progress == 99 && progress < 101) {
-                            //progress += 1;
+                        if(progress == 99) {
                             setText();
                             progress += 1;
                             Thread.sleep(1500);

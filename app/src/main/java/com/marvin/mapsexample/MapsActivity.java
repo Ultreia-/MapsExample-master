@@ -52,7 +52,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             longitude = location.getLongitude();
 
             LatLng latLng = new LatLng(latitude, longitude);
-            
+
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
