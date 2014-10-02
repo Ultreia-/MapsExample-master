@@ -25,6 +25,9 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
     public double latitude;
     public double longitude;
+    public double hqLat;
+    public double hqLong;
+    public float distance;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,14 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
     public void onLocationChanged(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
+        isClose(location);
+
+        if(distance > 0) {
+            System.out.println(distance);
+        }
+
+
+
     }
 
     @Override
@@ -107,6 +118,16 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
     @Override
     public void onProviderDisabled(String s) {
+
+    }
+
+    public void isClose(Location location) {
+        Location pos = new Location("HQ");
+
+        pos.setLatitude(hqLat);
+        pos.setLongitude(hqLong);
+
+        distance = location.distanceTo(pos);
 
     }
 }
