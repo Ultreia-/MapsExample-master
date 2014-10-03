@@ -62,8 +62,8 @@ public class UploadingScreen extends FragmentActivity{
                         }
 
                         if(progress == 99) {
-                            setText();
                             progress += 1;
+                            setText();
                             Thread.sleep(1500);
                             Intent i = new Intent(getApplicationContext(), OSScreen.class);
                             startActivity(i);
@@ -81,9 +81,10 @@ public class UploadingScreen extends FragmentActivity{
         uploading.post(new Runnable() {
             public void run() {
                 if(progress == 100) {
-                    uploading.setText("Uploading Package done!");
+                    uploading.setText("Uploading package done!");
+                } else {
+                    uploading.setText("Uploading package " + progress + "%");
                 }
-                uploading.setText("Uploading package " + progress + "%");
             }
         });
     }
