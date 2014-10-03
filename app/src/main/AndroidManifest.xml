@@ -77,15 +77,15 @@
         </activity>
 
         <activity
-            android:name=".DialClasses.InitiateSineCurve"
-            android:screenOrientation="landscape"
-            android:label="Dial Test">
-        </activity>
-
-        <activity
             android:name=".SignalRedirect.InitiatePaintView"
             android:screenOrientation="landscape"
             android:label="Signal Test">
+        </activity>
+
+        <activity
+            android:name=".DialClasses.InitiateSineView"
+            android:screenOrientation="landscape"
+            android:label="Sine Test">
         </activity>
 
         <meta-data
