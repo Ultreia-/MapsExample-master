@@ -20,6 +20,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Fragment;
 import android.net.ConnectivityManager;
@@ -37,7 +40,7 @@ public class RestServer extends Activity {
 
     interface RestCallbackInterface {
 
-        void onEndRequest(String result);
+        void onEndRequest(JSONObject result);
     }
 
     public void requestGet(String url, final RestCallbackInterface callback) {
@@ -48,7 +51,13 @@ public class RestServer extends Activity {
                 }
                 @Override
                 protected void onPostExecute(String result) {
-                    callback.onEndRequest(result);
+                    JSONObject json = null; // convert String to JSONObject
+                    try {
+                        json = new JSONObject(result);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    callback.onEndRequest(json);
                 }
             }.execute(url);
     }
@@ -61,7 +70,13 @@ public class RestServer extends Activity {
             }
             @Override
             protected void onPostExecute(String result) {
-                callback.onEndRequest(result);
+                JSONObject json = null;
+                try {
+                    json = new JSONObject(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                callback.onEndRequest(json);
             }
         }.execute(url);
     }

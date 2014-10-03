@@ -7,6 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 /**
@@ -18,7 +22,8 @@ public class IntroScreen extends RestServer {
     Button joinGame;
     Button funcTestScreen;
     EditText inputField;
-    static String username = "";
+    static String username;
+    static String userId;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +83,7 @@ public class IntroScreen extends RestServer {
 
     private class NewGameCallback implements RestCallbackInterface {
 
-        public void onEndRequest(String result)
+        public void onEndRequest(JSONObject result)
         {
             Intent i = new Intent(getApplicationContext(), NewGameScreen.class);
             startActivity(i);
@@ -87,8 +92,18 @@ public class IntroScreen extends RestServer {
 
     private class JoinGameCallback implements RestCallbackInterface {
 
-        public void onEndRequest(String result)
+        public void onEndRequest(JSONObject result)
         {
+            JSONArray articles = null; // get articles array
+            try {
+                articles = result.getJSONArray("articleList");
+                articles.length(); // --> 2
+                articles.getJSONObject(0); // get first article in the array
+                articles.getJSONObject(0).names(); // get first article keys [title,url,categories,tags]
+                articles.getJSONObject(0).getString("url"); // return an article url
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             Intent i = new Intent(getApplicationContext(), JoinGame.class);
             startActivity(i);
         }
