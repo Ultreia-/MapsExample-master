@@ -43,6 +43,10 @@ public class restTestScreen extends RestServer {
         // get reference to the views
         etResponse = (EditText) findViewById(R.id.etResponse);
         this.requestPost("http://marvin.idyia.dk/user/postdata", new RestCallback());
+        /*new ArrayList<String[]>(){{
+            add(new String[]{"fk_user_course_rel_id", "=", "userCourseRelationID", "AND"});
+            add(new String[]{"fk_content_id", "=", "contentID"});
+        }};*/
     }
 
     private class RestCallback implements RestCallbackInterface {
