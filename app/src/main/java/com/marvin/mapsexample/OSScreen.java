@@ -37,8 +37,8 @@ public class OSScreen extends FragmentActivity{
                     .setMessage("Hola bromigos! I could really use some help from you, so if you want to, suck ma penis!")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            editor.putBoolean(firstTime, false);
-                            editor.commit();
+                            //editor.putBoolean(firstTime, false);
+                            //editor.commit();
                             Intent i = new Intent(getApplicationContext(), MapsActivity.class);
                             Bundle b = new Bundle();
                             b.putString("id", "marker for S2");
