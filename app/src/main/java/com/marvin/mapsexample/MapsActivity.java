@@ -75,13 +75,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
                 String title = i.getExtras().getString("id");
                 String snippet = i.getExtras().getString("snippet");
 
-                LatLng pos = new LatLng(lat, lng);
-
-                googleMap.addMarker(new MarkerOptions()
-                        .title(title)
-                        .snippet(snippet)
-                        .position(pos)
-                );
+                addMarkerToMap(lat, lng, title, snippet);
             }
         }
 
