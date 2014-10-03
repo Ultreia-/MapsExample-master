@@ -16,7 +16,6 @@ public class DialTest extends Activity implements DialModel.Listener {
 
         //DialView leftDial = (DialView) findViewById(R.id.left_dial);
         //leftDial.getModel().addListener(this);
-        startSineCurve();
     }
 
     @Override
@@ -25,8 +24,4 @@ public class DialTest extends Activity implements DialModel.Listener {
         //text.setText(sender.getCurrentNick() + "");
     }
 
-    public void startSineCurve(){
-        Intent i = new Intent(getApplicationContext(), InitiateSineView.class);
-        startActivity(i);
-    }
 }

@@ -83,7 +83,7 @@
         </activity>
 
         <activity
-            android:name=".DialClasses.InitiateSineView"
+            android:name=".DialClasses.SineView"
             android:screenOrientation="landscape"
             android:label="Sine Test">
         </activity>
