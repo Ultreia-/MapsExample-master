@@ -11,7 +11,7 @@ import android.widget.TextView;
  */
 public class UploadingScreen extends FragmentActivity{
     private ProgressBar progressbar;
-    private TextView downloading;
+    private TextView uploading;
     private int progress;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class UploadingScreen extends FragmentActivity{
 
             public void run() {
                 progressbar = (ProgressBar) findViewById(R.id.progressBar);
-                downloading = (TextView) findViewById(R.id.downloading);
+                uploading = (TextView) findViewById(R.id.uploading);
 
                 try {
                     while (progress < 100) {
@@ -78,9 +78,12 @@ public class UploadingScreen extends FragmentActivity{
     }
 
     public void setText() {
-        downloading.post(new Runnable() {
+        uploading.post(new Runnable() {
             public void run() {
-                downloading.setText("Downloading Compass OS v1.1.21 " + progress + "%");
+                if(progress == 100) {
+                    uploading.setText("Uploading Package done!");
+                }
+                uploading.setText("Uploading package " + progress + "%");
             }
         });
     }
