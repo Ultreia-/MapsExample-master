@@ -34,9 +34,8 @@ public class IntroScreen extends RestServer {
             public void onClick(View v) {
                 username = inputField.getText().toString();
 
-                if(username != null)
+                if(username.length() > 4)
                 {
-                    Toast.makeText(getBaseContext(), "Loading...", Toast.LENGTH_LONG).show();
                     requestPost("http://marvin.idyia.dk/game/new",
                         new HashMap<String, String>() {{
                             put("username", username);
@@ -45,7 +44,7 @@ public class IntroScreen extends RestServer {
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(), "You need to enter an username!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Username must be min. 5 characters", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -54,9 +53,8 @@ public class IntroScreen extends RestServer {
             public void onClick(View v) {
                 username = inputField.getText().toString();
 
-                if(username != null)
+                if(username.length() > 5)
                 {
-                    Toast.makeText(getBaseContext(), "Loading...", Toast.LENGTH_LONG).show();
                     requestPost("http://marvin.idyia.dk/game/new",
                             new HashMap<String, String>() {{
                                 put("username", username);
@@ -65,7 +63,7 @@ public class IntroScreen extends RestServer {
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(), "You need to enter an username!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Username must be min. 5 characters", Toast.LENGTH_LONG).show();
                 }
             }
         });
