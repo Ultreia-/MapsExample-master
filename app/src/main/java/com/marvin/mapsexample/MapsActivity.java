@@ -19,6 +19,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.marvin.mapsexample.ARView.ARView;
 
 public class MapsActivity extends FragmentActivity implements LocationListener {
 
@@ -67,7 +68,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             }
             locationManager.requestLocationUpdates(provider, 1500, 0, this);
         }
-        /*Intent i = getIntent();
+        Intent i = getIntent();
         if(i != null) {
             String id = i.getExtras().getString("id");
             if(id.equals("marker for S2")) {
@@ -78,17 +79,17 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
                 addMarkerToMap(lat, lng, title, snippet);
             }
-        } */
+        }
 
         addTestMarkerToMap();
 
     }
 
     private void addTestMarkerToMap() {
-        LatLng pos = new LatLng(56.1709909, 10.192562800000019);
+        LatLng pos = new LatLng(56.172809, 10.186461);
         hqLocation = new Location("Test");
-        hqLocation.setLatitude(56.1709909);
-        hqLocation.setLongitude(10.192562800000019);
+        hqLocation.setLatitude(56.172809);
+        hqLocation.setLongitude(10.186461);
 
         googleMap.addMarker(new MarkerOptions()
             .title("MalCorp")
@@ -117,8 +118,15 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         if(hqLocation != null) {
             distance = location.distanceTo(hqLocation);
 
-            if (distance > 0) {
+            if (distance < 10) {
                 System.out.println(distance);
+                Intent intent = new Intent(getApplicationContext(), ARView.class);
+                Bundle b = new Bundle();
+                b.putString("id", "close enough");
+                b.putDouble("lat", latitude);
+                b.putDouble("lng", longitude);
+                intent.putExtras(b);
+                startActivity(intent);
             }
         }
 

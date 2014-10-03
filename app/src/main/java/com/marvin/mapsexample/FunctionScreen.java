@@ -50,6 +50,7 @@ public class FunctionScreen extends FragmentActivity {
         mapTest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                i.putExtra("id", "from function screen");
                 startActivity(i);
             }
         });
