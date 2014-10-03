@@ -1,49 +1,98 @@
 package com.marvin.mapsexample;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.HashMap;
 
 /**
  * Created by rasmus on 9/16/14.
  */
-public class IntroScreen extends FragmentActivity {
+public class IntroScreen extends RestServer {
 
     Button newGame;
     Button joinGame;
+    Button funcTestScreen;
     EditText inputField;
     static String username = "";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_screen);
+        setContentView(R.layout.intro_screen);
 
         //prepare dem buttons
         newGame = (Button) findViewById(R.id.new_game);
         joinGame = (Button) findViewById(R.id.join_game);
+        funcTestScreen = (Button) findViewById(R.id.func_test_screen);
         inputField = (EditText)findViewById(R.id.edittext);
 
         newGame.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 username = inputField.getText().toString();
-                Intent i = new Intent(getApplicationContext(), FunctionScreen.class);
-                startActivity(i);
+
+                if(username != null)
+                {
+                    Toast.makeText(getBaseContext(), "Loading...", Toast.LENGTH_LONG).show();
+                    requestPost("http://marvin.idyia.dk/game/new",
+                        new HashMap<String, String>() {{
+                            put("username", username);
+                        }},
+                        new NewGameCallback());
+                }
+                else
+                {
+                    Toast.makeText(getBaseContext(), "You need to enter an username!", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
         joinGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                username= inputField.getText().toString();
-                Intent i = new Intent(getApplicationContext(), JoinGame.class);
-                startActivity(i);
+                username = inputField.getText().toString();
+
+                if(username != null)
+                {
+                    Toast.makeText(getBaseContext(), "Loading...", Toast.LENGTH_LONG).show();
+                    requestPost("http://marvin.idyia.dk/game/new",
+                            new HashMap<String, String>() {{
+                                put("username", username);
+                            }},
+                            new JoinGameCallback());
+                }
+                else
+                {
+                    Toast.makeText(getBaseContext(), "You need to enter an username!", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
+        funcTestScreen.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), FunctionScreen.class);
+                startActivity(i);
+            }
+        });
+    }
+
+    private class NewGameCallback implements RestCallbackInterface {
+
+        public void onEndRequest(String result)
+        {
+            Intent i = new Intent(getApplicationContext(), FunctionScreen.class);
+            startActivity(i);
+        }
+    }
+
+    private class JoinGameCallback implements RestCallbackInterface {
+
+        public void onEndRequest(String result)
+        {
+            Intent i = new Intent(getApplicationContext(), JoinGame.class);
+            startActivity(i);
+        }
     }
 }

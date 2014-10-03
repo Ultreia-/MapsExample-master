@@ -51,9 +51,7 @@ public class restTestScreen extends RestServer {
             }},
             new RestCallback());*/
 
-        this.requestGet("http://marvin.idyia.dk/user/getdata/95",
-
-                new RestCallback());
+        this.requestGet("http://marvin.idyia.dk/user/getdata/95", new RestCallback());
     }
 
     private class RestCallback implements RestCallbackInterface {
