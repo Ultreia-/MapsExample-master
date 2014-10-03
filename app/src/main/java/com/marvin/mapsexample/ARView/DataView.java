@@ -45,12 +45,14 @@ public class DataView {
     RelativeLayout.LayoutParams[] subjectTextViewParams;
     TextView[] locationTextView;
 
+    double currentLat;
+    double currentLon;
 
 
     /*
-     *  Array or Array lists of latitude and longitude to plot
-     *  In your case you can populate with an ArrayList
-     * */
+         *  Array or Array lists of latitude and longitude to plot
+         *  In your case you can populate with an ArrayList
+         * */
     // SF Art Commission, SF Dept. of Public Health, SF Ethics Comm, SF Conservatory of Music, All Star Cafe, Magic Curry Cart, SF SEO Marketing, SF Honda,
     // SF Mun Transport Agency, SF Parking Citation, Mayors Office of Housing, SF Redev Agency, Catario Patrice, Bank of America , SF Retirement System, Bank of America Mortage,
     // Writers Corp., Van Nes Keno Mkt.
@@ -104,6 +106,14 @@ public class DataView {
     public float deltaX;
     public float deltaY;
     Bitmap bmp;
+
+    public void setCurrentLat(double currentLat) {
+        this.currentLat = 56.1714624653886;
+    }
+
+    public void setCurrentLon(double currentLon) {
+        this.currentLon = 10.18987298011779;
+    }
 
     public DataView(Context ctx) {
         this._context = ctx;
@@ -270,8 +280,8 @@ public class DataView {
             System.out.println("camera.getParameters().getHorizontalViewAngle()=="+camera.getParameters().getHorizontalViewAngle());
 
             bearings = new double[latitudes.length];
-            currentLocation.setLatitude(19.413958);
-            currentLocation.setLongitude(72.82729);
+            currentLocation.setLatitude(currentLat);
+            currentLocation.setLongitude(currentLon);
 
 
             if(bearing < 0)
