@@ -16,7 +16,7 @@ public class UploadingScreen extends FragmentActivity{
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.loading_screen);
+        setContentView(R.layout.uploading_screen);
 
         new Thread(new Runnable() {
 
