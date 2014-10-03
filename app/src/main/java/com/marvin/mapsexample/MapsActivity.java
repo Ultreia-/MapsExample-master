@@ -1,6 +1,7 @@
 package com.marvin.mapsexample;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
@@ -64,6 +65,24 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
                 onLocationChanged(location);
             }
             locationManager.requestLocationUpdates(provider, 1500, 0, this);
+        }
+        Intent i = getIntent();
+        if(i != null) {
+            String id = i.getExtras().getString("id");
+            if(id.equals("marker for S2")) {
+                double lat = i.getExtras().getDouble("lat");
+                double lng = i.getExtras().getDouble("lng");
+                String title = i.getExtras().getString("id");
+                String snippet = i.getExtras().getString("snippet");
+
+                LatLng pos = new LatLng(lat, lng);
+
+                googleMap.addMarker(new MarkerOptions()
+                        .title(title)
+                        .snippet(snippet)
+                        .position(pos)
+                );
+            }
         }
 
         addTestMarkerToMap();

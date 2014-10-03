@@ -39,10 +39,15 @@ public class OSScreen extends FragmentActivity{
                         public void onClick(DialogInterface dialog, int which) {
                             editor.putBoolean(firstTime, false);
                             editor.commit();
-                            /*Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                            Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("id", "marker for S2");
+                            b.putDouble("lat", 56.15674);
+                            b.putDouble("lng", 10.20112);
+                            b.putString("title", "S2");
+                            b.putString("snippet", "Kæmpe meget mission");
+                            i.putExtras(b);
                             startActivity(i);
-                            MapsActivity setpos = new MapsActivity();
-                            setpos.addMarkerToMap(56.15674, 10.20112, "S2", "Kæmpe meget mission"); */
                         }
                     })
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
