@@ -28,8 +28,8 @@ public class RadarView{
     Location currentLocation = new Location("provider");
     Location destinedLocation = new Location("provider");
 
-    double currentLat;
-    double currentLon;
+    double currentLat = ARView.currentLat;
+    double currentLng = ARView.currentLng;
 
     /*
      * pass the same set of coordinates to plot POI's on radar
@@ -89,7 +89,7 @@ public class RadarView{
          *  Your current location coordinate here.
          * */
         currentLocation.setLatitude(currentLat);
-        currentLocation.setLongitude(currentLon);
+        currentLocation.setLongitude(currentLng);
 
 
         for(int i = 0; i <latitudes.length;i++){
@@ -110,7 +110,7 @@ public class RadarView{
 
     public void calculateDistances(PaintUtils dw, float yaw){
         currentLocation.setLatitude(currentLat);
-        currentLocation.setLongitude(currentLon);
+        currentLocation.setLongitude(currentLng);
         for(int i = 0; i <latitudes.length;i++){
             if(bearings[i]<0){
                 bearings[i] = 360 - bearings[i];

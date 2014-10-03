@@ -9,6 +9,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.hardware.Camera;
@@ -76,6 +77,8 @@ public class ARView extends Activity implements SensorEventListener{
     protected float[] gravSensorVals;
     protected float[] magSensorVals;
 
+    static double currentLat;
+    static double currentLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +172,16 @@ public class ARView extends Activity implements SensorEventListener{
                 return true;
             }
         });
+
+        Intent intent = getIntent();
+
+        if(intent != null) {
+            String id = intent.getExtras().getString("id");
+            if(id.equals("locations for AR")){
+                currentLat = intent.getExtras().getDouble("lat");
+                currentLng = intent.getExtras().getDouble("lng");
+            }
+        }
     }
 
     public static Context getContext() {

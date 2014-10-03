@@ -46,8 +46,8 @@ public class DataView {
     RelativeLayout.LayoutParams[] subjectTextViewParams;
     TextView[] locationTextView;
 
-    double currentLat;
-    double currentLon;
+    double currentLat = ARView.currentLat;
+    double currentLng = ARView.currentLng;
 
 
     /*
@@ -274,7 +274,7 @@ public class DataView {
 
             bearings = new double[latitudes.length];
             currentLocation.setLatitude(currentLat);
-            currentLocation.setLongitude(currentLon);
+            currentLocation.setLongitude(currentLng);
 
 
             if(bearing < 0)
