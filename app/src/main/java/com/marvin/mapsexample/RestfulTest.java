@@ -53,7 +53,7 @@ public class RestfulTest extends FragmentActivity {
             tvIsConnected.setText("You are NOT conncted");
         }
 
-        // call AsynTask to perform network operation on separate thread
+        // call AsyncTask to perform network operation on separate thread
         new HttpAsyncTask().execute("http://marvin.idyia.dk/user/getdata/85");
     }
 

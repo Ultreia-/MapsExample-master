@@ -1,6 +1,8 @@
 package com.marvin.mapsexample;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,6 +23,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements LocationListener {
 
     GoogleMap googleMap;
+
+    public double latitude;
+    public double longitude;
+    public double hqLat;
+    public double hqLong;
+    public float distance;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +52,31 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             Location location = locationManager.getLastKnownLocation(provider);
             tvLocation.setText("Welcome, " + IntroScreen.username);
 
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+
+            LatLng latLng = new LatLng(latitude, longitude);
+
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
 
             if(location != null) {
                 onLocationChanged(location);
             }
-            locationManager.requestLocationUpdates(provider, 10000, 0, this);
+            locationManager.requestLocationUpdates(provider, 1500, 0, this);
+        }
+        Intent i = getIntent();
+        if(i != null) {
+            String id = i.getExtras().getString("id");
+            if(id.equals("marker for S2")) {
+                double lat = i.getExtras().getDouble("lat");
+                double lng = i.getExtras().getDouble("lng");
+                String title = i.getExtras().getString("id");
+                String snippet = i.getExtras().getString("snippet");
+
+                addMarkerToMap(lat, lng, title, snippet);
+            }
         }
 
         addTestMarkerToMap();
@@ -65,13 +94,29 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         );
     }
 
+    public void addMarkerToMap(double lat, double lng, String title, String snippet) {
+        LatLng pos = new LatLng(lat, lng);
+
+        MarkerOptions marker = new MarkerOptions()
+            .title(title)
+            .snippet(snippet)
+            .position(pos);
+        googleMap.addMarker(marker);
+
+    }
+
     @Override
     public void onLocationChanged(Location location) {
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
-        LatLng latLng = new LatLng(latitude, longitude);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        isClose(location);
+
+        if(distance > 0) {
+            System.out.println(distance);
+        }
+
+
+
     }
 
     @Override
@@ -86,6 +131,16 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
     @Override
     public void onProviderDisabled(String s) {
+
+    }
+
+    public void isClose(Location location) {
+        Location pos = new Location("HQ");
+
+        pos.setLatitude(hqLat);
+        pos.setLongitude(hqLong);
+
+        distance = location.distanceTo(pos);
 
     }
 }

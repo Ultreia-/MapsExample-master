@@ -11,5 +11,6 @@
     <string name="content_desc_overlay">Content Description</string>
     <string name="button_capture_text">Capture Text</string>
     <string name="button_use_camera">Click!</string>
+    <string name="dial_test">DialAcitivity</string>
 
 </resources>
