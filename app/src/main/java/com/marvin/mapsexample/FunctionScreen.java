@@ -25,6 +25,7 @@ public class FunctionScreen extends FragmentActivity {
     Button camTest;
     Button restTest;
     Button dialTest;
+    Button uploadTest;
     Button sigTest;
 
 
@@ -39,6 +40,7 @@ public class FunctionScreen extends FragmentActivity {
         camTest = (Button) findViewById(R.id.cam_test);
         restTest = (Button) findViewById(R.id.rest_test);
         dialTest = (Button) findViewById(R.id.dial_test);
+        uploadTest = (Button) findViewById(R.id.upload_test);
         sigTest = (Button) findViewById(R.id.sig_test);
 
 
@@ -77,6 +79,14 @@ public class FunctionScreen extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), DialTest.class);
+                startActivity(i);
+            }
+        });
+
+        uploadTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), UploadingScreen.class);
                 startActivity(i);
             }
         });

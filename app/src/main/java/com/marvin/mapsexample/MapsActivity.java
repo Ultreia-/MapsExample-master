@@ -27,10 +27,13 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
     public double latitude;
     public double longitude;
+    public double ARLatitude;
+    public double ARLongitude;
     public double hqLat;
     public double hqLong;
     public float distance;
     public Location hqLocation;
+    public double distToMarker = 10;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -62,16 +65,17 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
+            addTestMarkerToMap();
 
             if(location != null) {
                 onLocationChanged(location);
             }
-            locationManager.requestLocationUpdates(provider, 1500, 0, this);
+            locationManager.requestLocationUpdates(provider, 500, 0, this);
         }
         Intent i = getIntent();
         if(i != null) {
             String id = i.getExtras().getString("id");
-            if(id.equals("marker for S2")) {
+            if (id.equals("marker for S2")) {
                 double lat = i.getExtras().getDouble("lat");
                 double lng = i.getExtras().getDouble("lng");
                 String title = i.getExtras().getString("id");
@@ -80,9 +84,6 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
                 addMarkerToMap(lat, lng, title, snippet);
             }
         }
-
-        addTestMarkerToMap();
-
     }
 
     private void addTestMarkerToMap() {
@@ -92,10 +93,10 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         hqLocation.setLongitude(10.186461);
 
         googleMap.addMarker(new MarkerOptions()
-            .title("MalCorp")
-            .snippet("MalCorp HQ")
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-            .position(pos)
+                        .title("MalCorp")
+                        .snippet("MalCorp HQ")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                        .position(pos)
         );
     }
 
@@ -103,9 +104,9 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         LatLng pos = new LatLng(lat, lng);
 
         MarkerOptions marker = new MarkerOptions()
-            .title(title)
-            .snippet(snippet)
-            .position(pos);
+                .title(title)
+                .snippet(snippet)
+                .position(pos);
         googleMap.addMarker(marker);
 
     }
@@ -115,22 +116,30 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
 
-        if(hqLocation != null) {
-            distance = location.distanceTo(hqLocation);
+        if (location != null) {
+            ARLatitude = latitude;
+            ARLongitude = longitude;
 
-            if (distance < 10) {
-                System.out.println(distance);
-                Intent intent = new Intent(getApplicationContext(), ARView.class);
-                Bundle b = new Bundle();
-                b.putString("id", "close enough");
-                b.putDouble("lat", latitude);
-                b.putDouble("lng", longitude);
-                intent.putExtras(b);
-                startActivity(intent);
+            if (hqLocation != null) {
+                System.out.println("Hey igen!");
+                distance = location.distanceTo(hqLocation);
+
+                if (distance < distToMarker) {
+                    Intent intent = new Intent(getApplicationContext(), ARView.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", "locations for AR");
+                    bundle.putDouble("lat", ARLatitude);
+                    bundle.putDouble("lng", ARLongitude);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    System.out.println(distance);
+                } else {
+                    System.out.print(distance);
+                }
             }
+
+
         }
-
-
     }
 
     @Override
@@ -147,4 +156,8 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
     public void onProviderDisabled(String s) {
 
     }
+
+    /*public void findDistance(Location location) {
+        }
+    } */
 }
