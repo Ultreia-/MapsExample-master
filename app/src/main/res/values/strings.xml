@@ -6,11 +6,12 @@
     <string name="title_activity_maps">Map</string>
     <string name="joingame">Join Game</string>
     <string name="newgame">New Game</string>
-    <string name="username">Username...</string>
+    <string name="username">Enter username...</string>
     <string name="content_desc_image_just_taken">Image taken!</string>
     <string name="content_desc_overlay">Content Description</string>
     <string name="button_capture_text">Capture Text</string>
     <string name="button_use_camera">Click!</string>
     <string name="dial_test">DialAcitivity</string>
+    <string name="cancel_game">Cancel game</string>
 
 </resources>

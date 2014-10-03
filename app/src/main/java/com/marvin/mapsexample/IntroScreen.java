@@ -28,13 +28,13 @@ public class IntroScreen extends RestServer {
         newGame = (Button) findViewById(R.id.new_game);
         joinGame = (Button) findViewById(R.id.join_game);
         funcTestScreen = (Button) findViewById(R.id.func_test_screen);
-        inputField = (EditText)findViewById(R.id.edittext);
+        inputField = (EditText) findViewById(R.id.edittext);
 
         newGame.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 username = inputField.getText().toString();
 
-                if(username.length() > 4)
+                if(username.length() > 3)
                 {
                     requestPost("http://marvin.idyia.dk/game/new",
                         new HashMap<String, String>() {{
@@ -44,7 +44,7 @@ public class IntroScreen extends RestServer {
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(), "Username must be min. 5 characters", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Username must be min. 4 characters", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -53,7 +53,7 @@ public class IntroScreen extends RestServer {
             public void onClick(View v) {
                 username = inputField.getText().toString();
 
-                if(username.length() > 5)
+                if(username.length() > 3)
                 {
                     requestPost("http://marvin.idyia.dk/game/new",
                             new HashMap<String, String>() {{
@@ -63,7 +63,7 @@ public class IntroScreen extends RestServer {
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(), "Username must be min. 5 characters", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Username must be min. 4 characters", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -80,7 +80,7 @@ public class IntroScreen extends RestServer {
 
         public void onEndRequest(String result)
         {
-            Intent i = new Intent(getApplicationContext(), FunctionScreen.class);
+            Intent i = new Intent(getApplicationContext(), NewGameScreen.class);
             startActivity(i);
         }
     }
