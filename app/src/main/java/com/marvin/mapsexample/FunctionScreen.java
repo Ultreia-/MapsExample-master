@@ -35,7 +35,6 @@ public class FunctionScreen extends FragmentActivity {
         super.onPostCreate(savedInstanceState);
         setContentView(R.layout.func_screen);
 
-        TextView text = (TextView) findViewById(R.id.textView);
         loadTest = (Button) findViewById(R.id.loading_test);
         mapTest = (Button) findViewById(R.id.map_test);
         camTest = (Button) findViewById(R.id.cam_test);
@@ -45,8 +44,6 @@ public class FunctionScreen extends FragmentActivity {
         sigTest = (Button) findViewById(R.id.sig_test);
         accelTest = (Button) findViewById(R.id.accelerometer_test);
 
-
-        text.setText("Welcome, " + IntroScreen.username);
 
         loadTest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
