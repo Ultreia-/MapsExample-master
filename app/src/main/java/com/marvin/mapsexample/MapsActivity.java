@@ -87,10 +87,10 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
     }
 
     private void addTestMarkerToMap() {
-        LatLng pos = new LatLng(56.172809, 10.186461);
+        LatLng pos = new LatLng(56.172675, 10.186526);
         hqLocation = new Location("Test");
-        hqLocation.setLatitude(56.172809);
-        hqLocation.setLongitude(10.186461);
+        hqLocation.setLatitude(56.172675);
+        hqLocation.setLongitude(10.186526);
 
         googleMap.addMarker(new MarkerOptions()
                         .title("MalCorp")
