@@ -29,6 +29,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
     public double hqLat;
     public double hqLong;
     public float distance;
+    public Location hqLocation;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             }
             locationManager.requestLocationUpdates(provider, 1500, 0, this);
         }
-        Intent i = getIntent();
+        /*Intent i = getIntent();
         if(i != null) {
             String id = i.getExtras().getString("id");
             if(id.equals("marker for S2")) {
@@ -77,7 +78,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
                 addMarkerToMap(lat, lng, title, snippet);
             }
-        }
+        } */
 
         addTestMarkerToMap();
 
@@ -85,6 +86,9 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
     private void addTestMarkerToMap() {
         LatLng pos = new LatLng(56.1709909, 10.192562800000019);
+        hqLocation = new Location("Test");
+        hqLocation.setLatitude(56.1709909);
+        hqLocation.setLongitude(10.192562800000019);
 
         googleMap.addMarker(new MarkerOptions()
             .title("MalCorp")
@@ -109,12 +113,14 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
     public void onLocationChanged(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        isClose(location);
 
-        if(distance > 0) {
-            System.out.println(distance);
+        if(hqLocation != null) {
+            distance = location.distanceTo(hqLocation);
+
+            if (distance > 0) {
+                System.out.println(distance);
+            }
         }
-
 
 
     }
@@ -131,16 +137,6 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
     @Override
     public void onProviderDisabled(String s) {
-
-    }
-
-    public void isClose(Location location) {
-        Location pos = new Location("HQ");
-
-        pos.setLatitude(hqLat);
-        pos.setLongitude(hqLong);
-
-        distance = location.distanceTo(pos);
 
     }
 }
