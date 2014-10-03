@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -42,11 +43,17 @@ public class restTestScreen extends RestServer {
 
         // get reference to the views
         etResponse = (EditText) findViewById(R.id.etResponse);
-        this.requestPost("http://marvin.idyia.dk/user/postdata", new RestCallback());
-        /*new ArrayList<String[]>(){{
-            add(new String[]{"fk_user_course_rel_id", "=", "userCourseRelationID", "AND"});
-            add(new String[]{"fk_content_id", "=", "contentID"});
-        }};*/
+
+        /*this.requestPost("http://marvin.idyia.dk/user/postdata",
+            new HashMap<String, String>(){{
+                put("data", "data-2343657468");
+                put("moredata", "moredata-34543476");
+            }},
+            new RestCallback());*/
+
+        this.requestGet("http://marvin.idyia.dk/user/getdata/95",
+
+                new RestCallback());
     }
 
     private class RestCallback implements RestCallbackInterface {

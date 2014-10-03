@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -51,11 +53,11 @@ public class RestServer extends Activity {
             }.execute(url);
     }
 
-    public void requestPost(String url, final RestCallbackInterface callback) {
+    public void requestPost(String url, final HashMap data, final RestCallbackInterface callback) {
         new HttpAsyncTask() {
             @Override
             protected String doInBackground(String... urls) {
-                return POST(urls[0]);
+                return POST(urls[0], data);
             }
             @Override
             protected void onPostExecute(String result) {
@@ -83,7 +85,7 @@ public class RestServer extends Activity {
         return result;
     }
 
-    public static String POST(String url){
+    public static String POST(String url, HashMap data){
 
         String result = "";
         HttpPost httppost = new HttpPost(url);
@@ -94,7 +96,16 @@ public class RestServer extends Activity {
 
             // Add your data
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair("data", "25hhhdg545"));
+
+            Iterator iter = data.keySet().iterator();
+            while(iter.hasNext())
+            {
+                String key = (String) iter.next();
+                String val = (String) data.get(key);
+
+                nameValuePairs.add(new BasicNameValuePair(key, val));
+            }
+
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             // Execute HTTP Post Request
