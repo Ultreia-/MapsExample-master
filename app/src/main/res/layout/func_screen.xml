@@ -75,4 +75,12 @@
         android:layout_marginRight="20dp"
         android:text="Signal Redirect Test"
         android:id="@+id/sig_test"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Accelerometer Test"
+        android:id="@+id/accelerometer_test"/>
 </LinearLayout>

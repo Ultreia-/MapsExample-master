@@ -27,6 +27,7 @@ public class FunctionScreen extends FragmentActivity {
     Button dialTest;
     Button uploadTest;
     Button sigTest;
+    Button accelTest;
 
 
     @Override
@@ -42,6 +43,7 @@ public class FunctionScreen extends FragmentActivity {
         dialTest = (Button) findViewById(R.id.dial_test);
         uploadTest = (Button) findViewById(R.id.upload_test);
         sigTest = (Button) findViewById(R.id.sig_test);
+        accelTest = (Button) findViewById(R.id.accelerometer_test);
 
 
         text.setText("Welcome, " + IntroScreen.username);
@@ -95,6 +97,14 @@ public class FunctionScreen extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), InitiatePaintView.class);
+                startActivity(i);
+            }
+        });
+
+        accelTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), AccelerometerScreen.class);
                 startActivity(i);
             }
         });
