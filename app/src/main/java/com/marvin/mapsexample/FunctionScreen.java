@@ -12,6 +12,8 @@ import com.marvin.mapsexample.ARView.ARView;
 import com.marvin.mapsexample.CameraPackage.CameraLandingPage;
 import com.marvin.mapsexample.CameraPackage.CameraOverlay;
 import com.marvin.mapsexample.DialClasses.DialTest;
+import com.marvin.mapsexample.SignalRedirect.InitiatePaintView;
+import com.marvin.mapsexample.SignalRedirect.PaintView;
 
 /**
  * Created by christianheldingsrensen on 24/09/14.
@@ -23,6 +25,7 @@ public class FunctionScreen extends FragmentActivity {
     Button camTest;
     Button restTest;
     Button dialTest;
+    Button sigTest;
 
 
     @Override
@@ -36,6 +39,7 @@ public class FunctionScreen extends FragmentActivity {
         camTest = (Button) findViewById(R.id.cam_test);
         restTest = (Button) findViewById(R.id.rest_test);
         dialTest = (Button) findViewById(R.id.dial_test);
+        sigTest = (Button) findViewById(R.id.sig_test);
 
 
         text.setText("Welcome, " + IntroScreen.username);
@@ -73,6 +77,14 @@ public class FunctionScreen extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), DialTest.class);
+                startActivity(i);
+            }
+        });
+
+        sigTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), InitiatePaintView.class);
                 startActivity(i);
             }
         });

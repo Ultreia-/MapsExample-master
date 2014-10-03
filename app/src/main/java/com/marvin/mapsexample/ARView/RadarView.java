@@ -8,6 +8,7 @@ import android.location.Location;
 import android.util.TypedValue;
 
 import com.marvin.mapsexample.ARView.Utils.PaintUtils;
+import com.marvin.mapsexample.MapsActivity;
 
 
 public class RadarView{
@@ -58,14 +59,6 @@ public class RadarView{
     float  yaw = 0;
     double[] bearings;
     ARView arView = new ARView();
-
-    public void setCurrentLat(double currentLat) {
-        this.currentLat = 56.1714624653886;
-    }
-
-    public void setCurrentLon(double currentLon) {
-        this.currentLon = 10.18987298011779;
-    }
 
     public RadarView(DataView dataView, double[] bearings){
         this.bearings = bearings;

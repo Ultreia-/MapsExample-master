@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.marvin.mapsexample.ARView.Utils.Camera;
 import com.marvin.mapsexample.ARView.Utils.PaintUtils;
 import com.marvin.mapsexample.ARView.Utils.RadarLines;
+import com.marvin.mapsexample.MapsActivity;
 import com.marvin.mapsexample.R;
 
 import java.util.ArrayList;
@@ -106,14 +107,6 @@ public class DataView {
     public float deltaX;
     public float deltaY;
     Bitmap bmp;
-
-    public void setCurrentLat(double currentLat) {
-        this.currentLat = 56.1714624653886;
-    }
-
-    public void setCurrentLon(double currentLon) {
-        this.currentLon = 10.18987298011779;
-    }
 
     public DataView(Context ctx) {
         this._context = ctx;
