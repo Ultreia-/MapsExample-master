@@ -8,20 +8,22 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
 
-        <activity android:name=".IntroScreen"
+        <activity
+            android:name=".IntroScreen"
             android:label="@string/title_login_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".restTestScreen"
+        <activity
+            android:name=".restTestScreen"
             android:label="Restful">
         </activity>
 
-        <activity android:name=".JoinGame"
+        <activity
+            android:name=".JoinGame"
             android:label="Join Game">
         </activity>
 
@@ -40,21 +42,40 @@
             android:label="Loading">
         </activity>
 
-        <activity android:name=".CameraLandingPage"
+        <activity
+            android:name=".ARView.ARView"
+            android:screenOrientation="landscape"
+            android:label="AugmentedReality">
+        </activity>
+
+        <activity
+            android:name=".CameraPackage.CameraLandingPage"
             android:label="CameraScanner">
         </activity>
 
-        <activity android:name=".InitiateCamera"
+        <activity
+            android:name=".CameraPackage.InitiateCamera"
             android:screenOrientation="landscape"
             android:label="CameraActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
-
         </activity>
 
         <activity
             android:name=".OSScreen"
             android:label="OS Screen">
-            </activity>
+        </activity>
+
+        <activity
+            android:name=".DialClasses.DialTest"
+            android:screenOrientation="landscape"
+            android:label="Dial Test">
+        </activity>
+
+        <activity
+            android:name=".DialClasses.InitiateSineCurve"
+            android:screenOrientation="landscape"
+            android:label="Dial Test">
+        </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -65,6 +86,7 @@
     </application>
 
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
