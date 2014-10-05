@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.marvin.mapsexample.HelperPackage.Game;
 import com.marvin.mapsexample.IntroScreen;
 
 /**
@@ -20,7 +21,7 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
     Context context;
     SineCurveThread sineCurveThread;
     Paint mPaint;
-    int wheelRotation = 1;
+    int wheelRotation = 0;
 
     public void run(){
     }
@@ -83,11 +84,14 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     int getNormalizedSine(int x, int halfY, int maxX) {
-        wheelRotation = 1;
+        wheelRotation = Game.currentRotation;
+        //Log.v("Normalized Line","Amplitude: " + Integer.toString(wheelRotation));
+        double amplitude = wheelRotation/((double) Game.totalNicks);
+        //Log.v("Normalized Line","Amplitude: " + Double.toString(amplitude));
         double piDouble = 2 * Math.PI;
         double factor = (piDouble / maxX);
         //Log.v("Normalized Line","Factor: " + Double.toString(factor));
         //Log.v("Normalized Line", "Drawn");
-        return (int) (wheelRotation*(Math.sin(x * factor)) * halfY + halfY);
+        return (int) (amplitude*(Math.sin(x * factor)) * halfY + halfY);
     }
 }
