@@ -54,18 +54,6 @@
         </activity>
 
         <activity
-            android:name=".CameraPackage.CameraLandingPage"
-            android:label="CameraScanner">
-        </activity>
-
-        <activity
-            android:name=".CameraPackage.InitiateCamera"
-            android:screenOrientation="landscape"
-            android:label="CameraActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
-        </activity>
-
-        <activity
             android:name=".OSScreen"
             android:label="OS Screen">
         </activity>

@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 //import com.marvin.mapsexample.CameraPackage.CameraLandingPage;
 import com.marvin.mapsexample.ARView.ARView;
-import com.marvin.mapsexample.CameraPackage.CameraLandingPage;
-import com.marvin.mapsexample.CameraPackage.CameraOverlay;
 import com.marvin.mapsexample.DialClasses.DialTest;
 import com.marvin.mapsexample.SignalRedirect.InitiatePaintView;
 import com.marvin.mapsexample.SignalRedirect.PaintView;
