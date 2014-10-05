@@ -55,7 +55,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             Criteria criteria = new Criteria();
             String provider = locationManager.getBestProvider(criteria, true);
             Location location = locationManager.getLastKnownLocation(provider);
-            tvLocation.setText("Welcome, " + IntroScreen.username);
+            tvLocation.setText("Welcome, " + IntroScreen.playerName);
 
             latitude = location.getLatitude();
             longitude = location.getLongitude();

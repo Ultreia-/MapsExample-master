@@ -61,7 +61,7 @@ public class OSScreen extends FragmentActivity{
         }
 
         TextView text = (TextView) findViewById(R.id.textView);
-        text.setText("Agent: " + IntroScreen.username);
+        text.setText("Agent: " + IntroScreen.playerName);
 
         TabHost th = (TabHost) findViewById(R.id.tabHost);
         th.setup();

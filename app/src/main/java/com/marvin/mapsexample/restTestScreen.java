@@ -20,6 +20,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,9 +57,9 @@ public class restTestScreen extends RestServer {
 
     private class RestCallback implements RestCallbackInterface {
 
-        public void onEndRequest(String result)
+        public void onEndRequest(JSONObject result)
         {
-            etResponse.setText(result);
+
         }
     }
 }

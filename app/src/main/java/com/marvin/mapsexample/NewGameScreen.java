@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 /**
@@ -30,7 +32,7 @@ public class NewGameScreen extends RestServer{
 
                requestPost("http://marvin.idyia.dk/game/cancel",
                     new HashMap<String, String>() {{
-                        put("username", IntroScreen.username);
+                        put("username", IntroScreen.playerName);
                     }},
                     new CancelGameCallback());
             }
@@ -39,7 +41,7 @@ public class NewGameScreen extends RestServer{
 
     private class CancelGameCallback implements RestCallbackInterface {
 
-        public void onEndRequest(String result)
+        public void onEndRequest(JSONObject result)
         {
             Intent i = new Intent(getApplicationContext(), IntroScreen.class);
             startActivity(i);

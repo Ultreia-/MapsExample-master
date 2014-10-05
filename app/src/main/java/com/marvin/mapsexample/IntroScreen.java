@@ -22,8 +22,9 @@ public class IntroScreen extends RestServer {
     Button joinGame;
     Button funcTestScreen;
     EditText inputField;
-    static String username;
-    static String userId;
+
+    static String playerName;
+    static String playerId;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,38 +38,38 @@ public class IntroScreen extends RestServer {
 
         newGame.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                username = inputField.getText().toString();
+                playerName = inputField.getText().toString();
 
-                if(username.length() > 3)
+                if(playerName.length() > 3)
                 {
-                    requestPost("http://marvin.idyia.dk/game/new",
+                    requestPost("http://marvin.idyia.dk/player/create",
                         new HashMap<String, String>() {{
-                            put("username", username);
+                            put("playerName", playerName);
                         }},
-                        new NewGameCallback());
+                        new CreatePlayerCallback());
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(), "Username must be min. 4 characters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Player name must be min. 4 characters", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         joinGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                username = inputField.getText().toString();
+                playerName = inputField.getText().toString();
 
-                if(username.length() > 3)
+                if(playerName.length() > 3)
                 {
-                    requestPost("http://marvin.idyia.dk/game/new",
+                    requestPost("http://marvin.idyia.dk/player/create",
                             new HashMap<String, String>() {{
-                                put("username", username);
+                                put("playerName", playerName);
                             }},
-                            new JoinGameCallback());
+                            new CreatePlayerCallback());
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(), "Username must be min. 4 characters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Player name must be min. 4 characters", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -81,11 +82,34 @@ public class IntroScreen extends RestServer {
         });
     }
 
-    private class NewGameCallback implements RestCallbackInterface {
+    private class CreatePlayerCallback implements RestCallbackInterface {
 
         public void onEndRequest(JSONObject result)
         {
-            Intent i = new Intent(getApplicationContext(), NewGameScreen.class);
+            Toast.makeText(getBaseContext(), "Der skete noget", Toast.LENGTH_SHORT).show();
+            /*JSONObject data = null; // get articles array
+
+            try {
+
+                data = result.getJSONObject("data");
+                final String playerId = data.getString("playerId");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            requestPost("http://marvin.idyia.dk/game/create",
+                new HashMap<String, String>() {{
+                    put("playerId", playerId);
+                }},
+                new NewGameCallback());*/
+        }
+    }
+
+    private class NewGameCallback implements RestCallbackInterface{
+        public void onEndRequest(JSONObject result)
+        {
+            Intent i = new Intent(getApplicationContext(), JoinGame.class);
             startActivity(i);
         }
     }
@@ -96,7 +120,7 @@ public class IntroScreen extends RestServer {
         {
             JSONArray articles = null; // get articles array
             try {
-                articles = result.getJSONArray("articleList");
+                articles = result.getJSONArray("data");
                 articles.length(); // --> 2
                 articles.getJSONObject(0); // get first article in the array
                 articles.getJSONObject(0).names(); // get first article keys [title,url,categories,tags]
