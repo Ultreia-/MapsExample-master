@@ -145,8 +145,6 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
                     System.out.print(distance);
                 }
             }
-
-
         }
     }
 
