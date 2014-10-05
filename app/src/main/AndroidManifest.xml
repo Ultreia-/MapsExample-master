@@ -71,7 +71,7 @@
         </activity>
 
         <activity
-            android:name=".NewGameScreen"
+            android:name=".WaitingForPartnerScreen"
             android:label="New Game Screen">
 
         </activity>

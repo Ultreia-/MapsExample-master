@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
+
+import com.marvin.mapsexample.HelperPackage.Game;
+import com.marvin.mapsexample.HelperPackage.RestServer;
 
 import org.json.JSONObject;
 
@@ -14,16 +16,16 @@ import java.util.HashMap;
 /**
  * Created by Tobias on 03-10-2014.
  */
-public class NewGameScreen extends RestServer{
+public class WaitingForPartnerScreen extends RestServer {
 
     Button cancelNewGameButton;
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        setContentView(R.layout.new_game_screen);
+        setContentView(R.layout.waiting_for_partner_screen);
 
-        Toast.makeText(getBaseContext(), "Looking for other agents...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), "Looking for your partner...", Toast.LENGTH_SHORT).show();
 
         cancelNewGameButton = (Button) findViewById(R.id.cancelGame);
 
@@ -32,17 +34,23 @@ public class NewGameScreen extends RestServer{
 
                requestPost("http://marvin.idyia.dk/game/cancel",
                     new HashMap<String, String>() {{
-                        put("username", IntroScreen.playerName);
+                        put("gameId", Game.id);
                     }},
                     new CancelGameCallback());
             }
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getBaseContext(), "Back canceled...", Toast.LENGTH_SHORT).show();
+    }
+
     private class CancelGameCallback implements RestCallbackInterface {
 
         public void onEndRequest(JSONObject result)
         {
+            Game.id = null;
             Intent i = new Intent(getApplicationContext(), IntroScreen.class);
             startActivity(i);
         }

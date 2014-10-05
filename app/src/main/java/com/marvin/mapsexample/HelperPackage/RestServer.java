@@ -1,4 +1,4 @@
-package com.marvin.mapsexample;
+package com.marvin.mapsexample.HelperPackage;
 
 /**
  * Created by Tobias on 02-10-2014.
@@ -38,7 +38,7 @@ import android.app.Activity;
 
 public class RestServer extends Activity {
 
-    interface RestCallbackInterface {
+    public interface RestCallbackInterface {
 
         void onEndRequest(JSONObject result);
     }

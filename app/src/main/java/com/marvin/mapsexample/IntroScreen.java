@@ -7,7 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONArray;
+import com.marvin.mapsexample.HelperPackage.Game;
+import com.marvin.mapsexample.HelperPackage.Player;
+import com.marvin.mapsexample.HelperPackage.RestServer;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,6 +33,8 @@ public class IntroScreen extends RestServer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro_screen);
 
+        if(Game.player != null) inputField.setText(Game.player.getName());
+
         //prepare dem buttons
         newGame = (Button) findViewById(R.id.new_game);
         joinGame = (Button) findViewById(R.id.join_game);
@@ -46,7 +51,7 @@ public class IntroScreen extends RestServer {
                         new HashMap<String, String>() {{
                             put("playerName", playerName);
                         }},
-                        new CreatePlayerCallback());
+                        new NewGameCallback());
                 }
                 else
                 {
@@ -57,6 +62,7 @@ public class IntroScreen extends RestServer {
 
         joinGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 playerName = inputField.getText().toString();
 
                 if(playerName.length() > 3)
@@ -65,7 +71,7 @@ public class IntroScreen extends RestServer {
                             new HashMap<String, String>() {{
                                 put("playerName", playerName);
                             }},
-                            new CreatePlayerCallback());
+                            new JoinGameCallback());
                 }
                 else
                 {
@@ -82,17 +88,18 @@ public class IntroScreen extends RestServer {
         });
     }
 
-    private class CreatePlayerCallback implements RestCallbackInterface {
+    private class NewGameCallback implements RestCallbackInterface {
 
         public void onEndRequest(JSONObject result)
         {
-            Toast.makeText(getBaseContext(), "Der skete noget", Toast.LENGTH_SHORT).show();
-            /*JSONObject data = null; // get articles array
+            JSONObject data = null;
 
             try {
 
                 data = result.getJSONObject("data");
-                final String playerId = data.getString("playerId");
+                playerId = data.getString("playerId");
+
+                Game.player = new Player(playerId, playerName);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -102,14 +109,25 @@ public class IntroScreen extends RestServer {
                 new HashMap<String, String>() {{
                     put("playerId", playerId);
                 }},
-                new NewGameCallback());*/
+                new CreateGameCallback());
         }
     }
 
-    private class NewGameCallback implements RestCallbackInterface{
+    private class CreateGameCallback implements RestCallbackInterface{
         public void onEndRequest(JSONObject result)
         {
-            Intent i = new Intent(getApplicationContext(), JoinGame.class);
+            JSONObject data = null;
+
+            try {
+
+                data = result.getJSONObject("data");
+                Game.id = data.getString("gameId");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Intent i = new Intent(getApplicationContext(), WaitingForPartnerScreen.class);
             startActivity(i);
         }
     }
@@ -118,16 +136,19 @@ public class IntroScreen extends RestServer {
 
         public void onEndRequest(JSONObject result)
         {
-            JSONArray articles = null; // get articles array
+            JSONObject data = null;
+
             try {
-                articles = result.getJSONArray("data");
-                articles.length(); // --> 2
-                articles.getJSONObject(0); // get first article in the array
-                articles.getJSONObject(0).names(); // get first article keys [title,url,categories,tags]
-                articles.getJSONObject(0).getString("url"); // return an article url
+
+                data = result.getJSONObject("data");
+                playerId = data.getString("playerId");
+
+                Game.player = new Player(playerId, playerName);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
             Intent i = new Intent(getApplicationContext(), JoinGame.class);
             startActivity(i);
         }
