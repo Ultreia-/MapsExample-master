@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -36,6 +37,7 @@ public class PaintView extends View {
     private int mTouchTolerance;
     private boolean isPathStarted = false;
     private Point p1;
+    private Context context;
 
     public PaintView(Context context) {
         super(context);
@@ -184,6 +186,9 @@ public class PaintView extends View {
      */
     private void touch_up(float x, float y) {
         mPath.reset();
+        context = getContext();
+        Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+
         if (checkPoint(x, y, mLastPointIndex + 1) && isPathStarted) {
             // move finished at valid point so draw whole line
 
@@ -202,11 +207,12 @@ public class PaintView extends View {
             mLastPointIndex = 0;
             mPath.reset();
             isPathStarted = false;
+            // Vibrate for 500 milliseconds
+            v.vibrate(600);
             onDraw(mCanvas);
         }
 
         if (mLastPointIndex+1 == mPoints.size()){
-            Context context = getContext();
             Intent i = new Intent(context, OSScreen.class);
             context.startActivity(i);
         }
