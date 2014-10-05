@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -18,8 +19,11 @@ import com.marvin.mapsexample.R;
 public class SineView extends SurfaceView implements SurfaceHolder.Callback{
 
     Context context;
-    Canvas sineCanvas =new Canvas();
+    Canvas sineCanvas = new Canvas();
+    SineCurveThread sineCurveThread;
     private static final int BACKGROUND = 0xFFDDDDDD;
+    Paint mPaint;
+
 
     public SineView(Context ctx, AttributeSet attributeSet){
         super(ctx, attributeSet);
@@ -27,58 +31,43 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
         sineCanvas.drawColor(BACKGROUND);
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
-
-    }
-
-    @Override
-    public void surfaceCreated(SurfaceHolder surfaceHolder) {
-
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3) {
-
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
-    }
-/*
-    private Bitmap mBitmap;
-    private Canvas mCanvas;
-    private Paint mPaint;
-    private static final int BACKGROUND = 0xFFDDDDDD;
-
-    public SineView(Context context) {
-        super(context);
-        mCanvas = new Canvas();
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
         mPaint.setColor(Color.BLACK);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(12);
+
     }
 
     @Override
-    protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
-        super.onSizeChanged(width, height, oldWidth, oldHeight);
-        clear();
+    public void surfaceCreated(SurfaceHolder holder) {
+        sineCurveThread = new SineCurveThread(holder, context, this);
+        sineCurveThread.setRunning(true);
+        sineCurveThread.start();
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        canvas.drawColor(BACKGROUND);
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3) {
     }
 
-    public void clear() {
-        mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        mBitmap.eraseColor(BACKGROUND);
-        mCanvas.setBitmap(mBitmap);
-        invalidate();
+    @Override
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        sineCurveThread.setRunning(false);
+        boolean retry = true;
+        while (retry){
+            try {
+                sineCurveThread.join();
+                retry = false;
+            }
+            catch (Exception e){
+                Log.v("Exception!", e.getMessage());
+            }
+        }
     }
-    */
+
+    void doDraw(Canvas canvas){
+        canvas.drawColor(Color.CYAN);
+        //canvas.drawLine(0,0,100,100, mPaint);
+    }
 }
