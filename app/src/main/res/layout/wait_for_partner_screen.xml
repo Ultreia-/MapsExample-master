@@ -14,7 +14,6 @@
         android:layout_marginBottom="20dp"
         android:gravity="center_horizontal" />
 
-
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.marvin.mapsexample.HelperPackage.Game;
+
 /**
  * Created by christianheldingsrensen on 20/09/14.
  */
@@ -25,21 +27,13 @@ public class JoinGameScreen extends FragmentActivity {
 
         TextView text = (TextView) findViewById(R.id.textView);
         findPartner = (Button) findViewById(R.id.find_partner);
-        findGame = (Button) findViewById(R.id.find_game);
         inputField = (EditText)findViewById(R.id.edittext);
 
-        text.setText("Welcome, " + IntroScreen.playerName);
+        text.setText("Welcome, " + Game.player.getName());
 
         findPartner.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 partnerName = inputField.getText().toString();
-                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
-                startActivity(i);
-            }
-        });
-
-        findGame.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivity(i);
             }
