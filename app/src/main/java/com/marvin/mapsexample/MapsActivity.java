@@ -24,6 +24,7 @@ import com.marvin.mapsexample.ARView.ARView;
 public class MapsActivity extends FragmentActivity implements LocationListener {
 
     GoogleMap googleMap;
+    LocationManager locationManager;
 
     public double latitude;
     public double longitude;
@@ -161,5 +162,19 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    public void onPause() {
+        super.onPause();
+        if(locationManager != null) {
+            locationManager.removeUpdates(this);
+        }
+    }
+
+    public void onResume() {
+        super.onResume();
+        if(locationManager != null) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1, this);
+        }
     }
 }
