@@ -1,6 +1,7 @@
 package com.marvin.mapsexample;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
@@ -28,6 +29,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
     public double hqLat;
     public double hqLong;
     public float distance;
+    public Intent i;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -63,8 +65,22 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             if(location != null) {
                 onLocationChanged(location);
             }
+
+            /*i = this.getIntent();
+            if(i != null) {
+                String id = i.getExtras().getString("id");
+                if(id.equals("new marker")) {
+                    Bundle extras = i.getExtras();
+                    double lat = extras.getDouble("lat");
+                    double lng = extras.getDouble("lng");
+                    String title = extras.getString("title");
+                    String snippet = extras.getString("snippet");
+                    addMarkerToMap(lat, lng, title, snippet);
+                }
+            } */
             locationManager.requestLocationUpdates(provider, 1500, 0, this);
         }
+
 
         addTestMarkerToMap();
 
