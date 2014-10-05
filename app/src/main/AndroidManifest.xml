@@ -18,8 +18,8 @@
         </activity>
 
         <activity
-            android:name=".RestfulTest"
-            android:label="Restful shit">
+            android:name=".restTestScreen"
+            android:label="Restful">
         </activity>
 
         <activity
@@ -40,6 +40,11 @@
         <activity
             android:name=".LoadingScreen"
             android:label="Loading">
+        </activity>
+
+        <activity
+            android:name=".UploadingScreen"
+            android:label="Uploading">
         </activity>
 
         <activity
@@ -72,9 +77,20 @@
         </activity>
 
         <activity
-            android:name=".DialClasses.InitiateSineCurve"
+            android:name=".SignalRedirect.InitiatePaintView"
             android:screenOrientation="landscape"
-            android:label="Dial Test">
+            android:label="Signal Test">
+        </activity>
+
+        <activity
+            android:name=".NewGameScreen"
+            android:label="New Game Screen">
+
+        </activity>
+
+        <activity
+            android:name=".AccelerometerScreen"
+            android:label="Accelerometer" >
         </activity>
 
         <meta-data

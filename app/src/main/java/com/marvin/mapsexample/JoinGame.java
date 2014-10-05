@@ -28,7 +28,7 @@ public class JoinGame extends FragmentActivity {
         findGame = (Button) findViewById(R.id.find_game);
         inputField = (EditText)findViewById(R.id.edittext);
 
-        text.setText("Welcome, " + IntroScreen.username);
+        text.setText("Welcome, " + IntroScreen.playerName);
 
         findPartner.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {

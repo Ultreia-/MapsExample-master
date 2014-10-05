@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.marvin.mapsexample.ARView.Utils.Camera;
 import com.marvin.mapsexample.ARView.Utils.PaintUtils;
 import com.marvin.mapsexample.ARView.Utils.RadarLines;
+import com.marvin.mapsexample.MapsActivity;
 import com.marvin.mapsexample.R;
 
 import java.util.ArrayList;
@@ -45,12 +46,14 @@ public class DataView {
     RelativeLayout.LayoutParams[] subjectTextViewParams;
     TextView[] locationTextView;
 
+    double currentLat = ARView.currentLat;
+    double currentLng = ARView.currentLng;
 
 
     /*
-     *  Array or Array lists of latitude and longitude to plot
-     *  In your case you can populate with an ArrayList
-     * */
+         *  Array or Array lists of latitude and longitude to plot
+         *  In your case you can populate with an ArrayList
+         * */
     // SF Art Commission, SF Dept. of Public Health, SF Ethics Comm, SF Conservatory of Music, All Star Cafe, Magic Curry Cart, SF SEO Marketing, SF Honda,
     // SF Mun Transport Agency, SF Parking Citation, Mayors Office of Housing, SF Redev Agency, Catario Patrice, Bank of America , SF Retirement System, Bank of America Mortage,
     // Writers Corp., Van Nes Keno Mkt.
@@ -270,8 +273,8 @@ public class DataView {
             System.out.println("camera.getParameters().getHorizontalViewAngle()=="+camera.getParameters().getHorizontalViewAngle());
 
             bearings = new double[latitudes.length];
-            currentLocation.setLatitude(19.413958);
-            currentLocation.setLongitude(72.82729);
+            currentLocation.setLatitude(currentLat);
+            currentLocation.setLongitude(currentLng);
 
 
             if(bearing < 0)

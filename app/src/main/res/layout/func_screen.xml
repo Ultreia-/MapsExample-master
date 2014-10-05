@@ -4,16 +4,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="30sp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal" />
-
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -58,4 +48,29 @@
         android:text="Dial Test"
         android:id="@+id/dial_test"
         android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Uploading Test"
+        android:id="@+id/upload_test"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Signal Redirect Test"
+        android:id="@+id/sig_test"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Accelerometer Test"
+        android:id="@+id/accelerometer_test"/>
 </LinearLayout>

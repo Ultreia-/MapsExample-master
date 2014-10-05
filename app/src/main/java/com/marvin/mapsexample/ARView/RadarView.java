@@ -8,6 +8,7 @@ import android.location.Location;
 import android.util.TypedValue;
 
 import com.marvin.mapsexample.ARView.Utils.PaintUtils;
+import com.marvin.mapsexample.MapsActivity;
 
 
 public class RadarView{
@@ -26,6 +27,9 @@ public class RadarView{
     static int radarColor = Color.argb(100, 220, 0, 0);
     Location currentLocation = new Location("provider");
     Location destinedLocation = new Location("provider");
+
+    double currentLat = ARView.currentLat;
+    double currentLng = ARView.currentLng;
 
     /*
      * pass the same set of coordinates to plot POI's on radar
@@ -84,8 +88,8 @@ public class RadarView{
         /**
          *  Your current location coordinate here.
          * */
-        currentLocation.setLatitude(37.774968);
-        currentLocation.setLongitude(-122.41941);
+        currentLocation.setLatitude(currentLat);
+        currentLocation.setLongitude(currentLng);
 
 
         for(int i = 0; i <latitudes.length;i++){
@@ -105,8 +109,8 @@ public class RadarView{
     }
 
     public void calculateDistances(PaintUtils dw, float yaw){
-        currentLocation.setLatitude(19.474037);
-        currentLocation.setLongitude(72.800388);
+        currentLocation.setLatitude(currentLat);
+        currentLocation.setLongitude(currentLng);
         for(int i = 0; i <latitudes.length;i++){
             if(bearings[i]<0){
                 bearings[i] = 360 - bearings[i];

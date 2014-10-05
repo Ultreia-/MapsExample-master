@@ -19,6 +19,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.marvin.mapsexample.ARView.ARView;
 
 public class MapsActivity extends FragmentActivity implements LocationListener {
 
@@ -26,10 +27,17 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
     public double latitude;
     public double longitude;
+    public double ARLatitude;
+    public double ARLongitude;
     public double hqLat;
     public double hqLong;
     public float distance;
+<<<<<<< HEAD
     public Intent i;
+=======
+    public Location hqLocation;
+    public double distToMarker = 10;
+>>>>>>> origin/master
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +59,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             Criteria criteria = new Criteria();
             String provider = locationManager.getBestProvider(criteria, true);
             Location location = locationManager.getLastKnownLocation(provider);
-            tvLocation.setText("Welcome, " + IntroScreen.username);
+            tvLocation.setText("Welcome, " + IntroScreen.playerName);
 
             latitude = location.getLatitude();
             longitude = location.getLongitude();
@@ -61,10 +69,12 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
+            addTestMarkerToMap();
 
             if(location != null) {
                 onLocationChanged(location);
             }
+<<<<<<< HEAD
 
             /*i = this.getIntent();
             if(i != null) {
@@ -84,16 +94,35 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
         addTestMarkerToMap();
 
+=======
+            locationManager.requestLocationUpdates(provider, 500, 0, this);
+        }
+        Intent i = getIntent();
+        if(i != null) {
+            String id = i.getExtras().getString("id");
+            if (id.equals("marker for S2")) {
+                double lat = i.getExtras().getDouble("lat");
+                double lng = i.getExtras().getDouble("lng");
+                String title = i.getExtras().getString("id");
+                String snippet = i.getExtras().getString("snippet");
+
+                addMarkerToMap(lat, lng, title, snippet);
+            }
+        }
+>>>>>>> origin/master
     }
 
     private void addTestMarkerToMap() {
-        LatLng pos = new LatLng(56.1709909, 10.192562800000019);
+        LatLng pos = new LatLng(56.172675, 10.186526);
+        hqLocation = new Location("Test");
+        hqLocation.setLatitude(56.172675);
+        hqLocation.setLongitude(10.186526);
 
         googleMap.addMarker(new MarkerOptions()
-            .title("MalCorp")
-            .snippet("MalCorp HQ")
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-            .position(pos)
+                        .title("MalCorp")
+                        .snippet("MalCorp HQ")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                        .position(pos)
         );
     }
 
@@ -101,9 +130,9 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         LatLng pos = new LatLng(lat, lng);
 
         MarkerOptions marker = new MarkerOptions()
-            .title(title)
-            .snippet(snippet)
-            .position(pos);
+                .title(title)
+                .snippet(snippet)
+                .position(pos);
         googleMap.addMarker(marker);
 
     }
@@ -112,14 +141,31 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
     public void onLocationChanged(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        isClose(location);
 
-        if(distance > 0) {
-            System.out.println(distance);
+        if (location != null) {
+            ARLatitude = latitude;
+            ARLongitude = longitude;
+
+            if (hqLocation != null) {
+                System.out.println("Hey igen!");
+                distance = location.distanceTo(hqLocation);
+
+                if (distance < distToMarker) {
+                    Intent intent = new Intent(getApplicationContext(), ARView.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", "locations for AR");
+                    bundle.putDouble("lat", ARLatitude);
+                    bundle.putDouble("lng", ARLongitude);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    System.out.println(distance);
+                } else {
+                    System.out.print(distance);
+                }
+            }
+
+
         }
-
-
-
     }
 
     @Override
@@ -137,13 +183,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
     }
 
-    public void isClose(Location location) {
-        Location pos = new Location("HQ");
-
-        pos.setLatitude(hqLat);
-        pos.setLongitude(hqLong);
-
-        distance = location.distanceTo(pos);
-
-    }
+    /*public void findDistance(Location location) {
+        }
+    } */
 }
