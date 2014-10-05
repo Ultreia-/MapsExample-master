@@ -37,29 +37,20 @@ public class OSScreen extends FragmentActivity{
                     .setMessage("Hola bromigos! I could really use some help from you, so if you want to, suck ma penis!")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-<<<<<<< HEAD
                             editor.putBoolean(firstTime, false);
                             editor.commit();
-                            Intent i = new Intent(OSScreen.this, MapsActivity.class);
-                            /*Bundle b = new Bundle();
-
-                            b.putString("id", "new marker");
-=======
                             //editor.putBoolean(firstTime, false);
                             //editor.commit();
-                            Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+
+                            Intent i = new Intent(OSScreen.this, MapsActivity.class);
                             Bundle b = new Bundle();
+
                             b.putString("id", "marker for S2");
->>>>>>> origin/master
                             b.putDouble("lat", 56.15674);
                             b.putDouble("lng", 10.20112);
                             b.putString("title", "S2");
                             b.putString("snippet", "Kæmpe meget mission");
-<<<<<<< HEAD
-                            i.putExtras(b); */
-=======
                             i.putExtras(b);
->>>>>>> origin/master
                             startActivity(i);
                         }
                     })

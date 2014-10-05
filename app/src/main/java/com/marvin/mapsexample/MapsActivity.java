@@ -32,12 +32,12 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
     public double hqLat;
     public double hqLong;
     public float distance;
-<<<<<<< HEAD
+
     public Intent i;
-=======
+
     public Location hqLocation;
     public double distToMarker = 10;
->>>>>>> origin/master
+
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -74,9 +74,8 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             if(location != null) {
                 onLocationChanged(location);
             }
-<<<<<<< HEAD
 
-            /*i = this.getIntent();
+            i = this.getIntent();
             if(i != null) {
                 String id = i.getExtras().getString("id");
                 if(id.equals("new marker")) {
@@ -87,29 +86,12 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
                     String snippet = extras.getString("snippet");
                     addMarkerToMap(lat, lng, title, snippet);
                 }
-            } */
+            }
             locationManager.requestLocationUpdates(provider, 1500, 0, this);
         }
 
 
         addTestMarkerToMap();
-
-=======
-            locationManager.requestLocationUpdates(provider, 500, 0, this);
-        }
-        Intent i = getIntent();
-        if(i != null) {
-            String id = i.getExtras().getString("id");
-            if (id.equals("marker for S2")) {
-                double lat = i.getExtras().getDouble("lat");
-                double lng = i.getExtras().getDouble("lng");
-                String title = i.getExtras().getString("id");
-                String snippet = i.getExtras().getString("snippet");
-
-                addMarkerToMap(lat, lng, title, snippet);
-            }
-        }
->>>>>>> origin/master
     }
 
     private void addTestMarkerToMap() {
@@ -182,8 +164,4 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
     public void onProviderDisabled(String s) {
 
     }
-
-    /*public void findDistance(Location location) {
-        }
-    } */
 }
