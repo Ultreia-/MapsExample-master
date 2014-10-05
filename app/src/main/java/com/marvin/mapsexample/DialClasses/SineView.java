@@ -1,8 +1,7 @@
 package com.marvin.mapsexample.DialClasses;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,7 +10,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.marvin.mapsexample.R;
+import com.marvin.mapsexample.IntroScreen;
 
 /**
  * Created by Rasmus on 10/3/2014.
@@ -19,24 +18,21 @@ import com.marvin.mapsexample.R;
 public class SineView extends SurfaceView implements SurfaceHolder.Callback{
 
     Context context;
-    Canvas sineCanvas = new Canvas();
     SineCurveThread sineCurveThread;
-    private static final int BACKGROUND = 0xFFDDDDDD;
     Paint mPaint;
+    int wheelRotation = 1;
 
+    public void run(){
+    }
 
     public SineView(Context ctx, AttributeSet attributeSet){
         super(ctx, attributeSet);
         context = ctx;
-        sineCanvas.drawColor(BACKGROUND);
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
         mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setDither(true);
         mPaint.setColor(Color.BLACK);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(12);
+        mPaint.setStrokeWidth(6);
 
     }
 
@@ -45,6 +41,7 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
         sineCurveThread = new SineCurveThread(holder, context, this);
         sineCurveThread.setRunning(true);
         sineCurveThread.start();
+
     }
 
     @Override
@@ -68,6 +65,29 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
 
     void doDraw(Canvas canvas){
         canvas.drawColor(Color.CYAN);
-        //canvas.drawLine(0,0,100,100, mPaint);
+        curveControl(canvas);
+        //Log.v("doDraw", "is running");
+    }
+
+    public void curveControl(Canvas sineCanvas){
+        int width =  sineCanvas.getWidth();
+        int height = sineCanvas.getHeight();
+
+        int halfHeight = height / 2;
+        //Log.v("Curvecontrol", "Width: " + Integer.toString(width));
+        for (int i = 0; i < width; i++) {
+            sineCanvas.drawPoint(i, getNormalizedSine(i, halfHeight, width), mPaint);
+            //Log.v("CurveControl", "Numbaaa: " + Integer.toString(i));
+        }
+        //Log.v("CurveControl","Method has been entered");
+    }
+
+    int getNormalizedSine(int x, int halfY, int maxX) {
+        wheelRotation = 1;
+        double piDouble = 2 * Math.PI;
+        double factor = (piDouble / maxX);
+        //Log.v("Normalized Line","Factor: " + Double.toString(factor));
+        //Log.v("Normalized Line", "Drawn");
+        return (int) (wheelRotation*(Math.sin(x * factor)) * halfY + halfY);
     }
 }

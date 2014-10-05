@@ -12,7 +12,7 @@ public class DialModel {
 
     private List<Listener> listeners = new ArrayList<Listener>();
 
-    private int totalNicks = 80;
+    private int totalNicks = 16;
 
     private int currentNick = 0;
 
@@ -22,13 +22,11 @@ public class DialModel {
 
     public final void rotate(int nicks) {
         currentNick = (currentNick + nicks);
-        //if (currentNick >= totalNicks) {
-          //  currentNick %= totalNicks;
-        //}
-        if (currentNick < 0) {
+        if (currentNick >= totalNicks) {
+            currentNick %= totalNicks;
+        } else if (currentNick < 0) {
             currentNick = (totalNicks + currentNick);
         }
-
         for (Listener listener : listeners) {
             listener.onDialPositionChanged(this, nicks);
         }
