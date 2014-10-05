@@ -15,16 +15,12 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
     TextView accelerationX;
     TextView accelerationY;
     TextView accelerationZ;
+    TextView accelerationProgress;
 
     public float[] gravity = new float[3];
     public float[] linear_acceleration = new float[3];
+    public int progress;
 
-    public float latestValueX;
-    public float latestValueY;
-    public float latestValueZ;
-    public float previousValueX;
-    public float previousValueY;
-    public float previousValueZ;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +33,7 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
         accelerationX = (TextView) findViewById(R.id.acceleration_x);
         accelerationY = (TextView) findViewById(R.id.acceleration_y);
         accelerationZ = (TextView) findViewById(R.id.acceleration_z);
+        accelerationProgress = (TextView) findViewById(R.id.acceleration_progress);
     }
 
     @Override
@@ -56,6 +53,11 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
         linear_acceleration[1] = sensorEvent.values[1] - gravity[1];
         linear_acceleration[2] = sensorEvent.values[2] - gravity[2];
 
+        if(linear_acceleration[0] > 8 && progress < 100) {
+            progress += 5;
+            setText();
+        }
+
         accelerationX.setText("Acceleration på X akse: " + linear_acceleration[0]);
         accelerationY.setText("Acceleration på Y akse: " + linear_acceleration[1]);
         accelerationZ.setText("Acceleration på Z akse: " + linear_acceleration[2]);
@@ -74,5 +76,13 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
     protected void onPause() {
         super.onPause();
         sm.unregisterListener(this);
+    }
+
+    public void setText() {
+        accelerationProgress.post(new Runnable() {
+            public void run() {
+                accelerationProgress.setText("Shake the phone till 100% You are at: " + progress + "%");
+            }
+        });
     }
 }

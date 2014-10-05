@@ -30,4 +30,13 @@
         android:layout_centerHorizontal="true"
         android:text="ACCE Z" />
 
+    <TextView
+        android:id="@+id/acceleration_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/acceleration_z"
+        android:layout_centerHorizontal="true"
+        android:text=""/>
+
 </RelativeLayout>
