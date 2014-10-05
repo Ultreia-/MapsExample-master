@@ -1,7 +1,6 @@
 package com.marvin.mapsexample.DialClasses;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,7 +10,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.marvin.mapsexample.HelperPackage.Game;
-import com.marvin.mapsexample.IntroScreen;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Rasmus on 10/3/2014.
@@ -20,20 +21,25 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
 
     Context context;
     SineCurveThread sineCurveThread;
-    Paint mPaint;
+    Paint sPaint;
+    Paint gPaint;
     int wheelRotation = 0;
-
-    public void run(){
-    }
+    int sineCurvePhase = 0;
+    double amplitude;
 
     public SineView(Context ctx, AttributeSet attributeSet){
         super(ctx, attributeSet);
         context = ctx;
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
-        mPaint = new Paint();
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStrokeWidth(6);
+        sPaint = new Paint();
+        sPaint.setColor(Color.GREEN);
+        sPaint.setStrokeWidth(4);
+
+        gPaint = new Paint();
+        gPaint.setColor(Color.BLACK);
+        gPaint.setStrokeWidth(2);
+
 
     }
 
@@ -42,6 +48,17 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
         sineCurveThread = new SineCurveThread(holder, context, this);
         sineCurveThread.setRunning(true);
         sineCurveThread.start();
+
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                sineCurvePhase++;
+            }
+        };
+
+        Timer t = new Timer();
+        long amp = Math.round(amplitude);
+        t.scheduleAtFixedRate(timerTask, 0, 100);
 
     }
 
@@ -65,9 +82,9 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     void doDraw(Canvas canvas){
-        canvas.drawColor(Color.CYAN);
+        canvas.drawRGB(33, 168, 195);
+        drawGrid(canvas);
         curveControl(canvas);
-        //Log.v("doDraw", "is running");
     }
 
     public void curveControl(Canvas sineCanvas){
@@ -75,23 +92,35 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
         int height = sineCanvas.getHeight();
 
         int halfHeight = height / 2;
-        //Log.v("Curvecontrol", "Width: " + Integer.toString(width));
         for (int i = 0; i < width; i++) {
-            sineCanvas.drawPoint(i, getNormalizedSine(i, halfHeight, width), mPaint);
-            //Log.v("CurveControl", "Numbaaa: " + Integer.toString(i));
+            sineCanvas.drawPoint(i, getNormalizedSine(i, halfHeight, width), sPaint);
         }
-        //Log.v("CurveControl","Method has been entered");
     }
 
     int getNormalizedSine(int x, int halfY, int maxX) {
+
         wheelRotation = Game.currentRotation;
-        //Log.v("Normalized Line","Amplitude: " + Integer.toString(wheelRotation));
-        double amplitude = wheelRotation/((double) Game.totalNicks);
-        //Log.v("Normalized Line","Amplitude: " + Double.toString(amplitude));
+        amplitude = wheelRotation/((double) Game.totalNicks);
         double piDouble = 2 * Math.PI;
         double factor = (piDouble / maxX);
-        //Log.v("Normalized Line","Factor: " + Double.toString(factor));
-        //Log.v("Normalized Line", "Drawn");
-        return (int) (amplitude*(Math.sin(x * factor)) * halfY + halfY);
+
+        return (int) (amplitude * (Math.sin(x * factor + sineCurvePhase)) * halfY + halfY);
+    }
+
+    public void drawGrid(Canvas sineCanvas){
+
+        int width =  sineCanvas.getWidth();
+        int height = sineCanvas.getHeight();
+
+        int gridNumberX = 8;
+        int gridNumberY = 10;
+
+        for (int i = 0; i < (height/gridNumberX); i++) {
+            sineCanvas.drawLine(0, ((height/gridNumberX)+1)*i, width, ((height/gridNumberX)+1)*i, gPaint);
+        }
+
+        for (int i = 0; i < (width/gridNumberY); i++) {
+            sineCanvas.drawLine(((width/gridNumberY)+1)*i, 0, ((width/gridNumberY)+1)*i, height, gPaint);
+        }
     }
 }

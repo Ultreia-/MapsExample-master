@@ -9,7 +9,7 @@ public class Game {
     public static Player player = null;
     public static Player partner = null;
 
-    public static int currentRotation = 1;
+    public static int currentRotation = 25;
     public static int totalNicks = 32;
 
 }

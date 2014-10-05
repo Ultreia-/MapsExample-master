@@ -15,7 +15,7 @@ public class DialModel {
 
     private List<Listener> listeners = new ArrayList<Listener>();
 
-    private int currentNick = 0;
+    private int currentNick = 25;
     private boolean countUp = false;
     private boolean countDown = false;
     public DialModel() {
@@ -51,37 +51,7 @@ public class DialModel {
             currentNick = (currentNick + nicks);
         }
 
-        Log.v("nicks", Integer.toString(nicks));
-
-        /*if(countDown)
-        {
-            currentNick--;
-        }
-        else if(countUp)
-        {
-            currentNick++;
-        }
-        else
-        {
-            currentNick += (currentNick + Game.totalNicks);
-        }
-
-        //if(currentNick == 15) countDown = true;
-
-        if (currentNick >= Game.totalNicks) {
-            countDown = true;
-            //currentNick %= Game.totalNicks;
-        } else if (currentNick < -Game.totalNicks+1) {
-            countUp = true;
-            //currentNick += (currentNick + Game.totalNicks);
-        } else if(currentNick == 0) {
-            countDown = false;
-            countUp = false;
-        }
-        */
         Game.currentRotation = currentNick;
-
-        //Log.v("CurrentNick: ",Integer.toString(currentNick));
 
         for (Listener listener : listeners) {
             listener.onDialPositionChanged(this, nicks);
