@@ -33,13 +33,13 @@ public class IntroScreen extends RestServer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro_screen);
 
-        if(Game.player != null) inputField.setText(Game.player.getName());
-
         //prepare dem buttons
         newGame = (Button) findViewById(R.id.new_game);
         joinGame = (Button) findViewById(R.id.join_game);
         funcTestScreen = (Button) findViewById(R.id.func_test_screen);
         inputField = (EditText) findViewById(R.id.edittext);
+
+        if(Game.player != null) inputField.setText(Game.player.getName());
 
         newGame.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
