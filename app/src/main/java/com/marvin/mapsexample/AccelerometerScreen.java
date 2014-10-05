@@ -1,11 +1,19 @@
 package com.marvin.mapsexample;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class AccelerometerScreen extends FragmentActivity implements SensorEventListener{
@@ -17,6 +25,12 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
     TextView accelerationZ;
     TextView accelerationProgress;
 
+    public static final float BYTES_IN_MB = 1024.0f * 1024.0f;
+    public static final float BYTES_PER_PX = 4.0f;
+
+    ImageView image;
+
+
     public float[] gravity = new float[3];
     public float[] linear_acceleration = new float[3];
     public int progress;
@@ -25,6 +39,8 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.accelerometer_screen);
+
+        image = (ImageView) findViewById(R.id.accelerometer_image);
 
         sm = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -58,6 +74,39 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
             setText();
         }
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (progress >= 40 && progress < 60) {
+                        setFlicker();
+                        Thread.sleep(400);
+                        image.setBackgroundColor(Color.BLACK);
+                    }
+                    if (progress >= 60 && progress < 75) {
+                        setFlicker();
+                        Thread.sleep(250);
+                        image.setBackgroundColor(Color.BLACK);
+                    }
+                    if (progress >= 75 && progress < 90) {
+                        setFlicker();
+                        Thread.sleep(175);
+                        image.setBackgroundColor(Color.BLACK);
+                    }
+                    if (progress >= 90 && progress < 100) {
+                        setFlicker();
+                        Thread.sleep(100);
+                        image.setBackgroundColor(Color.BLACK);
+                    }
+                    if(progress == 100) {
+                        image.setBackgroundColor(Color.BLACK);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
         accelerationX.setText("Acceleration på X akse: " + linear_acceleration[0]);
         accelerationY.setText("Acceleration på Y akse: " + linear_acceleration[1]);
         accelerationZ.setText("Acceleration på Z akse: " + linear_acceleration[2]);
@@ -84,5 +133,62 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
                 accelerationProgress.setText("Shake the phone till 100% You are at: " + progress + "%");
             }
         });
+    }
+
+    public void setFlicker() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(readBitMapInfo() > megabytesFree()) {
+                    subSampleImage(32);
+                } else {
+                    image.setBackgroundResource(R.drawable.flicker);
+                }
+            }
+        });
+    }
+
+    private float readBitMapInfo() {
+        final Resources res = this.getResources();
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, R.drawable.flicker, options);
+        final float imageHeight = options.outHeight;
+        final float imageWidth = options.outWidth;
+        final String imageMimeType = options.outMimeType;
+
+        Log.d("ScaleBeforeLoad", "w, h, type: " + imageWidth + ", " + imageHeight + ", " + imageMimeType);
+        Log.d("ScaleBeforeLoad", "estimated memory required in MB: " + imageWidth * imageHeight * BYTES_PER_PX / BYTES_IN_MB);
+
+        return imageWidth * imageHeight * BYTES_PER_PX / BYTES_IN_MB;
+    }
+
+    public void subSampleImage(int powerOf2) {
+        if(powerOf2 < 1 || powerOf2 > 32) {
+            Log.e("ScaleBeforeLoad", "trying to apply upscale or excessive downscale" + powerOf2);
+            return;
+        }
+
+        final Resources res = this.getResources();
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = false;
+        options.inSampleSize = powerOf2;
+        final Bitmap bmp = BitmapFactory.decodeResource(res, R.drawable.flicker, options);
+        image.setImageBitmap(bmp);
+
+    }
+
+    public static float megabytesFree() {
+        final Runtime rt = Runtime.getRuntime();
+        final float bytesUsed = rt.totalMemory();
+        final float mbUsed = bytesUsed / BYTES_IN_MB;
+        final float mbFree = megabytesAvailable() - mbUsed;
+        return mbFree;
+    }
+
+    public static float megabytesAvailable() {
+        final Runtime rt = Runtime.getRuntime();
+        final float bytesAvailable = rt.maxMemory();
+        return bytesAvailable / BYTES_IN_MB;
     }
 }

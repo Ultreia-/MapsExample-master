@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainAccelerometer" >
+    tools:context=".MainAccelerometer"
+    android:id="@+id/accelerometer_layout">
 
     <TextView
         android:id="@+id/acceleration_x"
@@ -38,5 +39,12 @@
         android:layout_below="@id/acceleration_z"
         android:layout_centerHorizontal="true"
         android:text=""/>
+
+    <ImageView
+        android:id="@+id/accelerometer_image"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        />
 
 </RelativeLayout>
