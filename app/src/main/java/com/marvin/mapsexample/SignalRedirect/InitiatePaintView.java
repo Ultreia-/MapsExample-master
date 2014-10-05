@@ -3,7 +3,6 @@ package com.marvin.mapsexample.SignalRedirect;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.marvin.mapsexample.R;
 
 /**
  * Created by christianheldingsrensen on 03/10/14.

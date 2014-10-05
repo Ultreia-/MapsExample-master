@@ -1,6 +1,7 @@
 package com.marvin.mapsexample.SignalRedirect;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,9 +10,12 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.marvin.mapsexample.OSScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +30,12 @@ public class PaintView extends View {
     private Path mPath;
     private Paint mPaint;
     private static final int TOUCH_TOLERANCE_DP = 24;
-    private static final int BACKGROUND = 0xFFDDDDDD;
+   // private static final int BACKGROUND = 0xFFDDDDDD;
     private List<Point> mPoints = new ArrayList<Point>();
     private int mLastPointIndex = 0;
     private int mTouchTolerance;
     private boolean isPathStarted = false;
+    private Point p1;
 
     public PaintView(Context context) {
         super(context);
@@ -39,15 +44,15 @@ public class PaintView extends View {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
-        mPaint.setColor(Color.BLACK);
+        mPaint.setColor(Color.WHITE);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(12);
+        mPaint.setStrokeWidth(10);
         mTouchTolerance = dp2px(TOUCH_TOLERANCE_DP);
 
         // TODO just test points
-        Point p1 = new Point(20, 20);
+        p1 = new Point(20, 20);
         Point p2 = new Point(20, 400);
         Point p3 = new Point(300, 250);
         Point p4 = new Point(780, 400);
@@ -60,7 +65,7 @@ public class PaintView extends View {
         mPoints.add(p5);
         mPoints.add(p6);
     }
-
+/*
     public PaintView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mCanvas = new Canvas();
@@ -104,7 +109,7 @@ public class PaintView extends View {
         mPaint.setStrokeWidth(12);
         mTouchTolerance = dp2px(TOUCH_TOLERANCE_DP);
     }
-
+*/
     @Override
     protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
         super.onSizeChanged(width, height, oldWidth, oldHeight);
@@ -114,13 +119,17 @@ public class PaintView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(BACKGROUND);
+        canvas.drawColor(Color.BLACK);
         canvas.drawBitmap(mBitmap, 0, 0, null);
         canvas.drawPath(mPath, mPaint);
 
+        canvas.drawCircle(p1.x, p1.y, 1, mPaint);
+        canvas.drawCircle(p1.x, p1.y, 35, mPaint);
+        canvas.drawCircle(p1.x, p1.y, 50, mPaint);
+
         // TODO remove if you dont want points to be drawn
         for (Point point : mPoints) {
-            canvas.drawPoint(point.x, point.y, mPaint);
+            canvas.drawCircle(point.x, point.y, 20, mPaint);
         }
     }
 
@@ -189,8 +198,18 @@ public class PaintView extends View {
             // increment point index
             ++mLastPointIndex;
             isPathStarted = false;
+        } else{
+            mLastPointIndex = 0;
+            mPath.reset();
+            isPathStarted = false;
+            onDraw(mCanvas);
         }
 
+        if (mLastPointIndex+1 == mPoints.size()){
+            Context context = getContext();
+            Intent i = new Intent(context, OSScreen.class);
+            context.startActivity(i);
+        }
     }
 
     /**
@@ -216,7 +235,7 @@ public class PaintView extends View {
      */
     public void clear() {
         mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        mBitmap.eraseColor(BACKGROUND);
+        mBitmap.eraseColor(Color.BLACK);
         mCanvas.setBitmap(mBitmap);
         invalidate();
     }
