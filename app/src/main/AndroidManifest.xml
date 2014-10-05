@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".JoinGame"
+            android:name=".JoinGameScreen"
             android:label="Join Game">
         </activity>
 
@@ -71,7 +71,7 @@
         </activity>
 
         <activity
-            android:name=".WaitingForPartnerScreen"
+            android:name=".WaitForPartnerScreen"
             android:screenOrientation="portrait"
             android:label="New Game Screen">
 

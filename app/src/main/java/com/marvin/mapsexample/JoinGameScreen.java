@@ -11,7 +11,7 @@ import android.widget.TextView;
 /**
  * Created by christianheldingsrensen on 20/09/14.
  */
-public class JoinGame extends FragmentActivity {
+public class JoinGameScreen extends FragmentActivity {
 
     EditText inputField;
     Button findPartner;
@@ -21,7 +21,7 @@ public class JoinGame extends FragmentActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        setContentView(R.layout.join_screen);
+        setContentView(R.layout.join_game_screen);
 
         TextView text = (TextView) findViewById(R.id.textView);
         findPartner = (Button) findViewById(R.id.find_partner);

@@ -30,12 +30,4 @@
         android:id="@+id/find_partner"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:text="Find Online Game"
-        android:id="@+id/find_game"
-        android:layout_gravity="center_horizontal" />
 </LinearLayout>

@@ -24,7 +24,7 @@ public class IntroScreen extends RestServer {
     Button newGame;
     Button joinGame;
     Button funcTestScreen;
-    EditText inputField;
+    EditText playerNameInputField;
 
     static String playerName;
     static String playerId;
@@ -37,13 +37,14 @@ public class IntroScreen extends RestServer {
         newGame = (Button) findViewById(R.id.new_game);
         joinGame = (Button) findViewById(R.id.join_game);
         funcTestScreen = (Button) findViewById(R.id.func_test_screen);
-        inputField = (EditText) findViewById(R.id.edittext);
+        playerNameInputField = (EditText) findViewById(R.id.edittext);
 
-        if(Game.player != null) inputField.setText(Game.player.getName());
+        if(Game.player != null) playerNameInputField.setText(Game.player.getName());
 
         newGame.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                playerName = inputField.getText().toString();
+                playerName = playerNameInputField.getText().toString();
+                playerName = playerName.substring(0, 1).toUpperCase() + playerName.substring(1);
 
                 if(playerName.length() > 3)
                 {
@@ -63,7 +64,8 @@ public class IntroScreen extends RestServer {
         joinGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                playerName = inputField.getText().toString();
+                playerName = playerNameInputField.getText().toString();
+                playerName = playerName.substring(0, 1).toUpperCase() + playerName.substring(1);
 
                 if(playerName.length() > 3)
                 {
@@ -127,7 +129,7 @@ public class IntroScreen extends RestServer {
                 e.printStackTrace();
             }
 
-            Intent i = new Intent(getApplicationContext(), WaitingForPartnerScreen.class);
+            Intent i = new Intent(getApplicationContext(), WaitForPartnerScreen.class);
             startActivity(i);
         }
     }
@@ -149,7 +151,7 @@ public class IntroScreen extends RestServer {
                 e.printStackTrace();
             }
 
-            Intent i = new Intent(getApplicationContext(), JoinGame.class);
+            Intent i = new Intent(getApplicationContext(), JoinGameScreen.class);
             startActivity(i);
         }
     }
