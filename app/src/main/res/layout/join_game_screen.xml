@@ -27,7 +27,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:text="Find Partner"
-        android:id="@+id/find_partner"
+        android:id="@+id/findPartner"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

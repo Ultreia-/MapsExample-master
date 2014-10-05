@@ -51,9 +51,9 @@ public class RestServer extends Activity {
                 }
                 @Override
                 protected void onPostExecute(String result) {
-                    JSONObject json = null; // convert String to JSONObject
+                    JSONObject json = null;
                     try {
-                        json = new JSONObject(result);
+                        json = new JSONObject(result);// convert String to JSONObject
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

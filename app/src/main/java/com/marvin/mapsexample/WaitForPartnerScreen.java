@@ -41,6 +41,7 @@ public class WaitForPartnerScreen extends RestServer {
         });
     }
 
+    /*
     @Override
     public void onBackPressed() {
         requestPost("http://marvin.idyia.dk/game/cancel",
@@ -48,7 +49,7 @@ public class WaitForPartnerScreen extends RestServer {
                     put("gameId", Game.id);
                 }},
                 new CancelGameCallback());
-    }
+    }*/
 
     private class CancelGameCallback implements RestCallbackInterface {
 

@@ -1,8 +1,10 @@
 package com.marvin.mapsexample;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -44,10 +46,14 @@ public class IntroScreen extends RestServer {
         newGame.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 playerName = playerNameInputField.getText().toString();
-                playerName = playerName.substring(0, 1).toUpperCase() + playerName.substring(1);
 
                 if(playerName.length() > 3)
                 {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(playerNameInputField.getWindowToken(), 0);
+
+                    playerName = playerName.substring(0, 1).toUpperCase() + playerName.substring(1);
                     requestPost("http://marvin.idyia.dk/player/create",
                         new HashMap<String, String>() {{
                             put("playerName", playerName);
@@ -65,10 +71,10 @@ public class IntroScreen extends RestServer {
             public void onClick(View v) {
 
                 playerName = playerNameInputField.getText().toString();
-                playerName = playerName.substring(0, 1).toUpperCase() + playerName.substring(1);
 
                 if(playerName.length() > 3)
                 {
+                    playerName = playerName.substring(0, 1).toUpperCase() + playerName.substring(1);
                     requestPost("http://marvin.idyia.dk/player/create",
                             new HashMap<String, String>() {{
                                 put("playerName", playerName);
