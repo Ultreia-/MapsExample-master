@@ -53,7 +53,7 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
         linear_acceleration[1] = sensorEvent.values[1] - gravity[1];
         linear_acceleration[2] = sensorEvent.values[2] - gravity[2];
 
-        if(linear_acceleration[0] > 8 && progress < 100) {
+        if(linear_acceleration[0] > 6 && progress < 100) {
             progress += 5;
             setText();
         }
