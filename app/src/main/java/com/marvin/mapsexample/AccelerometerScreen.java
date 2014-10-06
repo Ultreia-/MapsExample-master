@@ -77,11 +77,6 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
             progress += 1;
         }
 
-        /*if(progress == 15 || progress == 30 || progress == 50 || progress == 70) {
-            image.setImageResource(R.drawable.flicker);
-            setText();
-        } */
-
         new Thread(new Runnable() {
             @Override
             public void run() {
