@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -83,6 +84,18 @@ public class ARView extends Activity implements SensorEventListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+
+        if(intent != null) {
+            String id = intent.getExtras().getString("id");
+            if(id.equals("locations for AR")){
+                currentLat = intent.getExtras().getDouble("lat");
+                currentLng = intent.getExtras().getDouble("lng");
+            }
+        }
+        Log.v("Current Lat for ARView", Double.toString(currentLat));
+        Log.v("Current Lng for ARView", Double.toString(currentLng));
 
         final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         this.mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "");
@@ -172,16 +185,6 @@ public class ARView extends Activity implements SensorEventListener{
                 return true;
             }
         });
-
-        Intent intent = getIntent();
-
-        if(intent != null) {
-            String id = intent.getExtras().getString("id");
-            if(id.equals("locations for AR")){
-                currentLat = intent.getExtras().getDouble("lat");
-                currentLng = intent.getExtras().getDouble("lng");
-            }
-        }
     }
 
     public static Context getContext() {

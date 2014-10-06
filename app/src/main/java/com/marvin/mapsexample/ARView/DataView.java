@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.location.Location;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -119,6 +120,9 @@ public class DataView {
 
     public void init(int widthInit, int heightInit, android.hardware.Camera camera, DisplayMetrics displayMetrics, RelativeLayout rel) {
         try {
+
+            Log.v("Current lat", Double.toString(currentLat));
+            Log.v("Current lng", Double.toString(currentLng));
 
             locationMarkerView = new RelativeLayout[latitudes.length];
             layoutParams = new RelativeLayout.LayoutParams[latitudes.length];
