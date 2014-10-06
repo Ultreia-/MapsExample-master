@@ -66,8 +66,12 @@ public class JoinGameScreen extends RestServer {
 
                     if(joined)
                     {
-                        Game.id = data.getString("gameId");
-                        //Game.partner = new Player()
+                        String gameId = data.getString("gameId");
+                        String partnerId = data.getString("partnerId");
+                        String partnerName = data.getString("partnerName");
+                        
+                        Game.id = gameId;
+                        Game.partner = new Player(partnerId, partnerName);
 
                         Intent i = new Intent(getApplicationContext(), GameStartScreen.class);
                         startActivity(i);
