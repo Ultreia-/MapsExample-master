@@ -85,7 +85,9 @@ public class ARView extends Activity implements SensorEventListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*
         Intent intent = getIntent();
+
 
         if(intent != null) {
             String id = intent.getExtras().getString("id");
@@ -93,7 +95,10 @@ public class ARView extends Activity implements SensorEventListener{
                 currentLat = intent.getExtras().getDouble("lat");
                 currentLng = intent.getExtras().getDouble("lng");
             }
+
         }
+        */
+
         Log.v("Current Lat for ARView", Double.toString(currentLat));
         Log.v("Current Lng for ARView", Double.toString(currentLng));
 

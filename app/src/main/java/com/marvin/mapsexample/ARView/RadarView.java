@@ -28,8 +28,8 @@ public class RadarView{
     Location currentLocation = new Location("provider");
     Location destinedLocation = new Location("provider");
 
-    double currentLat = ARView.currentLat;
-    double currentLng = ARView.currentLng;
+    double currentLat = 56.182732;//ARView.currentLat;
+    double currentLng = 10.196322;//ARView.currentLng;
 
     /*
      * pass the same set of coordinates to plot POI's on radar

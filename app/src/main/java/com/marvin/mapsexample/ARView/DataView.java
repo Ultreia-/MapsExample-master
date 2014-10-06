@@ -47,8 +47,8 @@ public class DataView {
     RelativeLayout.LayoutParams[] subjectTextViewParams;
     TextView[] locationTextView;
 
-    double currentLat = ARView.currentLat;
-    double currentLng = ARView.currentLng;
+    double currentLat = 56.182732; //ARView.currentLat;
+    double currentLng = 10.196322;  //ARView.currentLng;
 
 
     /*
@@ -57,10 +57,10 @@ public class DataView {
          * */
     // SF Art Commission, SF Dept. of Public Health, SF Ethics Comm, SF Conservatory of Music, All Star Cafe, Magic Curry Cart, SF SEO Marketing, SF Honda,
     // SF Mun Transport Agency, SF Parking Citation, Mayors Office of Housing, SF Redev Agency, Catario Patrice, Bank of America , SF Retirement System, Bank of America Mortage,
-    // Writers Corp., Van Nes Keno Mkt.
-    double[] latitudes = new double[] {56.17146246538868, 37.775729, 37.775578, 37.77546, 37.775199, 37.774887, 37.774637,
+    // Writers Corp., Van Nes Keno Mkt.56.172821, 10.186332
+    double[] latitudes = new double[] {56.172732, 37.775729, 37.775578, 37.77546, 37.775199, 37.774887, 37.774637,
             37.774614, 37.774406, 37.774754, 37.774813, 37.774961, 37.774957, 37.775171, 37.775996, 37.775818, 37.775691, 37.775909};
-    double[] longitudes = new double[] {10.189872980117798, -122.419601, -122.419719, -122.42026, -122.419646, -122.419405, -122.42037,
+    double[] longitudes = new double[] {10.186322, -122.419601, -122.419719, -122.42026, -122.419646, -122.419405, -122.42037,
             -122.41934, -122.41886, -122.418785, -122.418581, -122.418868, -122.418064, -122.418884, -122.418898, -122.418305, -122.418895, -122.419161};
 
     int[] nextXofText ;
