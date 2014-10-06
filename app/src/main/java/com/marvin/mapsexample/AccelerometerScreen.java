@@ -81,25 +81,25 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
             @Override
             public void run() {
                 try {
-                    if (progress >= 40 && progress < 60) {
+                    if (progress >= 20 && progress < 45) {
                         setFlicker();
                         Thread.sleep(400);
                         removeFlicker();
                     }
-                    if (progress >= 60 && progress < 75) {
+                    if (progress >= 45 && progress < 65) {
                         setFlicker();
                         Thread.sleep(250);
                         removeFlicker();
                     }
-                    if (progress >= 75 && progress < 90) {
+                    if (progress >= 65 && progress < 80) {
                         setFlicker();
                         Thread.sleep(175);
                         removeFlicker();
                     }
-                    if (progress >= 90 && progress < 100) {
+                    if (progress >= 80 && progress < 100) {
                         setFlicker();
                         Thread.sleep(100);
-                        //image.setBackgroundColor(Color.BLACK);
+                        removeFlicker();
                     }
                     if(progress == 100) {
                         removeFlicker();
