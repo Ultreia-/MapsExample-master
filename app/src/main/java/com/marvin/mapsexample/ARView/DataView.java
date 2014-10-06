@@ -47,8 +47,8 @@ public class DataView {
     RelativeLayout.LayoutParams[] subjectTextViewParams;
     TextView[] locationTextView;
 
-    double currentLat = 56.182732; //ARView.currentLat;
-    double currentLng = 10.196322;  //ARView.currentLng;
+    double currentLat = ARView.currentLat;
+    double currentLng = ARView.currentLng;
 
 
     /*

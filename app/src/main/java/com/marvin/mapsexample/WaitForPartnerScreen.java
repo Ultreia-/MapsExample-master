@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.marvin.mapsexample.HelperPackage.Game;
 import com.marvin.mapsexample.HelperPackage.Player;
+import com.marvin.mapsexample.HelperPackage.RestCallbackInterface;
 import com.marvin.mapsexample.HelperPackage.RestServer;
 
 import org.json.JSONException;

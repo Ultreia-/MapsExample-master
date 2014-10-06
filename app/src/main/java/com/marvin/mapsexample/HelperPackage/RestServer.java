@@ -20,30 +20,20 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Fragment;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Activity;
 
-public class RestServer extends Activity {
+public class RestServer extends FragmentActivity {
 
-    public interface RestCallbackInterface {
-
-        void onEndRequest(JSONObject result);
-    }
-
-    public void requestGet(String url, final RestCallbackInterface callback) {
+      public void requestGet(String url, final RestCallbackInterface callback) {
             new HttpAsyncTask() {
                 @Override
                 protected String doInBackground(String... urls) {

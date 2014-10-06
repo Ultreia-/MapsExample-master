@@ -47,7 +47,7 @@ public class OSScreen extends FragmentActivity{
                             Intent i = new Intent(OSScreen.this, MapsActivity.class);
                             Bundle b = new Bundle();
 
-                            b.putString("id", "marker for S2");
+                            b.putString("id", "s2");
                             b.putDouble("lat", 56.15674);
                             b.putDouble("lng", 10.20112);
                             b.putString("title", "S2");

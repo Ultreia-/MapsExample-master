@@ -20,8 +20,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.marvin.mapsexample.ARView.ARView;
+import com.marvin.mapsexample.HelperPackage.RestServer;
 
-public class MapsActivity extends FragmentActivity implements LocationListener {
+public class MapsActivity extends RestServer implements LocationListener {
 
     GoogleMap googleMap;
     LocationManager locationManager;
@@ -39,7 +40,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
     public Location hqLocation;
     public double distToMarker = 10;
 
-
+    private String currentIdMarkerId;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
-            addTestMarkerToMap();
+            //addTestMarkerToMap();
 
             if(location != null) {
                 onLocationChanged(location);
@@ -78,8 +79,16 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
             i = this.getIntent();
             if(i != null) {
-                String id = i.getExtras().getString("id");
-                if(id.equals("new marker")) {
+                currentIdMarkerId = i.getExtras().getString("id");
+                if(currentIdMarkerId.equals("s2")) {
+                    Bundle extras = i.getExtras();
+                    double lat = extras.getDouble("lat");
+                    double lng = extras.getDouble("lng");
+                    String title = extras.getString("title");
+                    String snippet = extras.getString("snippet");
+                    addMarkerToMap(lat, lng, title, snippet);
+                }
+                if(currentIdMarkerId.equals("s1")) {
                     Bundle extras = i.getExtras();
                     double lat = extras.getDouble("lat");
                     double lng = extras.getDouble("lng");
@@ -90,9 +99,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             }
             locationManager.requestLocationUpdates(provider, 1500, 0, this);
         }
-
-
-        addTestMarkerToMap();
+        //addTestMarkerToMap();
     }
 
     private void addTestMarkerToMap() {
@@ -102,10 +109,10 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         hqLocation.setLongitude(10.186526);
 
         googleMap.addMarker(new MarkerOptions()
-                        .title("MalCorp")
-                        .snippet("MalCorp HQ")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                        .position(pos)
+                    .title("MalCorp")
+                    .snippet("MalCorp HQ")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                    .position(pos)
         );
     }
 
@@ -119,6 +126,8 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         googleMap.addMarker(marker);
 
     }
+
+
 
     @Override
     public void onLocationChanged(Location location) {
@@ -134,14 +143,18 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
                 distance = location.distanceTo(hqLocation);
 
                 if (distance < distToMarker) {
-                    Intent intent = new Intent(getApplicationContext(), ARView.class);
+                    if(currentIdMarkerId.equals("s1"))
+                    {
+                        //56.172857, 10.185276
+                    }
+                    /*Intent intent = new Intent(getApplicationContext(), ARView.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("id", "locations for AR");
                     bundle.putDouble("lat", ARLatitude);
                     bundle.putDouble("lng", ARLongitude);
                     intent.putExtras(bundle);
                     startActivity(intent);
-                    System.out.println(distance);
+                    System.out.println(distance);*/
                 } else {
                     System.out.print(distance);
                 }
