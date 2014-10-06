@@ -35,7 +35,9 @@ public class JoinGameScreen extends RestServer {
         findPartner = (Button) findViewById(R.id.findPartner);
         inputField = (EditText)findViewById(R.id.edittext);
 
-        text.setText("Welcome, " + Game.player.getName());
+        if(Game.player != null) {
+            text.setText("Welcome, " + Game.player.getName());
+        }
 
         findPartner.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {

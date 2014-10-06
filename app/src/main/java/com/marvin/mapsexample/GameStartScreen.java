@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 public class GameStartScreen extends RestServer {
 
     private TimerTask timerTask;
