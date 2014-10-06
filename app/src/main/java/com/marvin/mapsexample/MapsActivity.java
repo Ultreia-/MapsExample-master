@@ -8,8 +8,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -20,7 +22,17 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.marvin.mapsexample.ARView.ARView;
+import com.marvin.mapsexample.HelperPackage.Game;
+import com.marvin.mapsexample.HelperPackage.Player;
+import com.marvin.mapsexample.HelperPackage.RestCallbackInterface;
 import com.marvin.mapsexample.HelperPackage.RestServer;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MapsActivity extends RestServer implements LocationListener {
 
@@ -35,12 +47,21 @@ public class MapsActivity extends RestServer implements LocationListener {
     public double hqLong;
     public float distance;
 
+    private TimerTask timerTask;
+    private Timer timer;
+
     public Intent i;
 
     public Location hqLocation;
-    public double distToMarker = 10;
+    public double distToMarker = 20;
 
     private String currentIdMarkerId;
+    Bundle extras;
+    double lat;
+    double lng;
+    String title;
+    String snippet;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +69,7 @@ public class MapsActivity extends RestServer implements LocationListener {
 
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 
-        if(status != ConnectionResult.SUCCESS){
+        if (status != ConnectionResult.SUCCESS) {
             int requestCode = 10;
             Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
             dialog.show();
@@ -73,27 +94,27 @@ public class MapsActivity extends RestServer implements LocationListener {
 
             //addTestMarkerToMap();
 
-            if(location != null) {
+            if (location != null) {
                 onLocationChanged(location);
             }
 
             i = this.getIntent();
-            if(i != null) {
+            if (i != null) {
                 currentIdMarkerId = i.getExtras().getString("id");
-                if(currentIdMarkerId.equals("s2")) {
-                    Bundle extras = i.getExtras();
-                    double lat = extras.getDouble("lat");
-                    double lng = extras.getDouble("lng");
-                    String title = extras.getString("title");
-                    String snippet = extras.getString("snippet");
+                if (currentIdMarkerId.equals("s2")) {
+                    extras = i.getExtras();
+                    lat = extras.getDouble("lat");
+                    lng = extras.getDouble("lng");
+                    title = extras.getString("title");
+                    snippet = extras.getString("snippet");
                     addMarkerToMap(lat, lng, title, snippet);
                 }
-                if(currentIdMarkerId.equals("s1")) {
-                    Bundle extras = i.getExtras();
-                    double lat = extras.getDouble("lat");
-                    double lng = extras.getDouble("lng");
-                    String title = extras.getString("title");
-                    String snippet = extras.getString("snippet");
+                if (currentIdMarkerId.equals("s1")) {
+                    extras = i.getExtras();
+                    lat = extras.getDouble("lat");
+                    lng = extras.getDouble("lng");
+                    title = extras.getString("title");
+                    snippet = extras.getString("snippet");
                     addMarkerToMap(lat, lng, title, snippet);
                 }
             }
@@ -109,10 +130,10 @@ public class MapsActivity extends RestServer implements LocationListener {
         hqLocation.setLongitude(10.186526);
 
         googleMap.addMarker(new MarkerOptions()
-                    .title("MalCorp")
-                    .snippet("MalCorp HQ")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                    .position(pos)
+                        .title("MalCorp")
+                        .snippet("MalCorp HQ")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                        .position(pos)
         );
     }
 
@@ -127,37 +148,46 @@ public class MapsActivity extends RestServer implements LocationListener {
 
     }
 
-
-
     @Override
     public void onLocationChanged(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
 
+
+
+        Location markerLocation = new Location(currentIdMarkerId);
+        markerLocation.setLatitude(lat);
+        markerLocation.setLongitude(lng);
+
         if (location != null) {
-            ARLatitude = latitude;
-            ARLongitude = longitude;
 
-            if (hqLocation != null) {
-                System.out.println("Hey igen!");
-                distance = location.distanceTo(hqLocation);
+            distance = location.distanceTo(markerLocation);
 
-                if (distance < distToMarker) {
-                    if(currentIdMarkerId.equals("s1"))
-                    {
-                        //56.172857, 10.185276
-                    }
-                    /*Intent intent = new Intent(getApplicationContext(), ARView.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", "locations for AR");
-                    bundle.putDouble("lat", ARLatitude);
-                    bundle.putDouble("lng", ARLongitude);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    System.out.println(distance);*/
-                } else {
-                    System.out.print(distance);
+            if (distance < distToMarker) {
+
+                Toast.makeText(getBaseContext(), "location change in range", Toast.LENGTH_LONG).show();
+
+                if (currentIdMarkerId.equals("s1")) {
+                    Toast.makeText(getBaseContext(), "You have arrived, wait for your partner.", Toast.LENGTH_SHORT).show();
+
+                    requestPost("http://marvin.idyia.dk/player/hasarrivedats",
+                            new HashMap<String, String>() {{
+                                put("sId", currentIdMarkerId);
+                                put("playerOne", String.valueOf(Game.playerOne));
+                                put("gameId", Game.id);
+                            }},
+                            new PlayerHasArrivedSCallback());
                 }
+                /*Intent intent = new Intent(getApplicationContext(), ARView.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("id", "locations for AR");
+                bundle.putDouble("lat", ARLatitude);
+                bundle.putDouble("lng", ARLongitude);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                System.out.println(distance);*/
+            } else {
+                Toast.makeText(getBaseContext(), "location change "+Float.toString(distance), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -179,15 +209,80 @@ public class MapsActivity extends RestServer implements LocationListener {
 
     public void onPause() {
         super.onPause();
-        if(locationManager != null) {
+        if (locationManager != null) {
             locationManager.removeUpdates(this);
         }
     }
 
     public void onResume() {
         super.onResume();
-        if(locationManager != null) {
+        if (locationManager != null) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1, this);
         }
     }
+
+    private class PlayerHasArrivedSCallback implements RestCallbackInterface {
+        public void onEndRequest(JSONObject result) {
+            try {
+
+                String status = result.getString("status");
+                if (status.equals("200")) {
+
+                    final String sId = result.getString("sId");
+
+                    timerTask = new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (Looper.myLooper() == null) {
+                                Looper.prepare();
+                            }
+
+                            requestGet("http://marvin.idyia.dk/game/havebotharriveds/" + sId,
+                                    new HaveBothArrivedSCallback());
+                        }
+                    };
+
+                    timer = new Timer();
+                    timer.scheduleAtFixedRate(timerTask, 0, 1000);
+                } else throw new Exception(status);
+
+            } catch (JSONException e) {
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Something went wrong mission_S; status 500", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Something went wrong mission_S; status " + e, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private class HaveBothArrivedSCallback implements RestCallbackInterface {
+        public void onEndRequest(JSONObject result) {
+            try {
+
+                String status = result.getString("status");
+
+                if (status.equals("200")) {
+                    //boolean playerAArrived = result.getBoolean("playerAArrived");
+                    boolean playerAArrived = true;
+                    boolean playerBArrived = result.getBoolean("playerBArrived");
+
+                    if(playerAArrived && playerBArrived)
+                    {
+                        timerTask.cancel();
+                        timer.cancel();
+                        Intent i = new Intent(getApplicationContext(), LoadingScreen.class);
+                        startActivity(i);
+                    }
+                }
+            } catch (JSONException status) {
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Something went wrong mission_S; status 500", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Something went wrong mission_S; status " + e, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }
