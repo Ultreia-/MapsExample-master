@@ -82,6 +82,9 @@ public class WaitForPartnerScreen extends RestServer {
 
         public void onEndRequest(JSONObject result)
         {
+            timerTask.cancel();
+            timer.cancel();
+
             Game.id = null;
             Intent i = new Intent(getApplicationContext(), IntroScreen.class);
             startActivity(i);
@@ -105,7 +108,10 @@ public class WaitForPartnerScreen extends RestServer {
                     {
                         String partnerId = data.getString("partnerId");
                         String partnerName = data.getString("partnerName");
-                        Game.player = new Player(partnerId, partnerName);
+                        Game.partner = new Player(partnerId, partnerName);
+
+                        timerTask.cancel();
+                        timer.cancel();
 
                         Intent i = new Intent(getApplicationContext(), GameStartScreen.class);
                         startActivity(i);
