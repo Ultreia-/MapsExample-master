@@ -90,5 +90,15 @@
         android:text="Start Game"
         android:id="@+id/start_game_test"/>
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Start Finder"
+        android:id="@+id/coordinate_finder"/>
+
+
+
 
 </LinearLayout>

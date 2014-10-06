@@ -10,6 +10,7 @@ import android.widget.TextView;
 //import com.marvin.mapsexample.CameraPackage.CameraLandingPage;
 import com.marvin.mapsexample.ARView.ARView;
 import com.marvin.mapsexample.DialClasses.DialTest;
+import com.marvin.mapsexample.FinderClasses.InitiateCoordinateFinder;
 import com.marvin.mapsexample.SignalRedirect.InitiatePaintView;
 import com.marvin.mapsexample.SignalRedirect.PaintView;
 
@@ -28,6 +29,7 @@ public class FunctionScreen extends FragmentActivity {
     Button accelTest;
     Button hackTest;
     Button startGameTest;
+    Button initateCoordinateFinder;
 
 
     @Override
@@ -45,6 +47,7 @@ public class FunctionScreen extends FragmentActivity {
         accelTest = (Button) findViewById(R.id.accelerometer_test);
         hackTest = (Button) findViewById(R.id.hacking_test);
         startGameTest = (Button) findViewById(R.id.start_game_test);
+        initateCoordinateFinder = (Button) findViewById(R.id.coordinate_finder);
 
 
         loadTest.setOnClickListener(new View.OnClickListener() {
@@ -124,5 +127,12 @@ public class FunctionScreen extends FragmentActivity {
             }
         });
 
+        initateCoordinateFinder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), InitiateCoordinateFinder.class);
+                startActivity(i);
+            }
+        });
     }
 }
