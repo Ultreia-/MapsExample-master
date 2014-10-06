@@ -27,6 +27,7 @@ public class FunctionScreen extends FragmentActivity {
     Button sigTest;
     Button accelTest;
     Button hackTest;
+    Button startGameTest;
 
 
     @Override
@@ -43,6 +44,7 @@ public class FunctionScreen extends FragmentActivity {
         sigTest = (Button) findViewById(R.id.sig_test);
         accelTest = (Button) findViewById(R.id.accelerometer_test);
         hackTest = (Button) findViewById(R.id.hacking_test);
+        startGameTest = (Button) findViewById(R.id.start_game_test);
 
 
         loadTest.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +112,14 @@ public class FunctionScreen extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), BasicHackScreen.class);
+                startActivity(i);
+            }
+        });
+
+        startGameTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), GameStartScreen.class);
                 startActivity(i);
             }
         });

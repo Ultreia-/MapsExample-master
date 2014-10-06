@@ -82,4 +82,13 @@
         android:text="Hacking Test"
         android:id="@+id/hacking_test"/>
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Start Game"
+        android:id="@+id/start_game_test"/>
+
+
 </LinearLayout>

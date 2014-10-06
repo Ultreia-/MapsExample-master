@@ -88,6 +88,12 @@
             android:label="Hacking Screen" >
         </activity>
 
+        <activity
+            android:name=".GameStartScreen"
+            android:label="Start Game Screen" >
+        </activity>
+
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
