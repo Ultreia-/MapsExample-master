@@ -45,6 +45,7 @@ public class IntroScreen extends RestServer {
 
         newGame.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
+
                 playerName = playerNameInputField.getText().toString();
 
                 if(playerName.length() > 3)
@@ -53,7 +54,6 @@ public class IntroScreen extends RestServer {
                             Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(playerNameInputField.getWindowToken(), 0);
 
-                    playerName = playerName.substring(0, 1).toUpperCase() + playerName.substring(1);
                     requestPost("http://marvin.idyia.dk/player/create",
                         new HashMap<String, String>() {{
                             put("playerName", playerName);
@@ -74,7 +74,10 @@ public class IntroScreen extends RestServer {
 
                 if(playerName.length() > 3)
                 {
-                    playerName = playerName.substring(0, 1).toUpperCase() + playerName.substring(1);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(playerNameInputField.getWindowToken(), 0);
+
                     requestPost("http://marvin.idyia.dk/player/create",
                             new HashMap<String, String>() {{
                                 put("playerName", playerName);
@@ -100,43 +103,59 @@ public class IntroScreen extends RestServer {
 
         public void onEndRequest(JSONObject result)
         {
-            JSONObject data = null;
-
             try {
 
-                data = result.getJSONObject("data");
-                playerId = data.getString("playerId");
+                String status = result.getString("status");
 
-                Game.player = new Player(playerId, playerName);
+                if(status.equals("200"))
+                {
+                    JSONObject data = result.getJSONObject("data");
+                    playerId = data.getString("playerId");
+
+                    Game.player = new Player(playerId, playerName);
+
+                    requestPost("http://marvin.idyia.dk/game/create",
+                        new HashMap<String, String>() {{
+                            put("playerId", playerId);
+                        }},
+                        new CreateGameCallback());
+                }
+                else throw new Exception(status);
 
             } catch (JSONException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Could not create player; status 500", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Could not create player; status "+e, Toast.LENGTH_SHORT).show();
             }
-
-            requestPost("http://marvin.idyia.dk/game/create",
-                new HashMap<String, String>() {{
-                    put("playerId", playerId);
-                }},
-                new CreateGameCallback());
         }
     }
 
     private class CreateGameCallback implements RestCallbackInterface{
         public void onEndRequest(JSONObject result)
         {
-            JSONObject data = null;
+            try
+            {
+                String status = result.getString("status");
 
-            try {
+                if(status.equals("200"))
+                {
+                    JSONObject data = result.getJSONObject("data");
+                    Game.id = data.getString("gameId");
 
-                data = result.getJSONObject("data");
-                Game.id = data.getString("gameId");
+                    Intent i = new Intent(getApplicationContext(), WaitForPartnerScreen.class);
+                    startActivity(i);
+                }
+                else throw new Exception(status);
 
             } catch (JSONException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Could not create game; status 500", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Could not create game; status "+e, Toast.LENGTH_SHORT).show();
             }
-
-            Intent i = new Intent(getApplicationContext(), WaitForPartnerScreen.class);
-            startActivity(i);
         }
     }
 
@@ -144,21 +163,28 @@ public class IntroScreen extends RestServer {
 
         public void onEndRequest(JSONObject result)
         {
-            JSONObject data = null;
-
             try {
+                String status = result.getString("status");
 
-                data = result.getJSONObject("data");
-                playerId = data.getString("playerId");
+                if(status.equals("200"))
+                {
+                    JSONObject data = result.getJSONObject("data");
+                    playerId = data.getString("playerId");
 
-                Game.player = new Player(playerId, playerName);
+                    Game.player = new Player(playerId, playerName);
+
+                    Intent i = new Intent(getApplicationContext(), JoinGameScreen.class);
+                    startActivity(i);
+
+                }else throw new Exception(status);
 
             } catch (JSONException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Could not create player; status 500", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Could not create player; status "+e, Toast.LENGTH_SHORT).show();
             }
-
-            Intent i = new Intent(getApplicationContext(), JoinGameScreen.class);
-            startActivity(i);
         }
     }
 }

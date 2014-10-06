@@ -83,6 +83,7 @@ public class RestServer extends Activity {
 
     public static String GET(String url){
 
+
         String result = "";
         try {
             // create HttpClient
