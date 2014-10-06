@@ -69,10 +69,18 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
         linear_acceleration[1] = sensorEvent.values[1] - gravity[1];
         linear_acceleration[2] = sensorEvent.values[2] - gravity[2];
 
-        if(linear_acceleration[0] > 6 && progress < 100) {
-            progress += 5;
+        if(linear_acceleration[0] > 4 && progress < 99) {
+            progress += 3;
             setText();
+        } else if(linear_acceleration[0] > 4 && progress == 99) {
+            setText();
+            progress += 1;
         }
+
+        /*if(progress == 15 || progress == 30 || progress == 50 || progress == 70) {
+            image.setImageResource(R.drawable.flicker);
+            setText();
+        } */
 
         new Thread(new Runnable() {
             @Override
@@ -81,25 +89,26 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
                     if (progress >= 40 && progress < 60) {
                         setFlicker();
                         Thread.sleep(400);
-                        image.setBackgroundColor(Color.BLACK);
+                        removeFlicker();
                     }
                     if (progress >= 60 && progress < 75) {
                         setFlicker();
                         Thread.sleep(250);
-                        image.setBackgroundColor(Color.BLACK);
+                        removeFlicker();
                     }
                     if (progress >= 75 && progress < 90) {
                         setFlicker();
                         Thread.sleep(175);
-                        image.setBackgroundColor(Color.BLACK);
+                        removeFlicker();
                     }
                     if (progress >= 90 && progress < 100) {
                         setFlicker();
                         Thread.sleep(100);
-                        image.setBackgroundColor(Color.BLACK);
+                        //image.setBackgroundColor(Color.BLACK);
                     }
                     if(progress == 100) {
-                        image.setBackgroundColor(Color.BLACK);
+                        removeFlicker();
+                        setText();
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -130,20 +139,33 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
     public void setText() {
         accelerationProgress.post(new Runnable() {
             public void run() {
-                accelerationProgress.setText("Shake the phone till 100% You are at: " + progress + "%");
+                if(progress == 100) {
+                    accelerationProgress.setText("You have scrambled the poster! Good job");
+                }else {
+                    accelerationProgress.setText("Shake the phone till 100% You are at: " + progress + "%");
+                }
             }
         });
     }
 
     public void setFlicker() {
-        runOnUiThread(new Runnable() {
+        image.post(new Runnable() {
             @Override
             public void run() {
                 if(readBitMapInfo() > megabytesFree()) {
                     subSampleImage(32);
                 } else {
-                    image.setBackgroundResource(R.drawable.flicker);
+                    image.setImageResource(R.drawable.flicker);
                 }
+            }
+        });
+    }
+
+    public void removeFlicker() {
+        image.post(new Runnable() {
+            @Override
+            public void run() {
+                image.setImageResource(0);
             }
         });
     }
