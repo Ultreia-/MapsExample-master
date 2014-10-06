@@ -40,11 +40,11 @@ public class WaitForPartnerScreen extends RestServer {
         cancelNewGameButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
 
-           requestPost("http://marvin.idyia.dk/game/cancel",
-                new HashMap<String, String>() {{
-                    put("gameId", Game.id);
-                }},
-                new CancelGameCallback());
+               requestPost("http://marvin.idyia.dk/game/cancel",
+                    new HashMap<String, String>() {{
+                        put("gameId", Game.id);
+                    }},
+                    new CancelGameCallback());
             }
         });
 
@@ -71,11 +71,11 @@ public class WaitForPartnerScreen extends RestServer {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(getApplicationContext(), IntroScreen.class);
-        startActivity(i);
-
-        timerTask.cancel();
-        timer.cancel();
+        requestPost("http://marvin.idyia.dk/game/cancel",
+                new HashMap<String, String>() {{
+                    put("gameId", Game.id);
+                }},
+                new CancelGameCallback());
     }
 
     private class CancelGameCallback implements RestCallbackInterface {
