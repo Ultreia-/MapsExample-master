@@ -12,4 +12,6 @@ public class Game {
     public static int currentRotation = 25;
     public static int totalNicks = 32;
 
+    public static double scramble = 1.0;
+
 }

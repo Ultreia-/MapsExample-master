@@ -26,6 +26,8 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
     int wheelRotation = 0;
     int sineCurvePhase = 0;
     double amplitude;
+    long ampLong;
+    long period = 75;
 
     public SineView(Context ctx, AttributeSet attributeSet){
         super(ctx, attributeSet);
@@ -39,8 +41,6 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
         gPaint = new Paint();
         gPaint.setColor(Color.BLACK);
         gPaint.setStrokeWidth(2);
-
-
     }
 
     @Override
@@ -49,16 +49,14 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
         sineCurveThread.setRunning(true);
         sineCurveThread.start();
 
-        TimerTask timerTask = new TimerTask() {
+        final TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 sineCurvePhase++;
             }
         };
-
-        Timer t = new Timer();
-        long amp = Math.round(amplitude);
-        t.scheduleAtFixedRate(timerTask, 0, 100);
+        final Timer t = new Timer();
+        t.scheduleAtFixedRate(timerTask, 0, period);
 
     }
 
@@ -93,7 +91,9 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
 
         int halfHeight = height / 2;
         for (int i = 0; i < width; i++) {
-            sineCanvas.drawPoint(i, getNormalizedSine(i, halfHeight, width), sPaint);
+            sineCanvas.drawPoint((int)(i + ((Math.random()* 150.0)*(Game.scramble-0.5))),
+                    (int)(getNormalizedSine(i, halfHeight, width)+((Math.random()* 150.0)*(Game.scramble-0.5))), sPaint);
+
         }
     }
 
@@ -101,10 +101,15 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
 
         wheelRotation = Game.currentRotation;
         amplitude = wheelRotation/((double) Game.totalNicks);
+        ampLong = (long) Math.abs(amplitude*100);
+        period = 100-ampLong;
+
         double piDouble = 2 * Math.PI;
         double factor = (piDouble / maxX);
 
         return (int) (amplitude * (Math.sin(x * factor + sineCurvePhase)) * halfY + halfY);
+
+
     }
 
     public void drawGrid(Canvas sineCanvas){
