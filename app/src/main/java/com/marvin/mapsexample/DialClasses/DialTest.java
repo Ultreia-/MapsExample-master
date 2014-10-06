@@ -30,21 +30,17 @@ public class DialTest extends Activity implements DialModel.Listener {
                 progressChanged = progress;
                 double progressDouble = (double) progressChanged;
 
-                Game.scramble = (progressDouble/100);
+                Game.scramble = (progressDouble/100.0);
                 Log.v("Scramble", Double.toString(Game.scramble));
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
             }
 
             public void onStopTrackingTouch(SeekBar seekBar) {
-                /*Toast.makeText(DialTest.this, "seek bar progress:" + progressChanged,
-                        Toast.LENGTH_SHORT).show();
-                        */
+
             }
         });
-
     }
 
     @Override
@@ -52,5 +48,4 @@ public class DialTest extends Activity implements DialModel.Listener {
         TextView text = (TextView) findViewById(R.id.text);
         text.setText(sender.getCurrentNick() + "");
     }
-
 }

@@ -1,15 +1,24 @@
 package com.marvin.mapsexample.DialClasses;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Bundle;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.marvin.mapsexample.HelperPackage.Game;
+import com.marvin.mapsexample.MapsActivity;
+import com.marvin.mapsexample.OSScreen;
+import com.marvin.mapsexample.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,6 +29,7 @@ import java.util.TimerTask;
 public class SineView extends SurfaceView implements SurfaceHolder.Callback{
 
     Context context;
+
     SineCurveThread sineCurveThread;
     Paint sPaint;
     Paint gPaint;
@@ -28,11 +38,21 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
     double amplitude;
     long ampLong;
     long period = 75;
+    SurfaceHolder holder;
+    boolean drawCurve = true;
+
+    final TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            sineCurvePhase++;
+        }
+    };
+    final Timer t = new Timer();
 
     public SineView(Context ctx, AttributeSet attributeSet){
         super(ctx, attributeSet);
         context = ctx;
-        SurfaceHolder holder = getHolder();
+        holder = getHolder();
         holder.addCallback(this);
         sPaint = new Paint();
         sPaint.setColor(Color.GREEN);
@@ -49,15 +69,7 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
         sineCurveThread.setRunning(true);
         sineCurveThread.start();
 
-        final TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                sineCurvePhase++;
-            }
-        };
-        final Timer t = new Timer();
         t.scheduleAtFixedRate(timerTask, 0, period);
-
     }
 
     @Override
@@ -82,7 +94,9 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
     void doDraw(Canvas canvas){
         canvas.drawRGB(33, 168, 195);
         drawGrid(canvas);
-        curveControl(canvas);
+        if (drawCurve){
+            curveControl(canvas);
+        }
     }
 
     public void curveControl(Canvas sineCanvas){
@@ -93,9 +107,19 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
         for (int i = 0; i < width; i++) {
             sineCanvas.drawPoint((int)(i + ((Math.random()* 150.0)*(Game.scramble-0.5))),
                     (int)(getNormalizedSine(i, halfHeight, width)+((Math.random()* 150.0)*(Game.scramble-0.5))), sPaint);
+        }
 
+        if(amplitude == 0.0 && Game.scramble < 0.5){
+            if(Looper.myLooper() == null){
+                Looper.prepare();
+            }
+            drawCurve = false;
+            Game.dialTaskCompleted = true;
+            Intent i = new Intent(context, OSScreen.class);
+            context.startActivity(i);
         }
     }
+
 
     int getNormalizedSine(int x, int halfY, int maxX) {
 
@@ -108,8 +132,6 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
         double factor = (piDouble / maxX);
 
         return (int) (amplitude * (Math.sin(x * factor + sineCurvePhase)) * halfY + halfY);
-
-
     }
 
     public void drawGrid(Canvas sineCanvas){

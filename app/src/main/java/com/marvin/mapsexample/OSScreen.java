@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentActivity;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.marvin.mapsexample.DialClasses.SineView;
+
 /**
  * Created by nicklasjust on 25/09/14.
  */

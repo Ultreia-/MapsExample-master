@@ -67,51 +67,7 @@ public class PaintView extends View {
         mPoints.add(p5);
         mPoints.add(p6);
     }
-/*
-    public PaintView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        mCanvas = new Canvas();
-        mPath = new Path();
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setDither(true);
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(12);
-        mTouchTolerance = dp2px(TOUCH_TOLERANCE_DP);
 
-        // TODO just test points
-        Point p1 = new Point(20, 20);
-        Point p2 = new Point(100, 100);
-        Point p3 = new Point(200, 250);
-        Point p4 = new Point(280, 400);
-        Point p5 = new Point(350, 600);
-        Point p6 = new Point(400, 500);
-        mPoints.add(p1);
-        mPoints.add(p2);
-        mPoints.add(p3);
-        mPoints.add(p4);
-        mPoints.add(p5);
-        mPoints.add(p6);
-    }
-
-    public PaintView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        mCanvas = new Canvas();
-        mPath = new Path();
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setDither(true);
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(12);
-        mTouchTolerance = dp2px(TOUCH_TOLERANCE_DP);
-    }
-*/
     @Override
     protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
         super.onSizeChanged(width, height, oldWidth, oldHeight);

@@ -35,6 +35,6 @@
         android:layout_marginTop="280dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="420dp"
-        android:progress="0"/>
+        android:progress="100"/>
 
 </FrameLayout>

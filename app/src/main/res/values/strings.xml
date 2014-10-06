@@ -13,5 +13,9 @@
     <string name="button_use_camera">Click!</string>
     <string name="dial_test">DialAcitivity</string>
     <string name="cancel_game">Cancel game</string>
+    <string name="sinecurve_message">You have successfully scrambled the nearby RFID tags. Something about the buddy who has to do stuff now!</string>
+    <string name="sinecurve_title">Task completed!</string>
+    <string name="ok">Ok</string>
+
 
 </resources>
