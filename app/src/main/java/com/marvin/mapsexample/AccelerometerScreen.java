@@ -17,9 +17,6 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
 
     Sensor accelerometer;
     SensorManager sm;
-    TextView accelerationX;
-    TextView accelerationY;
-    TextView accelerationZ;
     TextView accelerationProgress;
 
     public static final float BYTES_IN_MB = 1024.0f * 1024.0f;
