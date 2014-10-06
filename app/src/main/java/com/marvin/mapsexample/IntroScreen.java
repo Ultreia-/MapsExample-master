@@ -46,55 +46,55 @@ public class IntroScreen extends RestServer {
         newGame.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
 
-                playerName = playerNameInputField.getText().toString();
+            playerName = playerNameInputField.getText().toString();
 
-                if(playerName.length() > 3)
-                {
-                    InputMethodManager imm = (InputMethodManager)getSystemService(
-                            Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(playerNameInputField.getWindowToken(), 0);
+            if(playerName.length() > 3)
+            {
+                InputMethodManager imm = (InputMethodManager)getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(playerNameInputField.getWindowToken(), 0);
 
-                    requestPost("http://marvin.idyia.dk/player/create",
-                        new HashMap<String, String>() {{
-                            put("playerName", playerName);
-                        }},
-                        new NewGameCallback());
-                }
-                else
-                {
-                    Toast.makeText(getBaseContext(), "Player name must be min. 4 characters", Toast.LENGTH_SHORT).show();
-                }
+                requestPost("http://marvin.idyia.dk/player/create",
+                    new HashMap<String, String>() {{
+                        put("playerName", playerName);
+                    }},
+                    new NewGameCallback());
+            }
+            else
+            {
+                Toast.makeText(getBaseContext(), "Player name must be min. 4 characters", Toast.LENGTH_SHORT).show();
+            }
             }
         });
 
         joinGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                playerName = playerNameInputField.getText().toString();
+            playerName = playerNameInputField.getText().toString();
 
-                if(playerName.length() > 3)
-                {
-                    InputMethodManager imm = (InputMethodManager)getSystemService(
-                            Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(playerNameInputField.getWindowToken(), 0);
+            if(playerName.length() > 3)
+            {
+                InputMethodManager imm = (InputMethodManager)getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(playerNameInputField.getWindowToken(), 0);
 
-                    requestPost("http://marvin.idyia.dk/player/create",
-                            new HashMap<String, String>() {{
-                                put("playerName", playerName);
-                            }},
-                            new JoinGameCallback());
-                }
-                else
-                {
-                    Toast.makeText(getBaseContext(), "Player name must be min. 4 characters", Toast.LENGTH_SHORT).show();
-                }
+                requestPost("http://marvin.idyia.dk/player/create",
+                        new HashMap<String, String>() {{
+                            put("playerName", playerName);
+                        }},
+                        new JoinGameCallback());
+            }
+            else
+            {
+                Toast.makeText(getBaseContext(), "Player name must be min. 4 characters", Toast.LENGTH_SHORT).show();
+            }
             }
         });
 
         funcTestScreen.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), FunctionScreen.class);
-                startActivity(i);
+            Intent i = new Intent(getApplicationContext(), FunctionScreen.class);
+            startActivity(i);
             }
         });
     }

@@ -6,39 +6,12 @@
     android:id="@+id/accelerometer_layout">
 
     <TextView
-        android:id="@+id/acceleration_x"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_centerHorizontal="true"
-        android:text="ACCE X" />
-
-    <TextView
-        android:id="@+id/acceleration_y"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_below="@id/acceleration_x"
-        android:layout_centerHorizontal="true"
-        android:text="ACCE Y" />
-
-    <TextView
-        android:id="@+id/acceleration_z"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_below="@id/acceleration_y"
-        android:layout_centerHorizontal="true"
-        android:text="ACCE Z" />
-
-    <TextView
         android:id="@+id/acceleration_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:layout_below="@id/acceleration_z"
-        android:layout_centerHorizontal="true"
-        android:text=""/>
+        android:layout_centerInParent="true"
+        android:text="Hey brother! Cut the damn power by shaking"/>
 
     <ImageView
         android:id="@+id/accelerometer_image"

@@ -25,8 +25,6 @@ public class JoinGameScreen extends RestServer {
 
     EditText inputField;
     Button findPartner;
-    static String partnerName = "";
-    Button findGame;
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -41,11 +39,12 @@ public class JoinGameScreen extends RestServer {
 
         findPartner.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                partnerName = inputField.getText().toString();
+                final String partnerName = inputField.getText().toString();
 
                 requestPost("http://marvin.idyia.dk/game/join",
                         new HashMap<String, String>() {{
                             put("partnerName", partnerName);
+                            put("playerId", Game.player.getId());
                         }},
                         new JoinGameCallback());
             }
@@ -56,31 +55,36 @@ public class JoinGameScreen extends RestServer {
 
         public void onEndRequest(JSONObject result)
         {
-            JSONObject status;
-            JSONObject data;
-            String gameId;
             try {
 
-                if(result != null) {
-                    status = result.getJSONObject("status");
+                String status = result.getString("status");
 
-                    if (status.equals("200")) {
-                        data = result.getJSONObject("data");
-                        gameId = data.getString("gameId");
+                if(status.equals("200"))
+                {
+                    JSONObject data = result.getJSONObject("data");
+                    Boolean joined = data.getBoolean("joined");
 
-                        Game.id = gameId;
+                    if(joined)
+                    {
+                        Game.id = data.getString("gameId");
+                        //Game.partner = new Player()
 
-                        Intent i = new Intent(getApplicationContext(), FunctionScreen.class);
+                        Intent i = new Intent(getApplicationContext(), GameStartScreen.class);
                         startActivity(i);
-                    } else {
-                        Toast.makeText(getBaseContext(), "There is no player with such name. Try again.", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(getBaseContext(), "Somethings not right.", Toast.LENGTH_SHORT).show();
+                    else
+                    {
+                        Toast.makeText(getBaseContext(), "No agents with such name found", Toast.LENGTH_SHORT).show();
+                    }
                 }
+                else throw new Exception(status);
 
             } catch (JSONException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Could not create player; status 500", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Could not create player; status "+e, Toast.LENGTH_SHORT).show();
             }
         }
     }
