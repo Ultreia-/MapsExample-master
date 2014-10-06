@@ -35,7 +35,6 @@ public class WaitForPartnerScreen extends RestServer {
         cancelNewGameButton = (Button) findViewById(R.id.cancelGame);
 
         final Toast toast = Toast.makeText(getBaseContext(), "Looking for a partner...", Toast.LENGTH_SHORT);
-        //toast.show();
 
         cancelNewGameButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {

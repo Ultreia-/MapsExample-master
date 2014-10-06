@@ -5,6 +5,7 @@ package com.marvin.mapsexample.HelperPackage;
  */
 public class Game {
 
+    public static boolean playerOne = false;
     public static String id = null;
     public static Player player = null;
     public static Player partner = null;
@@ -18,6 +19,13 @@ public class Game {
     public static boolean dialTaskCompleted = false;
 
 
+    /**
+     * MISSION VARIABLES
+     */
+
+    //SR 2
+    public static String sr2_amplitude = "-15";
+    public static String sr2_scramble = "0.7";
 
 
 }

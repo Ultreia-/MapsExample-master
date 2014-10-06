@@ -113,6 +113,7 @@ public class IntroScreen extends RestServer {
                     playerId = data.getString("playerId");
 
                     Game.player = new Player(playerId, playerName);
+                    Game.playerOne = true;
 
                     requestPost("http://marvin.idyia.dk/game/create",
                         new HashMap<String, String>() {{
