@@ -43,9 +43,6 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
         accelerometer = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sm.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
-        accelerationX = (TextView) findViewById(R.id.acceleration_x);
-        accelerationY = (TextView) findViewById(R.id.acceleration_y);
-        accelerationZ = (TextView) findViewById(R.id.acceleration_z);
         accelerationProgress = (TextView) findViewById(R.id.acceleration_progress);
     }
 
@@ -107,10 +104,6 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
                 }
             }
         }).start();
-
-        accelerationX.setText("Acceleration på X akse: " + linear_acceleration[0]);
-        accelerationY.setText("Acceleration på Y akse: " + linear_acceleration[1]);
-        accelerationZ.setText("Acceleration på Z akse: " + linear_acceleration[2]);
     }
 
     @Override
@@ -132,7 +125,7 @@ public class AccelerometerScreen extends FragmentActivity implements SensorEvent
         accelerationProgress.post(new Runnable() {
             public void run() {
                 if(progress == 100) {
-                    accelerationProgress.setText("You have scrambled the poster! Good job");
+                    accelerationProgress.setText("You have cuttededed the power mah maaaan! Good job");
                 }else {
                     accelerationProgress.setText("Shake the phone till 100% You are at: " + progress + "%");
                 }
