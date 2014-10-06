@@ -52,32 +52,5 @@ public class GameStartScreen extends RestServer {
                 ok.show();
             }
         }, 4000);
-        /*
-        timerTask = new TimerTask() {
-
-            @Override
-            public void run() {
-                if (Looper.myLooper() == null) {
-                    Looper.prepare();
-                }
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(GameStartScreen.this.getBaseContext());
-                builder.setMessage("Message From Jim")
-                        .setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
-                                i.putExtra("id", "from function screen");
-                                startActivity(i);
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        };
-
-        timer = new Timer();
-        timer.schedule(timerTask, 5000);
-        */
     }
 }

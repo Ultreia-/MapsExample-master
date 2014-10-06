@@ -26,14 +26,17 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
     Paint fPaint;
     Paint goalPaint;
     CoordinateFinderThread coordinateFinderThread;
-    Point coorFinder = new Point(20, 1);
-    Point coorGoalPoint = new Point(10, 25);
+
+    //Første koordinat er Game.scramble, som skal ganges med 20. Andet er Game.currentRotation, som skal have +32
+    Point coorFinder = new Point(10, 32);
+    Point coorGoalPoint = new Point(10, 32);
 
     int gridNumberX;
     int gridNumberY;
 
     int width;
     int height;
+
 
     public CoordinateFinder(Context ctx){
         super(ctx);
@@ -100,35 +103,29 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
         width =  finderCanvas.getWidth();
         height = finderCanvas.getHeight();
 
-        gridNumberX = 18;
+        gridNumberX = 64;
         gridNumberY = 20;
 
-        for (int i = 0; i < (height/gridNumberX); i++) {
-            finderCanvas.drawLine(0, ((height / gridNumberX)) * i, width, ((height / gridNumberX)) * i, gPaint);
-            if(i == (gridNumberY/2)-1){
-                finderCanvas.drawLine(0, ((height / gridNumberX)) * i, width, ((height / gridNumberX)) * i, bPaint);
-            }
+        for (int i = 0; i < (height/(gridNumberX/4)); i++) {
+            finderCanvas.drawLine(0, (height / gridNumberX) * i, width, (height / gridNumberX) * i, gPaint);
         }
 
         for (int i = 0; i < (width/gridNumberY); i++) {
             finderCanvas.drawLine(((width / gridNumberY)+1) * i, 0, ((width / gridNumberY)+1) * i, height, gPaint);
-            if(i == (gridNumberX/2)+1){
-                finderCanvas.drawLine(((width / gridNumberY) + 1) * i, 0, ((width / gridNumberY) + 1) * i, height, bPaint);
-            }
         }
 
     }
 
     public void drawFinder(Point coorF, Canvas canvas){
-        int xInterval = (height/64);
-        int yInterval = (width/20);
+        int yInterval = (height/64)+1;
+        int xInterval = (width/20)+1;
 
         canvas.drawCircle(coorF.x*xInterval, coorF.y*yInterval, 20, fPaint);
     }
 
     public void drawGoalPoint(Point coorG, Canvas canvas){
-        int xInterval = (height/gridNumberX);
-        int yInterval = (width/gridNumberY);
+        int yInterval = (height/64)+1;
+        int xInterval = (width/20)+1;
 
         canvas.drawPoint((float)(coorG.x*xInterval), (float)(coorG.y*yInterval), goalPaint);
     }
