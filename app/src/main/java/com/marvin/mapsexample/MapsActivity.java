@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,10 +51,11 @@ public class MapsActivity extends RestServer implements LocationListener {
     private TimerTask timerTask;
     private Timer timer;
 
+    private boolean stopRestPing = false;
     public Intent i;
 
     public Location hqLocation;
-    public double distToMarker = 20;
+    public double distToMarker = 30;
 
     private String currentIdMarkerId;
     Bundle extras;
@@ -153,8 +155,6 @@ public class MapsActivity extends RestServer implements LocationListener {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
 
-
-
         Location markerLocation = new Location(currentIdMarkerId);
         markerLocation.setLatitude(lat);
         markerLocation.setLongitude(lng);
@@ -165,12 +165,11 @@ public class MapsActivity extends RestServer implements LocationListener {
 
             if (distance < distToMarker) {
 
-                Toast.makeText(getBaseContext(), "location change in range", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), "location change in range", Toast.LENGTH_SHORT).show();
 
                 if (currentIdMarkerId.equals("s1")) {
-                    Toast.makeText(getBaseContext(), "You have arrived, wait for your partner.", Toast.LENGTH_SHORT).show();
 
-                    requestPost("http://marvin.idyia.dk/player/hasarrivedats",
+                    requestPost("http://marvin.idyia.dk/player/hasArrivedAtS",
                             new HashMap<String, String>() {{
                                 put("sId", currentIdMarkerId);
                                 put("playerOne", String.valueOf(Game.playerOne));
@@ -187,7 +186,7 @@ public class MapsActivity extends RestServer implements LocationListener {
                 startActivity(intent);
                 System.out.println(distance);*/
             } else {
-                Toast.makeText(getBaseContext(), "location change "+Float.toString(distance), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), "location change "+Float.toString(distance), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -228,7 +227,8 @@ public class MapsActivity extends RestServer implements LocationListener {
                 String status = result.getString("status");
                 if (status.equals("200")) {
 
-                    final String sId = result.getString("sId");
+                    JSONObject data = result.getJSONObject("data");
+                    final String sId = data.getString("sId");
 
                     timerTask = new TimerTask() {
                         @Override
@@ -237,21 +237,23 @@ public class MapsActivity extends RestServer implements LocationListener {
                                 Looper.prepare();
                             }
 
-                            requestGet("http://marvin.idyia.dk/game/havebotharriveds/" + sId,
-                                    new HaveBothArrivedSCallback());
+                            if(!stopRestPing) {
+                                requestGet("http://marvin.idyia.dk/game/havebotharriveds/" + sId,
+                                        new HaveBothArrivedSCallback());
+                            }
                         }
                     };
 
                     timer = new Timer();
-                    timer.scheduleAtFixedRate(timerTask, 0, 1000);
+                    timer.scheduleAtFixedRate(timerTask, 0, 2000);
                 } else throw new Exception(status);
 
             } catch (JSONException e) {
                 //e.printStackTrace();
-                Toast.makeText(getBaseContext(), "Something went wrong mission_S; status 500", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "PlayerHasArrivedSCallback; JSON "+e, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 //e.printStackTrace();
-                Toast.makeText(getBaseContext(), "Something went wrong mission_S; status " + e, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "PlayerHasArrivedSCallback; status " + e, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -263,24 +265,32 @@ public class MapsActivity extends RestServer implements LocationListener {
                 String status = result.getString("status");
 
                 if (status.equals("200")) {
-                    //boolean playerAArrived = result.getBoolean("playerAArrived");
-                    boolean playerAArrived = true;
-                    boolean playerBArrived = result.getBoolean("playerBArrived");
 
-                    if(playerAArrived && playerBArrived)
+                    JSONObject data = result.getJSONObject("data");
+                    //String playerAArrived = data.getString("playerAArrived");
+                    String playerAArrived = "1";
+                    String playerBArrived = data.getString("playerBArrived");
+
+                    if(playerAArrived.equals("1") && playerBArrived.equals("1"))
                     {
+                        stopRestPing = true;
                         timerTask.cancel();
                         timer.cancel();
+
                         Intent i = new Intent(getApplicationContext(), LoadingScreen.class);
                         startActivity(i);
                     }
+                    else if((playerAArrived.equals("1") && Game.playerOne && playerBArrived.equals("0")) || (playerBArrived.equals("0") && playerBArrived.equals("1")))
+                    {
+                        Toast.makeText(getBaseContext(), "You have arrived, wait for your partner.", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            } catch (JSONException status) {
+            } catch (JSONException e) {
                 //e.printStackTrace();
-                Toast.makeText(getBaseContext(), "Something went wrong mission_S; status 500", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "HaveBothArrivedSCallback; JSON " + e, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 //e.printStackTrace();
-                Toast.makeText(getBaseContext(), "Something went wrong mission_S; status " + e, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "HaveBothArrivedSCallback; status " + e, Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -139,6 +139,7 @@ public class RestServer extends FragmentActivity {
         else
             result = "Did not work!";
 
+        //Log.v("result", result);
         return result;
     }
 

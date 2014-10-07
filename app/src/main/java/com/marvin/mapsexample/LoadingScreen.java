@@ -31,7 +31,7 @@ public class LoadingScreen extends FragmentActivity{
                             progress += 7;
                             progressbar.setProgress(progress);
                             setText();
-                            Thread.sleep(200);
+                            Thread.sleep(600);
                         }
 
                         if(progress >= 25 && progress < 50) {
@@ -45,27 +45,27 @@ public class LoadingScreen extends FragmentActivity{
                             progress += 4;
                             progressbar.setProgress(progress);
                             setText();
-                            Thread.sleep(100);
+                            Thread.sleep(200);
                         }
 
                         if(progress >= 80) {
                             progress += 3;
                             progressbar.setProgress(progress);
                             setText();
-                            Thread.sleep(75);
+                            Thread.sleep(700);
                         }
 
                         if(progress >= 90) {
                             progress += 1;
                             progressbar.setProgress(progress);
                             setText();
-                            Thread.sleep(50);
+                            Thread.sleep(800);
                         }
 
                         if(progress == 99) {
                             setText();
                             progress += 1;
-                            Thread.sleep(1500);
+                            Thread.sleep(2000);
                             Intent i = new Intent(getApplicationContext(), OSScreen.class);
                             startActivity(i);
                         }

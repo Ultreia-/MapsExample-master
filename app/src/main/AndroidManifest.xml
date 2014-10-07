@@ -55,6 +55,7 @@
 
         <activity
             android:name=".OSScreen"
+            android:noHistory="true"
             android:label="OS Screen">
         </activity>
 
