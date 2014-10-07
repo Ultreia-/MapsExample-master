@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -84,8 +83,6 @@ public class MapsScreen extends RestServer implements LocationListener {
             String provider = locationManager.getBestProvider(criteria, true);
             Location location = locationManager.getLastKnownLocation(provider);
 
-            Toast.makeText(getBaseContext(), provider , Toast.LENGTH_SHORT).show();
-
             /*latitude = location.getLatitude();
             longitude = location.getLongitude();
 
@@ -93,7 +90,8 @@ public class MapsScreen extends RestServer implements LocationListener {
 
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-*/
+            */
+
             //addTestMarkerToMap();
 
             if (location != null) {
@@ -119,6 +117,20 @@ public class MapsScreen extends RestServer implements LocationListener {
         }
     }
 
+    private void addTestMarkerToMap() {
+        LatLng pos = new LatLng(56.172675, 10.186526);
+        hqLocation = new Location("Test");
+        hqLocation.setLatitude(56.172675);
+        hqLocation.setLongitude(10.186526);
+
+        googleMap.addMarker(new MarkerOptions()
+            .title("MalCorp")
+            .snippet("MalCorp HQ")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+            .position(pos)
+        );
+    }
+
     public void addMarkerToMap(double lat, double lng, String title, String snippet) {
         LatLng pos = new LatLng(lat, lng);
 
@@ -131,8 +143,7 @@ public class MapsScreen extends RestServer implements LocationListener {
     }
 
     @Override
-    public void onLocationChanged(Location location)
-    {
+    public void onLocationChanged(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
 
@@ -145,13 +156,11 @@ public class MapsScreen extends RestServer implements LocationListener {
         markerLocation.setLatitude(lat);
         markerLocation.setLongitude(lng);
 
-        Toast.makeText(getBaseContext(), "onLocationChanged" , Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), "Loc. change" , Toast.LENGTH_SHORT).show();
 
         if (location != null) {
 
             distance = location.distanceTo(markerLocation);
-
-            Toast.makeText(getBaseContext(), "dist: " + Float.toString(distance) , Toast.LENGTH_SHORT).show();
 
             if (distance < distToMarker) {
 
@@ -170,8 +179,10 @@ public class MapsScreen extends RestServer implements LocationListener {
                         new PlayerHasArrivedSCallback());
                 }
 
-            } else {
-                //Toast.makeText(getBaseContext(), "location change "+Float.toString(distance), Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(getBaseContext(), "dist: " + Float.toString(distance) , Toast.LENGTH_SHORT).show();
             }
         }
     }
