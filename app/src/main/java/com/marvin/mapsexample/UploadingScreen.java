@@ -5,11 +5,21 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.marvin.mapsexample.HelperPackage.Game;
+import com.marvin.mapsexample.HelperPackage.RestCallbackInterface;
+import com.marvin.mapsexample.HelperPackage.RestServer;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * Created by nicklasjust on 03/10/14.
  */
-public class UploadingScreen extends FragmentActivity{
+public class UploadingScreen extends RestServer{
     private ProgressBar progressbar;
     private TextView uploading;
     private int progress;
@@ -65,8 +75,14 @@ public class UploadingScreen extends FragmentActivity{
                             progress += 1;
                             setText();
                             Thread.sleep(1500);
-                            Intent i = new Intent(getApplicationContext(), OSScreen.class);
-                            startActivity(i);
+
+                            requestPost("http://marvin.idyia.dk/player/hasCompletedS",
+                                new HashMap<String, String>() {{
+                                    put("sId", Game.currentMisson);
+                                    put("playerOne", String.valueOf(Game.playerOne));
+                                    put("gameId", Game.id);
+                                }},
+                                new PlayerHasCompletedSCallback());
                         }
                     }
                 } catch(InterruptedException e) {
@@ -75,6 +91,31 @@ public class UploadingScreen extends FragmentActivity{
             }
         }).start();
 
+    }
+
+    private class PlayerHasCompletedSCallback implements RestCallbackInterface {
+
+        public void onEndRequest(JSONObject result)
+        {
+            try {
+
+                String status = result.getString("status");
+
+                if(status.equals("200"))
+                {
+                    Intent i = new Intent(getApplicationContext(), OSScreen.class);
+                    startActivity(i);
+
+                } else throw new Exception(status);
+
+            } catch (JSONException e) {
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Could not create player; status 500", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Could not create player; status "+e, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void setText() {

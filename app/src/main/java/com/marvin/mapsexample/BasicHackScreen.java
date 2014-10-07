@@ -9,10 +9,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.marvin.mapsexample.HelperPackage.RestServer;
+
 /**
  * Created by christianheldingsrensen on 05/10/14.
  */
-public class BasicHackScreen extends FragmentActivity {
+public class BasicHackScreen extends RestServer {
 
     EditText terminal;
     String termText = "$\n"

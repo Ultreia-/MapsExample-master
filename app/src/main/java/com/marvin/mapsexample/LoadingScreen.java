@@ -5,11 +5,22 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.marvin.mapsexample.HelperPackage.Game;
+import com.marvin.mapsexample.HelperPackage.Player;
+import com.marvin.mapsexample.HelperPackage.RestCallbackInterface;
+import com.marvin.mapsexample.HelperPackage.RestServer;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * Created by Nicklas on 24-09-2014.
  */
-public class LoadingScreen extends FragmentActivity{
+public class LoadingScreen extends RestServer{
 
     private ProgressBar progressbar;
     private TextView downloading;
@@ -65,9 +76,15 @@ public class LoadingScreen extends FragmentActivity{
                         if(progress == 99) {
                             setText();
                             progress += 1;
-                            Thread.sleep(2000);
-                            Intent i = new Intent(getApplicationContext(), OSScreen.class);
-                            startActivity(i);
+                            Thread.sleep(1000);
+
+                            requestPost("http://marvin.idyia.dk/player/hasCompletedS",
+                                    new HashMap<String, String>() {{
+                                        put("sId", Game.currentMisson);
+                                        put("playerOne", String.valueOf(Game.playerOne));
+                                        put("gameId", Game.id);
+                                    }},
+                                    new PlayerHasCompletedSCallback());
                         }
                     }
                 } catch(InterruptedException e) {
@@ -78,11 +95,36 @@ public class LoadingScreen extends FragmentActivity{
 
     }
 
+    private class PlayerHasCompletedSCallback implements RestCallbackInterface {
+
+        public void onEndRequest(JSONObject result)
+        {
+            try {
+
+                String status = result.getString("status");
+
+                if(status.equals("200"))
+                {
+                    Intent i = new Intent(getApplicationContext(), OSScreen.class);
+                    startActivity(i);
+
+                } else throw new Exception(status);
+
+            } catch (JSONException e) {
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "PlayerHasCompletedSCallback; JSON " + e, Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                //e.printStackTrace();
+                Toast.makeText(getBaseContext(), "PlayerHasCompletedSCallback; status " + e, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     public void setText() {
         downloading.post(new Runnable() {
-                          public void run() {
-                              downloading.setText("Downloading Compass OS v1.1.21 " + progress + "%");
-                          }
-                      });
+              public void run() {
+                  downloading.setText("Downloading Compass OS v1.1.21 " + progress + "%");
+              }
+          });
     }
 }

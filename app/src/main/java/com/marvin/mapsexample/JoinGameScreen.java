@@ -75,6 +75,8 @@ public class JoinGameScreen extends RestServer {
                         Game.id = gameId;
                         Game.partner = new Player(partnerId, partnerName);
 
+                        Game.currentMisson = "s1";
+
                         Intent i = new Intent(getApplicationContext(), GameStartScreen.class);
                         startActivity(i);
                     }

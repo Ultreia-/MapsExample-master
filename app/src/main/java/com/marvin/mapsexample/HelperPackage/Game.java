@@ -9,7 +9,7 @@ public class Game {
     public static Player player = null;
     public static Player partner = null;
     public static boolean playerOne = false;
-    public static String currentMisson = null;
+    public static String currentMisson = "s1";
 
     //Used to control the sinecurve in DialModel, based on wheel rotation
     public static int currentRotation = 25;

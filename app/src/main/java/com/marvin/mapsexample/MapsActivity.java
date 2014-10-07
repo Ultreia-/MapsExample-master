@@ -1,6 +1,8 @@
 package com.marvin.mapsexample;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Criteria;
@@ -51,13 +53,13 @@ public class MapsActivity extends RestServer implements LocationListener {
     private TimerTask timerTask;
     private Timer timer;
 
-    private boolean stopRestPing = false;
+    private boolean stopRestPing;
+    private boolean toastShow;
     public Intent i;
 
     public Location hqLocation;
     public double distToMarker = 30;
 
-    private String currentIdMarkerId;
     Bundle extras;
     double lat;
     double lng;
@@ -69,6 +71,9 @@ public class MapsActivity extends RestServer implements LocationListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        stopRestPing = false;
+        toastShow = true;
+
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 
         if (status != ConnectionResult.SUCCESS) {
@@ -76,7 +81,6 @@ public class MapsActivity extends RestServer implements LocationListener {
             Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
             dialog.show();
         } else {
-            TextView tvLocation = (TextView) findViewById(R.id.tv_location);
             SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
             googleMap = fm.getMap();
             googleMap.setMyLocationEnabled(true);
@@ -84,7 +88,6 @@ public class MapsActivity extends RestServer implements LocationListener {
             Criteria criteria = new Criteria();
             String provider = locationManager.getBestProvider(criteria, true);
             Location location = locationManager.getLastKnownLocation(provider);
-            tvLocation.setText("Welcome, " + IntroScreen.playerName);
 
             latitude = location.getLatitude();
             longitude = location.getLongitude();
@@ -101,17 +104,12 @@ public class MapsActivity extends RestServer implements LocationListener {
             }
 
             i = this.getIntent();
-            if (i != null) {
-                currentIdMarkerId = i.getExtras().getString("id");
-                if (currentIdMarkerId.equals("s2")) {
-                    extras = i.getExtras();
-                    lat = extras.getDouble("lat");
-                    lng = extras.getDouble("lng");
-                    title = extras.getString("title");
-                    snippet = extras.getString("snippet");
-                    addMarkerToMap(lat, lng, title, snippet);
-                }
-                if (currentIdMarkerId.equals("s1")) {
+            if (i != null)
+            {
+                if (Game.currentMisson.equals("s1")
+                ||  Game.currentMisson.equals("s2")
+                ||  Game.currentMisson.equals("s3"))
+                {
                     extras = i.getExtras();
                     lat = extras.getDouble("lat");
                     lng = extras.getDouble("lng");
@@ -122,7 +120,6 @@ public class MapsActivity extends RestServer implements LocationListener {
             }
             locationManager.requestLocationUpdates(provider, 1500, 0, this);
         }
-        //addTestMarkerToMap();
     }
 
     private void addTestMarkerToMap() {
@@ -155,7 +152,7 @@ public class MapsActivity extends RestServer implements LocationListener {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
 
-        Location markerLocation = new Location(currentIdMarkerId);
+        Location markerLocation = new Location(Game.currentMisson);
         markerLocation.setLatitude(lat);
         markerLocation.setLongitude(lng);
 
@@ -167,24 +164,19 @@ public class MapsActivity extends RestServer implements LocationListener {
 
                 //Toast.makeText(getBaseContext(), "location change in range", Toast.LENGTH_SHORT).show();
 
-                if (currentIdMarkerId.equals("s1")) {
-
+                if (Game.currentMisson.equals("s1")
+                ||  Game.currentMisson.equals("s2")
+                ||  Game.currentMisson.equals("s3"))
+                {
                     requestPost("http://marvin.idyia.dk/player/hasArrivedAtS",
-                            new HashMap<String, String>() {{
-                                put("sId", currentIdMarkerId);
-                                put("playerOne", String.valueOf(Game.playerOne));
-                                put("gameId", Game.id);
-                            }},
-                            new PlayerHasArrivedSCallback());
+                        new HashMap<String, String>() {{
+                            put("sId", Game.currentMisson);
+                            put("playerOne", String.valueOf(Game.playerOne));
+                            put("gameId", Game.id);
+                        }},
+                        new PlayerHasArrivedSCallback());
                 }
-                /*Intent intent = new Intent(getApplicationContext(), ARView.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("id", "locations for AR");
-                bundle.putDouble("lat", ARLatitude);
-                bundle.putDouble("lng", ARLongitude);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                System.out.println(distance);*/
+
             } else {
                 //Toast.makeText(getBaseContext(), "location change "+Float.toString(distance), Toast.LENGTH_SHORT).show();
             }
@@ -238,7 +230,7 @@ public class MapsActivity extends RestServer implements LocationListener {
                             }
 
                             if(!stopRestPing) {
-                                requestGet("http://marvin.idyia.dk/game/havebotharriveds/" + sId,
+                                requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + sId,
                                         new HaveBothArrivedSCallback());
                             }
                         }
@@ -267,8 +259,7 @@ public class MapsActivity extends RestServer implements LocationListener {
                 if (status.equals("200")) {
 
                     JSONObject data = result.getJSONObject("data");
-                    //String playerAArrived = data.getString("playerAArrived");
-                    String playerAArrived = "1";
+                    String playerAArrived = data.getString("playerAArrived");
                     String playerBArrived = data.getString("playerBArrived");
 
                     if(playerAArrived.equals("1") && playerBArrived.equals("1"))
@@ -277,11 +268,35 @@ public class MapsActivity extends RestServer implements LocationListener {
                         timerTask.cancel();
                         timer.cancel();
 
-                        Intent i = new Intent(getApplicationContext(), LoadingScreen.class);
-                        startActivity(i);
+                        if (Game.currentMisson.equals("s1"))
+                        {
+                            Intent i = new Intent(getApplicationContext(), LoadingScreen.class);
+                            startActivity(i);
+                        }
+                        else if (Game.currentMisson.equals("s2"))
+                        {
+                            Intent i = new Intent(getApplicationContext(), UploadingScreen.class);
+                            startActivity(i);
+                        }
+                        else if (Game.currentMisson.equals("s3"))
+                        {
+                            new AlertDialog.Builder(MapsActivity.this)
+                                .setTitle("Message from Robert")
+                                .setMessage("Hello again agent ... You have arrived at the terminal ... To execute your part of the virus, you have to run following command in the terminal ... ")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        Intent i = new Intent(getApplicationContext(), BasicHackScreen.class);
+                                        startActivity(i);
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_email)
+                                .show();
+                        }
                     }
-                    else if((playerAArrived.equals("1") && Game.playerOne && playerBArrived.equals("0")) || (playerBArrived.equals("0") && playerBArrived.equals("1")))
+                    else if(toastShow && (playerAArrived.equals("1") && Game.playerOne && playerBArrived.equals("0")) || (playerAArrived.equals("0") && playerBArrived.equals("1") && !Game.playerOne))
                     {
+                        toastShow = false;
                         Toast.makeText(getBaseContext(), "You have arrived, wait for your partner.", Toast.LENGTH_SHORT).show();
                     }
                 }

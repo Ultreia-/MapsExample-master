@@ -7,49 +7,99 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.FragmentActivity;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.marvin.mapsexample.DialClasses.SineView;
 import com.marvin.mapsexample.HelperPackage.Game;
+import com.marvin.mapsexample.HelperPackage.RestCallbackInterface;
 import com.marvin.mapsexample.HelperPackage.RestServer;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by nicklasjust on 25/09/14.
  */
 public class OSScreen extends RestServer{
 
+    private TimerTask timerTask;
+    private Timer timer;
+
+    private boolean stopRestPing = false;
+    private boolean toastShow = true;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.os_screen);
 
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
+        Toast.makeText(getBaseContext(), Game.currentMisson, Toast.LENGTH_SHORT).show();
 
-                new AlertDialog.Builder(OSScreen.this)
-                    .setTitle("Internal Memo")
-                    .setMessage("If you read this, you have been chosen to carry out a task of great importance ... ")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
+        if (Game.currentMisson.equals("s1"))
+        {
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
 
-                            Intent i = new Intent(OSScreen.this, MapsActivity.class);
-                            Bundle b = new Bundle();
+                    new AlertDialog.Builder(OSScreen.this)
+                        .setTitle("Internal Memo")
+                        .setMessage("If you read this, you have been chosen to carry out a task of great importance ... ")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
 
-                            b.putString("id", "s2");
-                            b.putDouble("lat", 56.15674);
-                            b.putDouble("lng", 10.20112);
-                            b.putString("title", "S2");
-                            b.putString("snippet", "Kæmpe meget mission");
-                            i.putExtras(b);
+                                Intent i = new Intent(OSScreen.this, MapsActivity.class);
+                                Bundle b = new Bundle();
 
-                            startActivity(i);
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_email)
-                    .show();
-            }
-        }, 3000);
+                                Game.currentMisson = "s2";
+
+                                b.putDouble("lat", 56.172579);
+                                b.putDouble("lng", 10.186515);
+                                b.putString("title", "Upload data");
+                                b.putString("snippet", "Jim is being captured. Go and save him together");
+                                i.putExtras(b);
+
+                                startActivity(i);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_email)
+                        .show();
+                }
+            }, 3000);
+
+        } else if (Game.currentMisson.equals("s2")) {
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+
+                    new AlertDialog.Builder(OSScreen.this)
+                        .setTitle("Message from Robert")
+                        .setMessage("Hello agents ... Execute Virus plx ... ")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent i = new Intent(OSScreen.this, MapsActivity.class);
+                                Bundle b = new Bundle();
+
+                                Game.currentMisson = "s3";
+
+                                b.putDouble("lat", 56.172579);
+                                b.putDouble("lng", 10.186515);
+                                b.putString("title", "Execute Virus");
+                                b.putString("snippet", "Go and Execute Virus");
+                                i.putExtras(b);
+
+                                startActivity(i);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_email)
+                        .show();
+                }
+            }, 3000);
+        }
 
         TextView text = (TextView) findViewById(R.id.textView);
         text.setText("Agent: " + Game.player.getName());

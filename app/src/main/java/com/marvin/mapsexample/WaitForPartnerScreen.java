@@ -117,6 +117,8 @@ public class WaitForPartnerScreen extends RestServer {
                         timerTask.cancel();
                         timer.cancel();
 
+                        Game.currentMisson = "s1";
+
                         Intent i = new Intent(getApplicationContext(), GameStartScreen.class);
                         startActivity(i);
                     }

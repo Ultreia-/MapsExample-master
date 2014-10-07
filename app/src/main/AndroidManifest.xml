@@ -39,11 +39,13 @@
 
         <activity
             android:name=".LoadingScreen"
+            android:screenOrientation="portrait"
             android:label="Loading">
         </activity>
 
         <activity
             android:name=".UploadingScreen"
+            android:screenOrientation="portrait"
             android:label="Uploading">
         </activity>
 
