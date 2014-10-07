@@ -55,7 +55,7 @@
 
         <activity
             android:name=".OSScreen"
-            android:noHistory="true"
+            android:screenOrientation="portrait"
             android:label="OS Screen">
         </activity>
 

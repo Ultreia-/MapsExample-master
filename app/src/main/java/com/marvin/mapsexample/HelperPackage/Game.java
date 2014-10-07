@@ -5,10 +5,11 @@ package com.marvin.mapsexample.HelperPackage;
  */
 public class Game {
 
-    public static boolean playerOne = false;
     public static String id = null;
     public static Player player = null;
     public static Player partner = null;
+    public static boolean playerOne = false;
+    public static String currentMisson = null;
 
     //Used to control the sinecurve in DialModel, based on wheel rotation
     public static int currentRotation = 25;

@@ -6,11 +6,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.marvin.mapsexample.DialClasses.SineView;
+import com.marvin.mapsexample.HelperPackage.Game;
 import com.marvin.mapsexample.HelperPackage.RestServer;
 
 /**
@@ -18,55 +20,39 @@ import com.marvin.mapsexample.HelperPackage.RestServer;
  */
 public class OSScreen extends RestServer{
 
-    public static final String firstTime = "firstTime";
-    public static final String myPreferences = "MyPrefs";
-
-    //SharedPreferences pref;
-    //SharedPreferences.Editor editor;
-
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.os_screen);
 
-        //pref = getSharedPreferences(myPreferences, Context.MODE_PRIVATE);
-        //editor = pref.edit();
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
 
-        //if(!pref.contains(firstTime)) {
-            //editor.putBoolean(firstTime, true);
-            //editor.commit();
-            new AlertDialog.Builder(this)
-                .setTitle("Halp meeeee!!!")
-                .setMessage("Hola bromigos! I could really use some help from you, so if you want to, suck ma penis!")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        //editor.putBoolean(firstTime, false);
-                        //editor.commit();
+                new AlertDialog.Builder(OSScreen.this)
+                    .setTitle("Internal Memo")
+                    .setMessage("If you read this, you have been chosen to carry out a task of great importance ... ")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
 
-                        Intent i = new Intent(OSScreen.this, MapsActivity.class);
-                        Bundle b = new Bundle();
+                            Intent i = new Intent(OSScreen.this, MapsActivity.class);
+                            Bundle b = new Bundle();
 
-                        b.putString("id", "s2");
-                        b.putDouble("lat", 56.15674);
-                        b.putDouble("lng", 10.20112);
-                        b.putString("title", "S2");
-                        b.putString("snippet", "Kæmpe meget mission");
-                        i.putExtras(b);
-                        startActivity(i);
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // editor.putBoolean(firstTime, false);
-                        //editor.commit();
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-        //}
+                            b.putString("id", "s2");
+                            b.putDouble("lat", 56.15674);
+                            b.putDouble("lng", 10.20112);
+                            b.putString("title", "S2");
+                            b.putString("snippet", "Kæmpe meget mission");
+                            i.putExtras(b);
+
+                            startActivity(i);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_email)
+                    .show();
+            }
+        }, 3000);
 
         TextView text = (TextView) findViewById(R.id.textView);
-        text.setText("Agent: " + IntroScreen.playerName);
+        text.setText("Agent: " + Game.player.getName());
 
         TabHost th = (TabHost) findViewById(R.id.tabHost);
         th.setup();
@@ -86,5 +72,11 @@ public class OSScreen extends RestServer{
         specs.setIndicator("Progress");
         th.addTab(specs);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), IntroScreen.class);
+        startActivity(i);
     }
 }
