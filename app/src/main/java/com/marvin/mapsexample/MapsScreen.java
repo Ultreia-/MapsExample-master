@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -83,14 +84,14 @@ public class MapsScreen extends RestServer implements LocationListener {
             String provider = locationManager.getBestProvider(criteria, true);
             Location location = locationManager.getLastKnownLocation(provider);
 
-            latitude = location.getLatitude();
+            /*latitude = location.getLatitude();
             longitude = location.getLongitude();
 
             LatLng latLng = new LatLng(latitude, longitude);
 
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-
+*/
             //addTestMarkerToMap();
 
             if (location != null) {
@@ -142,9 +143,15 @@ public class MapsScreen extends RestServer implements LocationListener {
     }
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(Location location)
+    {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
+
+        LatLng latLng = new LatLng(latitude, longitude);
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
         Location markerLocation = new Location(Game.currentMisson);
         markerLocation.setLatitude(lat);
