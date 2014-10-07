@@ -18,17 +18,12 @@
         </activity>
 
         <activity
-            android:name=".restTestScreen"
-            android:label="Restful">
-        </activity>
-
-        <activity
             android:name=".JoinGameScreen"
             android:label="Join Game">
         </activity>
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".MapsScreen"
             android:label="@string/title_activity_maps">
         </activity>
 
@@ -94,6 +89,7 @@
 
         <activity
             android:name=".BasicHackScreen"
+            android:screenOrientation="portrait"
             android:label="Hacking Screen" >
         </activity>
 

@@ -4,16 +4,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -24,9 +20,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.marvin.mapsexample.ARView.ARView;
 import com.marvin.mapsexample.HelperPackage.Game;
-import com.marvin.mapsexample.HelperPackage.Player;
 import com.marvin.mapsexample.HelperPackage.RestCallbackInterface;
 import com.marvin.mapsexample.HelperPackage.RestServer;
 
@@ -37,7 +31,7 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MapsActivity extends RestServer implements LocationListener {
+public class MapsScreen extends RestServer implements LocationListener {
 
     GoogleMap googleMap;
     LocationManager locationManager;
@@ -129,10 +123,10 @@ public class MapsActivity extends RestServer implements LocationListener {
         hqLocation.setLongitude(10.186526);
 
         googleMap.addMarker(new MarkerOptions()
-                        .title("MalCorp")
-                        .snippet("MalCorp HQ")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                        .position(pos)
+            .title("MalCorp")
+            .snippet("MalCorp HQ")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+            .position(pos)
         );
     }
 
@@ -156,13 +150,17 @@ public class MapsActivity extends RestServer implements LocationListener {
         markerLocation.setLatitude(lat);
         markerLocation.setLongitude(lng);
 
+        Toast.makeText(getBaseContext(), "Loc. change" , Toast.LENGTH_SHORT).show();
+
         if (location != null) {
 
             distance = location.distanceTo(markerLocation);
 
+            Toast.makeText(getBaseContext(), "dist: " + Float.toString(distance) , Toast.LENGTH_SHORT).show();
+
             if (distance < distToMarker) {
 
-                //Toast.makeText(getBaseContext(), "location change in range", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "location in range", Toast.LENGTH_SHORT).show();
 
                 if (Game.currentMisson.equals("s1")
                 ||  Game.currentMisson.equals("s2")
@@ -222,6 +220,10 @@ public class MapsActivity extends RestServer implements LocationListener {
                     JSONObject data = result.getJSONObject("data");
                     final String sId = data.getString("sId");
 
+                    requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + sId,
+                            new HaveBothArrivedSCallback());
+
+                    /*
                     timerTask = new TimerTask() {
                         @Override
                         public void run() {
@@ -238,6 +240,8 @@ public class MapsActivity extends RestServer implements LocationListener {
 
                     timer = new Timer();
                     timer.scheduleAtFixedRate(timerTask, 0, 2000);
+                    */
+
                 } else throw new Exception(status);
 
             } catch (JSONException e) {
@@ -280,7 +284,7 @@ public class MapsActivity extends RestServer implements LocationListener {
                         }
                         else if (Game.currentMisson.equals("s3"))
                         {
-                            new AlertDialog.Builder(MapsActivity.this)
+                            new AlertDialog.Builder(MapsScreen.this)
                                 .setTitle("Message from Robert")
                                 .setMessage("Hello again agent ... You have arrived at the terminal ... To execute your part of the virus, you have to run following command in the terminal ... ")
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -297,14 +301,21 @@ public class MapsActivity extends RestServer implements LocationListener {
                     else if(toastShow && (playerAArrived.equals("1") && Game.playerOne && playerBArrived.equals("0")) || (playerAArrived.equals("0") && playerBArrived.equals("1") && !Game.playerOne))
                     {
                         toastShow = false;
+                        //Toast.makeText(getBaseContext(), "You have arrived, wait for your partner.", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
                         Toast.makeText(getBaseContext(), "You have arrived, wait for your partner.", Toast.LENGTH_SHORT).show();
+
+                        requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + Game.currentMisson,
+                                new HaveBothArrivedSCallback());
                     }
                 }
             } catch (JSONException e) {
-                //e.printStackTrace();
+                e.printStackTrace();
                 Toast.makeText(getBaseContext(), "HaveBothArrivedSCallback; JSON " + e, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
-                //e.printStackTrace();
+                e.printStackTrace();
                 Toast.makeText(getBaseContext(), "HaveBothArrivedSCallback; status " + e, Toast.LENGTH_SHORT).show();
             }
         }

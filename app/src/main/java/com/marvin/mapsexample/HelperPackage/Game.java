@@ -24,6 +24,10 @@ public class Game {
      * MISSION VARIABLES
      */
 
+    //S3
+    public static String playerOneVirusCommand = "";
+    public static String playerTwoVirusCommand = "";
+
     //SR 2
     public static String sr2_amplitude = "-15";
     public static String sr2_scramble = "0.7";

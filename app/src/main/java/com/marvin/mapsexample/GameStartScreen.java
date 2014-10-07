@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.marvin.mapsexample.HelperPackage.Game;
@@ -38,7 +37,7 @@ public class GameStartScreen extends RestServer {
                 ok.setCancelable(false);
                 ok.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface ok, int id) {
-                        Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                        Intent i = new Intent(getApplicationContext(), MapsScreen.class);
                         Bundle b = new Bundle();
                         b.putString("id", "s1");
                         b.putDouble("lat", 56.172579);

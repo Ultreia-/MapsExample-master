@@ -16,7 +16,7 @@ import com.marvin.mapsexample.HelperPackage.RestServer;
  */
 public class BasicHackScreen extends RestServer {
 
-    EditText terminal;
+    TextView terminal;
     String termText = "$\n"
             + "ls\n"
             + "config\n"
@@ -41,7 +41,7 @@ public class BasicHackScreen extends RestServer {
 
         commit = (Button) findViewById(R.id.commit);
 
-        terminal = (EditText)findViewById(R.id.terminal);
+        terminal = (TextView) findViewById(R.id.terminal);
         terminal.setText(termText);
 
 

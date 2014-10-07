@@ -4,19 +4,26 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <TextView
         android:id="@+id/terminal"
         android:background="#000000"
         android:textColor="#f8f1ff"
-        android:textSize="18dp"
-        android:inputType="textMultiLine"
         android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_height="250dp" />
+
+    <EditText
+        android:id="@+id/edittext"
+        android:background="#000000"
+        android:textColor="#f8f1ff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"/>
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_margin="20dp"
         android:text="Commit"
         android:id="@+id/commit"/>
 

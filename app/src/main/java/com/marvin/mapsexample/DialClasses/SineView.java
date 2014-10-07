@@ -1,14 +1,10 @@
 package com.marvin.mapsexample.DialClasses;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Bundle;
 import android.os.Looper;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -16,9 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.marvin.mapsexample.HelperPackage.Game;
-import com.marvin.mapsexample.MapsActivity;
 import com.marvin.mapsexample.OSScreen;
-import com.marvin.mapsexample.R;
 
 import java.util.Timer;
 import java.util.TimerTask;

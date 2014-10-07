@@ -1,25 +1,15 @@
 package com.marvin.mapsexample;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.support.v4.app.FragmentActivity;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.marvin.mapsexample.DialClasses.SineView;
 import com.marvin.mapsexample.HelperPackage.Game;
-import com.marvin.mapsexample.HelperPackage.RestCallbackInterface;
 import com.marvin.mapsexample.HelperPackage.RestServer;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,8 +29,6 @@ public class OSScreen extends RestServer{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.os_screen);
 
-        Toast.makeText(getBaseContext(), Game.currentMisson, Toast.LENGTH_SHORT).show();
-
         if (Game.currentMisson.equals("s1"))
         {
             new Handler().postDelayed(new Runnable() {
@@ -52,7 +40,7 @@ public class OSScreen extends RestServer{
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
-                                Intent i = new Intent(OSScreen.this, MapsActivity.class);
+                                Intent i = new Intent(OSScreen.this, MapsScreen.class);
                                 Bundle b = new Bundle();
 
                                 Game.currentMisson = "s2";
@@ -81,7 +69,7 @@ public class OSScreen extends RestServer{
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
-                                Intent i = new Intent(OSScreen.this, MapsActivity.class);
+                                Intent i = new Intent(OSScreen.this, MapsScreen.class);
                                 Bundle b = new Bundle();
 
                                 Game.currentMisson = "s3";

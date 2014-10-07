@@ -5,10 +5,8 @@ package com.marvin.mapsexample.ARView;
  */
 import android.graphics.Color;
 import android.location.Location;
-import android.util.TypedValue;
 
 import com.marvin.mapsexample.ARView.Utils.PaintUtils;
-import com.marvin.mapsexample.MapsActivity;
 
 
 public class RadarView{

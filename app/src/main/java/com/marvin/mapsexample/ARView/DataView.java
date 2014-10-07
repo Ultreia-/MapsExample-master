@@ -3,7 +3,6 @@ package com.marvin.mapsexample.ARView;
 /**
  * Created by christianheldingsrensen on 02/10/14.
  */
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,7 +23,6 @@ import android.widget.Toast;
 import com.marvin.mapsexample.ARView.Utils.Camera;
 import com.marvin.mapsexample.ARView.Utils.PaintUtils;
 import com.marvin.mapsexample.ARView.Utils.RadarLines;
-import com.marvin.mapsexample.MapsActivity;
 import com.marvin.mapsexample.R;
 
 import java.util.ArrayList;

@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 //import com.marvin.mapsexample.CameraPackage.CameraLandingPage;
 import com.marvin.mapsexample.ARView.ARView;
 import com.marvin.mapsexample.DialClasses.DialTest;
 import com.marvin.mapsexample.FinderClasses.InitiateCoordinateFinder;
 import com.marvin.mapsexample.SignalRedirect.InitiatePaintView;
-import com.marvin.mapsexample.SignalRedirect.PaintView;
 
 /**
  * Created by christianheldingsrensen on 24/09/14.
@@ -59,7 +57,7 @@ public class FunctionScreen extends FragmentActivity {
 
         mapTest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                Intent i = new Intent(getApplicationContext(), MapsScreen.class);
                 i.putExtra("id", "from function screen");
                 startActivity(i);
             }
@@ -68,13 +66,6 @@ public class FunctionScreen extends FragmentActivity {
         camTest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), ARView.class);
-                startActivity(i);
-            }
-        });
-
-        restTest.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), restTestScreen.class);
                 startActivity(i);
             }
         });
