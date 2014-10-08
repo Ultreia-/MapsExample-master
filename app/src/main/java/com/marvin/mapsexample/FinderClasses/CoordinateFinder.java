@@ -65,7 +65,7 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
         goalPaint = new Paint();
         goalPaint.setColor(Color.RED);
         goalPaint.setStyle(Paint.Style.STROKE);
-        goalPaint.setStrokeWidth(10);
+        goalPaint.setStrokeWidth(20);
 
         checkForNewScrambleData();
     }
@@ -123,14 +123,24 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
                     JSONObject data = result.getJSONObject("data");
                     String newData = data.getString("newData");
 
+                    Log.v("NewData", newData);
+
                     if(newData.equals("1"))
                     {
                         String scramble = data.getString("scramble");
                         String amplitude = data.getString("amplitude");
 
+                        double scrambleDouble = Double.parseDouble(scramble);
+                        int scrambleInt = (int) Math.round(scrambleDouble*20);
+
                         Game.coorGoalPoint = new Point(
-                                Integer.parseInt(scramble)*20,
+                                scrambleInt,
                                 Integer.parseInt(amplitude)+32);
+
+                        if(Game.coorGoalPoint.equals(Game.coorFinder.x, Game.coorFinder.y));
+                        {
+                            
+                        }
 
                         restServer.requestPost("http://marvin.idyia.dk/game/checkScrambleData",
                             new HashMap<String, String>() {{
@@ -144,7 +154,7 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
                                     new checkForNewScrambleDataCallback());
 
                         }
-                    }, 1000);
+                    }, 500);
 
 
                 } else throw new Exception(status);
