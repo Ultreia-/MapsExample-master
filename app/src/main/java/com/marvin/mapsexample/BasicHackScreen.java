@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.marvin.mapsexample.HelperPackage.Game;
 import com.marvin.mapsexample.HelperPackage.RestServer;
 
 /**
@@ -16,55 +17,34 @@ import com.marvin.mapsexample.HelperPackage.RestServer;
  */
 public class BasicHackScreen extends RestServer {
 
-    TextView terminal;
-    String termText = "$\n"
-            + "ls\n"
-            + "config\n"
-            + "cache\n"
-            + "mnt\n"
-            + "vendor\n"
-            + "ueventd.rc\n"
-            + "ueventd.goldfish.rc\n"
-            + "system\n"
-            + "default.prop\n"
-            + "data\n"
-            + "root\n"
-            + ">..";
-    //String termTextOut = "$ ls config cache mnt vendor ueventd.rc ueventd.goldfish.rc system default.prop data root >..";
-    //String virusCode = "open sesame";
-    Button commit;
+    private EditText commandInput;
+    private Button buttonRun;
+    private String correntCommand;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hack_screen);
 
-        commit = (Button) findViewById(R.id.commit);
+        commandInput = (EditText) findViewById(R.id.commandInput);
+        buttonRun = (Button) findViewById(R.id.runCommand);
 
-        terminal = (TextView) findViewById(R.id.terminal);
-        terminal.setText(termText);
+        correntCommand = (Game.playerOne) ? Game.playerOneVirusCommand : Game.playerTwoVirusCommand;
 
-
-        commit.setOnClickListener(new View.OnClickListener() {
+        buttonRun.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                if(terminal.getText().toString().equals("$\n"
-                        + "ls\n"
-                        + "config\n"
-                        + "cache\n"
-                        + "mnt\n"
-                        + "vendor\n"
-                        + "ueventd.rc\n"
-                        + "ueventd.goldfish.rc\n"
-                        + "system\n"
-                        + "default.prop\n"
-                        + "data\n"
-                        + "root\n"
-                        + ">.." +"open sesame")){
+            public void onClick(View view)
+            {
+                if(commandInput.getText().toString().equals(correntCommand))
+                {
                     Intent i = new Intent(getApplicationContext(), OSScreen.class);
                     startActivity(i);
-                }else{
-                    Toast.makeText(getBaseContext(), "No deal", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(getBaseContext(), "Unknown command", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -2,17 +2,19 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#000000">
 
     <TextView
         android:id="@+id/terminal"
         android:background="#000000"
         android:textColor="#f8f1ff"
+        android:text="$\nls\nconfig\ncach\nvendor\nueventd.rc\nueventd.goldfish.rc\nsystem\ndefault.prop\nroot\n>__"
         android:layout_width="match_parent"
-        android:layout_height="250dp" />
+        android:layout_height="200dp" />
 
     <EditText
-        android:id="@+id/edittext"
+        android:id="@+id/commandInput"
         android:background="#000000"
         android:textColor="#f8f1ff"
         android:layout_width="match_parent"
@@ -24,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="20dp"
-        android:text="Commit"
-        android:id="@+id/commit"/>
+        android:text="run"
+        android:id="@+id/runCommand"/>
 
 </LinearLayout>

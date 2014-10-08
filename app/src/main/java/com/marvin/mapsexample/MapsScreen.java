@@ -134,7 +134,7 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
 
         float distanceToMarker = location.distanceTo(markerLocation);
 
-        if (distanceToMarker < 10)
+        if (distanceToMarker < 50)
         {
             if (Game.currentMisson.equals("s1")
             ||  Game.currentMisson.equals("s2")
@@ -213,26 +213,7 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                     final String sId = data.getString("sId");
 
                     requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + sId,
-                            new HaveBothArrivedSCallback());
-
-                    /*
-                    timerTask = new TimerTask() {
-                        @Override
-                        public void run() {
-                            if (Looper.myLooper() == null) {
-                                Looper.prepare();
-                            }
-
-                            if(!stopRestPing) {
-                                requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + sId,
-                                        new HaveBothArrivedSCallback());
-                            }
-                        }
-                    };
-
-                    timer = new Timer();
-                    timer.scheduleAtFixedRate(timerTask, 0, 2000);
-                    */
+                         new HaveBothArrivedSCallback());
 
                 } else throw new Exception(status);
 
@@ -263,7 +244,6 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
 
                     if(playerAArrived.equals("1") && playerBArrived.equals("1"))
                     {
-                        Toast.makeText(getBaseContext(), "Both have arrived", Toast.LENGTH_SHORT).show();
                         if (Game.currentMisson.equals("s1"))
                         {
                             Intent i = new Intent(getApplicationContext(), LoadingScreen.class);
@@ -279,9 +259,10 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                             new AlertDialog.Builder(MapsScreen.this)
                                 .setTitle("Message from Robert")
                                 .setMessage("Hello again agent ... You have arrived at the terminal ... To execute your part of the virus, you have to run following command in the terminal ... ")
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                                {
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
                                         Intent i = new Intent(getApplicationContext(), BasicHackScreen.class);
                                         startActivity(i);
                                     }

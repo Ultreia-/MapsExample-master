@@ -35,13 +35,14 @@ public class GameStartScreen extends RestServer {
                 ok.setTitle("Help!!");
                 ok.setMessage("Message from Jim!");
                 ok.setCancelable(false);
-                ok.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                ok.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+                {
                     public void onClick(DialogInterface ok, int id) {
                         Intent i = new Intent(getApplicationContext(), MapsScreen.class);
                         Bundle b = new Bundle();
                         b.putString("id", "s1");
-                        b.putDouble("lat", 56.171743);
-                        b.putDouble("lng", 10.188382);
+                        b.putDouble("lat", 56.172917);
+                        b.putDouble("lng", 10.186582);
                         b.putString("title", "Save Jim");
                         b.putString("snippet", "Jim is being captured. Go and save him together");
                         i.putExtras(b);

@@ -6,8 +6,8 @@ package com.marvin.mapsexample.HelperPackage;
 public class Game {
 
     public static String id = null;
-    public static Player player = null;
-    public static Player partner = null;
+    public static Player player = new Player(null, null);
+    public static Player partner = new Player(null, null);
     public static boolean playerOne = false;
     public static String currentMisson = "s1";
 
@@ -25,8 +25,8 @@ public class Game {
      */
 
     //S3
-    public static String playerOneVirusCommand = "";
-    public static String playerTwoVirusCommand = "";
+    public static String playerOneVirusCommand = "open sesame";
+    public static String playerTwoVirusCommand = "run sesame.exe";
 
     //SR 2
     public static String sr2_amplitude = "-15";

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.marvin.mapsexample.HelperPackage.Game;
 import com.marvin.mapsexample.HelperPackage.RestServer;
@@ -19,13 +20,8 @@ import java.util.TimerTask;
  */
 public class OSScreen extends RestServer{
 
-    private TimerTask timerTask;
-    private Timer timer;
-
-    private boolean stopRestPing = false;
-    private boolean toastShow = true;
-
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.os_screen);
 
@@ -34,59 +30,86 @@ public class OSScreen extends RestServer{
             new Handler().postDelayed(new Runnable() {
                 public void run() {
 
-                    new AlertDialog.Builder(OSScreen.this)
-                        .setTitle("Internal Memo")
-                        .setMessage("If you read this, you have been chosen to carry out a task of great importance ... ")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
+                new AlertDialog.Builder(OSScreen.this)
+                    .setTitle("Internal Memo")
+                    .setMessage("If you read this, you have been chosen to carry out a task of great importance ... ")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
 
-                                Intent i = new Intent(OSScreen.this, MapsScreen.class);
-                                Bundle b = new Bundle();
+                        Intent i = new Intent(OSScreen.this, MapsScreen.class);
+                        Bundle b = new Bundle();
 
-                                Game.currentMisson = "s2";
+                        Game.currentMisson = "s2";
 
-                                b.putDouble("lat", 56.171839);
-                                b.putDouble("lng", 10.187840);
-                                b.putString("title", "Upload data");
-                                b.putString("snippet", "Jim is being captured. Go and save him together");
-                                i.putExtras(b);
+                        b.putDouble("lat", 56.172917);
+                        b.putDouble("lng", 10.186582);
+                        b.putString("title", "Upload data");
+                        b.putString("snippet", "Jim is being captured. Go and save him together");
+                        i.putExtras(b);
 
-                                startActivity(i);
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_email)
-                        .show();
+                        startActivity(i);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_email)
+                    .show();
                 }
             }, 3000);
 
-        } else if (Game.currentMisson.equals("s2")) {
+        }
+        else if (Game.currentMisson.equals("s2"))
+        {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
 
-                    new AlertDialog.Builder(OSScreen.this)
-                        .setTitle("Message from Robert")
-                        .setMessage("Hello agents ... Execute Virus plx ... ")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
+                new AlertDialog.Builder(OSScreen.this)
+                    .setTitle("Message from Robert")
+                    .setMessage("Hello agents ... Execute Virus plx ... ")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog, int which) {
 
-                                Intent i = new Intent(OSScreen.this, MapsScreen.class);
-                                Bundle b = new Bundle();
+                            Intent i = new Intent(OSScreen.this, MapsScreen.class);
+                            Bundle b = new Bundle();
 
-                                Game.currentMisson = "s3";
+                            Game.currentMisson = "s3";
 
-                                b.putDouble("lat", 56.172263);
-                                b.putDouble("lng", 10.187894);
-                                b.putString("title", "Execute Virus");
-                                b.putString("snippet", "Go and Execute Virus");
-                                i.putExtras(b);
+                            b.putDouble("lat", 56.172917);
+                            b.putDouble("lng", 10.186582);
+                            b.putString("title", "Execute Virus");
+                            b.putString("snippet", "Go and Execute Virus");
+                            i.putExtras(b);
 
-                                startActivity(i);
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_email)
-                        .show();
+                            startActivity(i);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_email)
+                    .show();
                 }
             }, 3000);
+        }
+        else if (Game.currentMisson.equals("s3"))
+        {
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+
+                new AlertDialog.Builder(OSScreen.this)
+                    .setTitle("Message from Robert")
+                    .setMessage("Well done agents")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            Game.currentMisson = "1CS-2SR";
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_email)
+                    .show();
+                }
+            }, 3000);
+        }
+        else if (Game.currentMisson.equals("1CS-2SR"))
+        {
+            //Toast.makeText(getBaseContext(), "Well done agent", Toast.LENGTH_SHORT).show();
         }
 
         TextView text = (TextView) findViewById(R.id.textView);
