@@ -124,6 +124,7 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
     }
 
     public void drawGoalPoint(Point coorG, Canvas canvas){
+        //Create method to fetch currentRotation and scramble from server
         int yInterval = (height/64)+1;
         int xInterval = (width/20)+1;
 

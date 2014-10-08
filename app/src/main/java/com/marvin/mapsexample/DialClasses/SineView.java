@@ -102,16 +102,6 @@ public class SineView extends SurfaceView implements SurfaceHolder.Callback{
             sineCanvas.drawPoint((int)(i + ((Math.random()* 150.0)*(Game.scramble-0.5))),
                     (int)(getNormalizedSine(i, halfHeight, width)+((Math.random()* 150.0)*(Game.scramble-0.5))), sPaint);
         }
-
-        if(amplitude == 0.0 && Game.scramble < 0.5){
-            if(Looper.myLooper() == null){
-                Looper.prepare();
-            }
-            drawCurve = false;
-            Game.dialTaskCompleted = true;
-            Intent i = new Intent(context, OSScreen.class);
-            context.startActivity(i);
-        }
     }
 
 

@@ -85,11 +85,10 @@ public class DialTest extends Activity implements DialModel.Listener, SensorEven
             progress += 3;
         } else if(linear_acceleration[0] > 4 && progress == 99) {
             progress += 1;
-            /*
-            Her skal Tobias lave et eller andet til databasen vil jeg gå ud fra!
-            Game.scramble og den anden jeg ikke kan huske
-            Hvis det ikke er det rigtige så husk lige at sætte progress til 0.
-             */
+            //Her skal Game.currentRotation og Game.scramble fra Game klassen uploades til rest
+            Log.v("Accelerometer!", "Activated");
+            progress = 0;
+
         }
     }
 
