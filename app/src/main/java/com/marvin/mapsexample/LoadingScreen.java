@@ -63,14 +63,14 @@ public class LoadingScreen extends RestServer{
                             progress += 3;
                             progressbar.setProgress(progress);
                             setText();
-                            Thread.sleep(700);
+                            Thread.sleep(400);
                         }
 
                         if(progress >= 90) {
                             progress += 1;
                             progressbar.setProgress(progress);
                             setText();
-                            Thread.sleep(800);
+                            Thread.sleep(600);
                         }
 
                         if(progress == 99) {
@@ -79,12 +79,12 @@ public class LoadingScreen extends RestServer{
                             Thread.sleep(500);
 
                             requestPost("http://marvin.idyia.dk/player/hasCompletedS",
-                                    new HashMap<String, String>() {{
-                                        put("sId", Game.currentMisson);
-                                        put("playerOne", String.valueOf(Game.playerOne));
-                                        put("gameId", Game.id);
-                                    }},
-                                    new PlayerHasCompletedSCallback());
+                                new HashMap<String, String>() {{
+                                    put("sId", Game.currentMission);
+                                    put("playerOne", String.valueOf(Game.playerOne));
+                                    put("gameId", Game.id);
+                                }},
+                                new PlayerHasCompletedSCallback());
                         }
                     }
                 } catch(InterruptedException e) {

@@ -70,20 +70,21 @@ public class WaitForPartnerScreen extends RestServer {
     }
 
     @Override
-    public void onBackPressed() {
-        /*requestPost("http://marvin.idyia.dk/game/cancel",
-                new HashMap<String, String>() {{
-                    put("gameId", Game.id);
-                }},
-                new CancelGameCallback()); */
+    public void onBackPressed()
+    {
+        requestPost("http://marvin.idyia.dk/game/cancel",
+            new HashMap<String, String>() {{
+                put("gameId", Game.id);
+            }},
+            new CancelGameCallback());
         timerTask.cancel();
         timer.cancel();
         Intent i = new Intent(getApplicationContext(), IntroScreen.class);
         startActivity(i);
     }
 
-    private class CancelGameCallback implements RestCallbackInterface {
-
+    private class CancelGameCallback implements RestCallbackInterface
+    {
         public void onEndRequest(JSONObject result)
         {
             timerTask.cancel();
@@ -117,18 +118,21 @@ public class WaitForPartnerScreen extends RestServer {
                         timerTask.cancel();
                         timer.cancel();
 
-                        Game.currentMisson = "s1";
+                        Game.currentMission = "s1";
 
                         Intent i = new Intent(getApplicationContext(), GameStartScreen.class);
                         startActivity(i);
                     }
                 }
                 else throw new Exception(status);
-
-            } catch (JSONException e) {
+            }
+            catch (JSONException e)
+            {
                 //e.printStackTrace();
                 Toast.makeText(getBaseContext(), "Could not create player; status 500", Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 //e.printStackTrace();
                 Toast.makeText(getBaseContext(), "Could not create player; status "+e, Toast.LENGTH_SHORT).show();
             }

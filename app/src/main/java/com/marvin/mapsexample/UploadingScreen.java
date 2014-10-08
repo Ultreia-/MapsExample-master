@@ -78,7 +78,7 @@ public class UploadingScreen extends RestServer{
 
                             requestPost("http://marvin.idyia.dk/player/hasCompletedS",
                                 new HashMap<String, String>() {{
-                                    put("sId", Game.currentMisson);
+                                    put("sId", Game.currentMission);
                                     put("playerOne", String.valueOf(Game.playerOne));
                                     put("gameId", Game.id);
                                 }},

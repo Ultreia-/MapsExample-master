@@ -9,7 +9,7 @@ public class Game {
     public static Player player = new Player(null, null);
     public static Player partner = new Player(null, null);
     public static boolean playerOne = false;
-    public static String currentMisson = "s1";
+    public static String currentMission = "s1";
 
     //Used to control the sinecurve in DialModel, based on wheel rotation
     public static int currentRotation = 25;
@@ -26,7 +26,7 @@ public class Game {
 
     //S3
     public static String playerOneVirusCommand = "open sesame";
-    public static String playerTwoVirusCommand = "run sesame.exe";
+    public static String playerTwoVirusCommand = "run sesame -exe";
 
     //SR 2
     public static String sr2_amplitude = "-15";

@@ -44,11 +44,11 @@ public class JoinGameScreen extends RestServer {
                 final String partnerName = inputField.getText().toString();
 
                 requestPost("http://marvin.idyia.dk/game/join",
-                        new HashMap<String, String>() {{
-                            put("partnerName", partnerName);
-                            put("playerId", Game.player.getId());
-                        }},
-                        new JoinGameCallback());
+                    new HashMap<String, String>() {{
+                        put("partnerName", partnerName);
+                        put("playerId", Game.player.getId());
+                    }},
+                    new JoinGameCallback());
             }
         });
     }
@@ -75,7 +75,7 @@ public class JoinGameScreen extends RestServer {
                         Game.id = gameId;
                         Game.partner = new Player(partnerId, partnerName);
 
-                        Game.currentMisson = "s1";
+                        Game.currentMission = "s1";
 
                         Intent i = new Intent(getApplicationContext(), GameStartScreen.class);
                         startActivity(i);

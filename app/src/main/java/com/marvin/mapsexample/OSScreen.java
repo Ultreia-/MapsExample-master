@@ -25,7 +25,7 @@ public class OSScreen extends RestServer{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.os_screen);
 
-        if (Game.currentMisson.equals("s1"))
+        if (Game.currentMission.equals("s1"))
         {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
@@ -39,7 +39,7 @@ public class OSScreen extends RestServer{
                         Intent i = new Intent(OSScreen.this, MapsScreen.class);
                         Bundle b = new Bundle();
 
-                        Game.currentMisson = "s2";
+                        Game.currentMission = "s2";
 
                         b.putDouble("lat", 56.172917);
                         b.putDouble("lng", 10.186582);
@@ -56,7 +56,7 @@ public class OSScreen extends RestServer{
             }, 3000);
 
         }
-        else if (Game.currentMisson.equals("s2"))
+        else if (Game.currentMission.equals("s2"))
         {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
@@ -71,7 +71,7 @@ public class OSScreen extends RestServer{
                             Intent i = new Intent(OSScreen.this, MapsScreen.class);
                             Bundle b = new Bundle();
 
-                            Game.currentMisson = "s3";
+                            Game.currentMission = "s3";
 
                             b.putDouble("lat", 56.172917);
                             b.putDouble("lng", 10.186582);
@@ -87,7 +87,7 @@ public class OSScreen extends RestServer{
                 }
             }, 3000);
         }
-        else if (Game.currentMisson.equals("s3"))
+        else if (Game.currentMission.equals("s3"))
         {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
@@ -97,9 +97,20 @@ public class OSScreen extends RestServer{
                     .setMessage("Well done agents")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
                     {
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            Intent i = new Intent(OSScreen.this, MapsScreen.class);
+                            Bundle b = new Bundle();
 
-                            Game.currentMisson = "1CS-2SR";
+                            Game.currentMission = "2sr";
+
+                            b.putDouble("lat", 56.172917);
+                            b.putDouble("lng", 10.186582);
+                            b.putString("title", "FRID scanner");
+                            b.putString("snippet", "Go and scramble this RFID scanner to protect the privacy of the people");
+                            i.putExtras(b);
+
+                            startActivity(i);
                         }
                     })
                     .setIcon(android.R.drawable.ic_dialog_email)
@@ -107,7 +118,7 @@ public class OSScreen extends RestServer{
                 }
             }, 3000);
         }
-        else if (Game.currentMisson.equals("1CS-2SR"))
+        else if (Game.currentMission.equals("1cs-2sr"))
         {
             //Toast.makeText(getBaseContext(), "Well done agent", Toast.LENGTH_SHORT).show();
         }

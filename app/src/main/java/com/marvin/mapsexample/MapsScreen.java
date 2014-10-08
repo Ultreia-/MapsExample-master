@@ -81,9 +81,9 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
 
             if (intent != null)
             {
-                if (Game.currentMisson.equals("s1")
-                ||  Game.currentMisson.equals("s2")
-                ||  Game.currentMisson.equals("s3"))
+                if (Game.currentMission.equals("s1")
+                ||  Game.currentMission.equals("s2")
+                ||  Game.currentMission.equals("s3"))
                 {
                     extras = intent.getExtras();
 
@@ -128,7 +128,7 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
             mapFollowPlayer = false;
         }
 
-        Location markerLocation = new Location(Game.currentMisson);
+        Location markerLocation = new Location(Game.currentMission);
         markerLocation.setLatitude(markerLat);
         markerLocation.setLongitude(markerLng);
 
@@ -136,27 +136,42 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
 
         if (distanceToMarker < 50)
         {
-            if (Game.currentMisson.equals("s1")
-            ||  Game.currentMisson.equals("s2")
-            ||  Game.currentMisson.equals("s3"))
+            if(!waitingForResponse)
             {
-                if(!waitingForResponse)
-                {
-                    waitingForResponse = true;
+                waitingForResponse = true;
 
-                    requestPost("http://marvin.idyia.dk/player/hasArrivedAtS",
+                if (Game.currentMission.equals("s1")
+                ||  Game.currentMission.equals("s2")
+                ||  Game.currentMission.equals("s3"))
+                {
+                    requestPost("http://marvin.idyia.dk/player/hasArrivedAt",
                         new HashMap<String, String>() {{
-                            put("sId", Game.currentMisson);
+                            put("mId", Game.currentMission);
                             put("playerOne", String.valueOf(Game.playerOne));
                             put("gameId", Game.id);
                         }},
                         new PlayerHasArrivedSCallback());
                 }
+                else if(Game.currentMission.equals("2sr"))
+                {
+                    requestPost("http://marvin.idyia.dk/player/hasArrivedAt",
+                        new HashMap<String, String>() {{
+                            put("mId", Game.currentMission);
+                            put("playerOne", String.valueOf(Game.playerOne));
+                            put("gameId", Game.id);
+                        }},
+                        new PlayerHasArrivedSCallback());
+                }
+                else
+                {
+                    waitingForResponse = false;
+                }
             }
+
         }
         else
         {
-            Toast.makeText(getBaseContext(), "Dist: " + Float.toString(distanceToMarker), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "Distance: " + Float.toString(distanceToMarker), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -217,10 +232,14 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
 
                 } else throw new Exception(status);
 
-            } catch (JSONException e) {
+            }
+            catch (JSONException e)
+            {
                 //e.printStackTrace();
                 Toast.makeText(getBaseContext(), "PlayerHasArrivedSCallback; JSON "+e, Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 //e.printStackTrace();
                 Toast.makeText(getBaseContext(), "PlayerHasArrivedSCallback; status " + e, Toast.LENGTH_SHORT).show();
             }
@@ -244,17 +263,17 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
 
                     if(playerAArrived.equals("1") && playerBArrived.equals("1"))
                     {
-                        if (Game.currentMisson.equals("s1"))
+                        if (Game.currentMission.equals("s1"))
                         {
                             Intent i = new Intent(getApplicationContext(), LoadingScreen.class);
                             startActivity(i);
                         }
-                        else if (Game.currentMisson.equals("s2"))
+                        else if (Game.currentMission.equals("s2"))
                         {
                             Intent i = new Intent(getApplicationContext(), UploadingScreen.class);
                             startActivity(i);
                         }
-                        else if (Game.currentMisson.equals("s3"))
+                        else if (Game.currentMission.equals("s3"))
                         {
                             new AlertDialog.Builder(MapsScreen.this)
                                 .setTitle("Message from Robert")
