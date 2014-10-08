@@ -22,12 +22,6 @@ public class GameStartScreen extends RestServer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_start_screen);
 
-        if (Game.id != null
-                && Game.player != null
-                && Game.partner != null) {
-            Toast.makeText(getBaseContext(), Game.player.getName() + " & " + Game.partner.getName(), Toast.LENGTH_SHORT).show();
-        }
-
         new Handler().postDelayed(new Runnable() {
             public void run() {
 

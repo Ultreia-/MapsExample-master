@@ -29,7 +29,7 @@ public class OSScreen extends RestServer{
         {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-
+                /*
                 new AlertDialog.Builder(OSScreen.this)
                     .setTitle("Internal Memo")
                     .setMessage("If you read this, you have been chosen to carry out a task of great importance ... ")
@@ -51,7 +51,30 @@ public class OSScreen extends RestServer{
                         }
                     })
                     .setIcon(android.R.drawable.ic_dialog_email)
-                    .show();
+                    .show();*/
+                    new AlertDialog.Builder(OSScreen.this)
+                        .setTitle("Message from Robert")
+                        .setMessage("Well done agents")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                Intent i = new Intent(OSScreen.this, MapsScreen.class);
+                                Bundle b = new Bundle();
+
+                                Game.currentMission = "2sr";
+
+                                b.putDouble("lat", 56.172917);
+                                b.putDouble("lng", 10.186582);
+                                b.putString("title", "RFID scanner");
+                                b.putString("snippet", "Go and scramble this RFID scanner to protect the privacy of the people");
+                                i.putExtras(b);
+
+                                startActivity(i);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_email)
+                        .show();
                 }
             }, 3000);
 
@@ -106,7 +129,7 @@ public class OSScreen extends RestServer{
 
                             b.putDouble("lat", 56.172917);
                             b.putDouble("lng", 10.186582);
-                            b.putString("title", "FRID scanner");
+                            b.putString("title", "RFID scanner");
                             b.putString("snippet", "Go and scramble this RFID scanner to protect the privacy of the people");
                             i.putExtras(b);
 
@@ -121,6 +144,9 @@ public class OSScreen extends RestServer{
         else if (Game.currentMission.equals("1cs-2sr"))
         {
             //Toast.makeText(getBaseContext(), "Well done agent", Toast.LENGTH_SHORT).show();
+        }
+        else if (Game.currentMission.equals("2sr")) {
+            Toast.makeText(getBaseContext(), "U have sr", Toast.LENGTH_SHORT).show();
         }
 
         TextView text = (TextView) findViewById(R.id.textView);

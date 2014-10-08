@@ -1,5 +1,7 @@
 package com.marvin.mapsexample.HelperPackage;
 
+import android.graphics.Point;
+
 /**
  * Created by Tobias on 05-10-2014.
  */
@@ -25,12 +27,17 @@ public class Game {
      */
 
     //S3
-    public static String playerOneVirusCommand = "open sesame";
-    public static String playerTwoVirusCommand = "run sesame -exe";
+    //public static String playerOneVirusCommand = "open sesame";
+    //public static String playerTwoVirusCommand = "run sesame -exe";
+    public static String playerOneVirusCommand = "exe";
+    public static String playerTwoVirusCommand = "exe";
 
     //SR 2
     public static String sr2_amplitude = "-15";
     public static String sr2_scramble = "0.7";
+
+    public static Point coorFinder = new Point(10, 32);
+    public static Point coorGoalPoint = new Point(10, 32);
 
 
 }

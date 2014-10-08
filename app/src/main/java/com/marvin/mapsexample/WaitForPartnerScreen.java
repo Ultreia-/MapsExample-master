@@ -35,7 +35,7 @@ public class WaitForPartnerScreen extends RestServer {
 
         cancelNewGameButton = (Button) findViewById(R.id.cancelGame);
 
-        final Toast toast = Toast.makeText(getBaseContext(), "Looking for a partner...", Toast.LENGTH_SHORT);
+        //final Toast toast = Toast.makeText(getBaseContext(), "Looking for a partner...", Toast.LENGTH_SHORT);
 
         cancelNewGameButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
@@ -55,7 +55,7 @@ public class WaitForPartnerScreen extends RestServer {
                     Looper.prepare();
                 }
 
-                toast.show();
+
 
                 requestPost("http://marvin.idyia.dk/game/hasPartnerJoined",
                     new HashMap<String, String>() {{
@@ -122,6 +122,10 @@ public class WaitForPartnerScreen extends RestServer {
 
                         Intent i = new Intent(getApplicationContext(), GameStartScreen.class);
                         startActivity(i);
+                    }
+                    else
+                    {
+                        Toast.makeText(getBaseContext(), "Looking for a partner...", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else throw new Exception(status);

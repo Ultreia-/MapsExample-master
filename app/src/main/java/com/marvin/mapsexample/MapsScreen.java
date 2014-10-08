@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -18,6 +19,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.marvin.mapsexample.DialClasses.DialTest;
+import com.marvin.mapsexample.FinderClasses.CoordinateFinder;
+import com.marvin.mapsexample.FinderClasses.InitiateCoordinateFinder;
 import com.marvin.mapsexample.HelperPackage.Game;
 import com.marvin.mapsexample.HelperPackage.RestCallbackInterface;
 import com.marvin.mapsexample.HelperPackage.RestServer;
@@ -83,7 +87,8 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
             {
                 if (Game.currentMission.equals("s1")
                 ||  Game.currentMission.equals("s2")
-                ||  Game.currentMission.equals("s3"))
+                ||  Game.currentMission.equals("s3")
+                ||  Game.currentMission.equals("2sr"))
                 {
                     extras = intent.getExtras();
 
@@ -142,17 +147,8 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
 
                 if (Game.currentMission.equals("s1")
                 ||  Game.currentMission.equals("s2")
-                ||  Game.currentMission.equals("s3"))
-                {
-                    requestPost("http://marvin.idyia.dk/player/hasArrivedAt",
-                        new HashMap<String, String>() {{
-                            put("mId", Game.currentMission);
-                            put("playerOne", String.valueOf(Game.playerOne));
-                            put("gameId", Game.id);
-                        }},
-                        new PlayerHasArrivedSCallback());
-                }
-                else if(Game.currentMission.equals("2sr"))
+                ||  Game.currentMission.equals("s3")
+                ||  Game.currentMission.equals("2sr"))
                 {
                     requestPost("http://marvin.idyia.dk/player/hasArrivedAt",
                         new HashMap<String, String>() {{
@@ -167,7 +163,6 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                     waitingForResponse = false;
                 }
             }
-
         }
         else
         {
@@ -224,24 +219,33 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
 
                 if (status.equals("200"))
                 {
-                    JSONObject data = result.getJSONObject("data");
-                    final String sId = data.getString("sId");
+                    if (Game.currentMission.equals("s1")
+                    ||  Game.currentMission.equals("s2")
+                    ||  Game.currentMission.equals("s3"))
+                    {
+                        JSONObject data = result.getJSONObject("data");
+                        final String mId = data.getString("mId");
 
-                    requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + sId,
-                         new HaveBothArrivedSCallback());
+                        requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + mId,
+                             new HaveBothArrivedSCallback());
+                    }
+                    else if(Game.currentMission.equals("2sr"))
+                    {
+                        requestGet("http://marvin.idyia.dk/game/haveBothArrivedSR/",
+                                new HaveBothArrivedSCallback());
+                    }
 
                 } else throw new Exception(status);
-
             }
             catch (JSONException e)
             {
                 //e.printStackTrace();
-                Toast.makeText(getBaseContext(), "PlayerHasArrivedSCallback; JSON "+e, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "PlayerHasArrivedSCallback; JSON " + e, Toast.LENGTH_LONG).show();
             }
             catch (Exception e)
             {
                 //e.printStackTrace();
-                Toast.makeText(getBaseContext(), "PlayerHasArrivedSCallback; status " + e, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "PlayerHasArrivedSCallback; status " + e, Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -252,6 +256,8 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
         {
             try
             {
+
+
                 String status = result.getString("status");
 
                 if (status.equals("200")) {
@@ -259,7 +265,7 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                     JSONObject data = result.getJSONObject("data");
                     String playerAArrived = data.getString("playerAArrived");
                     String playerBArrived = data.getString("playerBArrived");
-                    final String sId = data.getString("sId");
+                    final String mId = data.getString("mId");
 
                     if(playerAArrived.equals("1") && playerBArrived.equals("1"))
                     {
@@ -289,6 +295,32 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                                 .setIcon(android.R.drawable.ic_dialog_email)
                                 .show();
                         }
+                        else if (Game.currentMission.equals("2sr"))
+                        {
+                            new AlertDialog.Builder(MapsScreen.this)
+                                .setTitle("You have arrived at the RFID scanner")
+                                .setMessage("Press ok to interact")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                                {
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                        Intent i;
+
+                                        if(Game.playerOne)
+                                        {
+                                            i = new Intent(getApplicationContext(), DialTest.class);
+                                        }
+                                        else
+                                        {
+                                            i = new Intent(getApplicationContext(), InitiateCoordinateFinder.class);
+                                        }
+
+                                        startActivity(i);
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                        }
                     }
                     else
                     {
@@ -297,20 +329,35 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                             arrivedAtMarker = true;
                             Toast.makeText(getBaseContext(), "You have arrived, wait for your partner.", Toast.LENGTH_LONG).show();
                         }
-                        requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + sId,
-                             new HaveBothArrivedSCallback());
+
+                        if (Game.currentMission.equals("s1")
+                        ||  Game.currentMission.equals("s2")
+                        ||  Game.currentMission.equals("s3"))
+                        {
+                            requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + mId,
+                                new HaveBothArrivedSCallback());
+                        }
+                        else if(Game.currentMission.equals("2sr"))
+                        {
+                            requestGet("http://marvin.idyia.dk/game/haveBothArrivedSR/",
+                                new HaveBothArrivedSCallback());
+
+
+                        }
                     }
                 }
+
+
             }
             catch (JSONException e)
             {
                 e.printStackTrace();
-                Toast.makeText(getBaseContext(), "HaveBothArrivedSCallback; JSON " + e, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "HaveBothArrivedSCallback; JSON " + e, Toast.LENGTH_LONG).show();
             }
             catch (Exception e)
             {
                 e.printStackTrace();
-                Toast.makeText(getBaseContext(), "HaveBothArrivedSCallback; status " + e, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "HaveBothArrivedSCallback; status " + e, Toast.LENGTH_LONG).show();
             }
         }
     }
