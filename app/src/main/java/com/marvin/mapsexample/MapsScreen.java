@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -228,7 +227,7 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                         final String mId = data.getString("mId");
 
                         requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + mId,
-                                new HaveBothArrivedSCallback());
+                             new HaveBothArrivedSCallback());
                     }
                     else if(Game.currentMission.equals("2sr"))
                     {
@@ -257,8 +256,6 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
         {
             try
             {
-
-
                 String status = result.getString("status");
 
                 if (status.equals("200")) {
@@ -335,22 +332,13 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                         ||  Game.currentMission.equals("s2")
                         ||  Game.currentMission.equals("s3"))
                         {
-                            new Handler().postDelayed(new Runnable() {
-                                public void run() {
-                                    requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + mId,
-                                            new HaveBothArrivedSCallback());
-                                }
-                            }, 1000);
-
+                            requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + mId,
+                                new HaveBothArrivedSCallback());
                         }
                         else if(Game.currentMission.equals("2sr"))
                         {
-                            new Handler().postDelayed(new Runnable() {
-                                public void run() {
-                                    requestGet("http://marvin.idyia.dk/game/haveBothArrivedSR/",
-                                      new HaveBothArrivedSCallback());
-                                }
-                            }, 1000);
+                            requestGet("http://marvin.idyia.dk/game/haveBothArrivedSR/",
+                                new HaveBothArrivedSCallback());
                         }
                     }
                 }
