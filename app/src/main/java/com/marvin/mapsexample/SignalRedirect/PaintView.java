@@ -55,7 +55,7 @@ public class PaintView extends View {
 
         // TODO just test points
         p1 = new Point(60, 60);
-        Point p2 = new Point(60, 600);
+        Point p2 = new Point(150, 600);
         Point p3 = new Point(450, 300);
         Point p4 = new Point(1000, 550);
         Point p5 = new Point(950, 60);
