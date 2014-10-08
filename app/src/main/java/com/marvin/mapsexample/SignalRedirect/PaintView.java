@@ -54,12 +54,12 @@ public class PaintView extends View {
         mTouchTolerance = dp2px(TOUCH_TOLERANCE_DP);
 
         // TODO just test points
-        p1 = new Point(20, 20);
-        Point p2 = new Point(20, 400);
-        Point p3 = new Point(300, 250);
-        Point p4 = new Point(780, 400);
-        Point p5 = new Point(780, 20);
-        Point p6 = new Point(500, 150);
+        p1 = new Point(60, 60);
+        Point p2 = new Point(60, 600);
+        Point p3 = new Point(450, 300);
+        Point p4 = new Point(1000, 550);
+        Point p5 = new Point(950, 60);
+        Point p6 = new Point(650,200);
         mPoints.add(p1);
         mPoints.add(p2);
         mPoints.add(p3);
