@@ -66,6 +66,8 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
         goalPaint.setColor(Color.RED);
         goalPaint.setStyle(Paint.Style.STROKE);
         goalPaint.setStrokeWidth(10);
+
+        checkForNewScrambleData();
     }
 
     @Override
