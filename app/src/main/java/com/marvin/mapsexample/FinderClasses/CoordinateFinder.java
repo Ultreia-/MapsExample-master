@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.marvin.mapsexample.HelperPackage.Game;
 import com.marvin.mapsexample.HelperPackage.RestCallbackInterface;
 
 import org.json.JSONObject;
@@ -26,10 +27,6 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
     Paint fPaint;
     Paint goalPaint;
     CoordinateFinderThread coordinateFinderThread;
-
-    //Første koordinat er Game.scramble, som skal ganges med 20. Andet er Game.currentRotation, som skal have +32
-    Point coorFinder = new Point(10, 32);
-    Point coorGoalPoint = new Point(10, 32);
 
     int gridNumberX;
     int gridNumberY;
@@ -94,8 +91,8 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
     void doDraw(Canvas canvas){
         canvas.drawColor(Color.GRAY);
         drawGrid(canvas);
-        drawFinder(coorFinder, canvas);
-        drawGoalPoint(coorGoalPoint, canvas);
+        drawFinder(Game.coorFinder, canvas);
+        drawGoalPoint(Game.coorGoalPoint, canvas);
     }
 
     public void drawGrid(Canvas finderCanvas){
