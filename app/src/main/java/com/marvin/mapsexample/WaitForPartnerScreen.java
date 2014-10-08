@@ -66,7 +66,7 @@ public class WaitForPartnerScreen extends RestServer {
         };
 
         timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask, 0, 4000);
+        timer.scheduleAtFixedRate(timerTask, 0, 2500);
     }
 
     @Override

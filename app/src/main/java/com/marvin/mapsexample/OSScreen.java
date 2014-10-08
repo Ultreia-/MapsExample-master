@@ -45,8 +45,8 @@ public class OSScreen extends RestServer{
 
                                 Game.currentMisson = "s2";
 
-                                b.putDouble("lat", 56.172579);
-                                b.putDouble("lng", 10.186515);
+                                b.putDouble("lat", 56.171839);
+                                b.putDouble("lng", 10.187840);
                                 b.putString("title", "Upload data");
                                 b.putString("snippet", "Jim is being captured. Go and save him together");
                                 i.putExtras(b);
@@ -74,8 +74,8 @@ public class OSScreen extends RestServer{
 
                                 Game.currentMisson = "s3";
 
-                                b.putDouble("lat", 56.172579);
-                                b.putDouble("lng", 10.186515);
+                                b.putDouble("lat", 56.172263);
+                                b.putDouble("lng", 10.187894);
                                 b.putString("title", "Execute Virus");
                                 b.putString("snippet", "Go and Execute Virus");
                                 i.putExtras(b);

@@ -76,7 +76,7 @@ public class LoadingScreen extends RestServer{
                         if(progress == 99) {
                             setText();
                             progress += 1;
-                            Thread.sleep(1000);
+                            Thread.sleep(500);
 
                             requestPost("http://marvin.idyia.dk/player/hasCompletedS",
                                     new HashMap<String, String>() {{

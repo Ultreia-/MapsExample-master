@@ -40,8 +40,8 @@ public class GameStartScreen extends RestServer {
                         Intent i = new Intent(getApplicationContext(), MapsScreen.class);
                         Bundle b = new Bundle();
                         b.putString("id", "s1");
-                        b.putDouble("lat", 56.172579);
-                        b.putDouble("lng", 10.186515);
+                        b.putDouble("lat", 56.171743);
+                        b.putDouble("lng", 10.188382);
                         b.putString("title", "Save Jim");
                         b.putString("snippet", "Jim is being captured. Go and save him together");
                         i.putExtras(b);

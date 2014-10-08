@@ -4,20 +4,18 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Looper;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.marvin.mapsexample.HelperPackage.Game;
@@ -28,148 +26,124 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class MapsScreen extends RestServer implements LocationListener {
+public class MapsScreen extends RestServer implements GooglePlayServicesClient.OnConnectionFailedListener, GooglePlayServicesClient.ConnectionCallbacks, com.google.android.gms.location.LocationListener {
 
-    GoogleMap googleMap;
-    LocationManager locationManager;
+    private LocationClient locationClient = null;
+    private GoogleMap googleMap = null;
 
-    public double latitude;
-    public double longitude;
-    public double ARLatitude;
-    public double ARLongitude;
-    public double hqLat;
-    public double hqLong;
-    public float distance;
+    private LocationRequest request = LocationRequest.create()
+            .setInterval(1000)
+            .setFastestInterval(16)
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-    private TimerTask timerTask;
-    private Timer timer;
+    private Intent intent;
+    private Bundle extras;
 
-    private boolean stopRestPing;
-    private boolean toastShow;
-    public Intent i;
+    private double markerLat;
+    private double markerLng;
+    private String markerTitle;
+    private String markerSnippet;
 
-    public Location hqLocation;
-    public double distToMarker = 30;
+    private boolean arrivedAtMarker = false;
+    private boolean mapFollowPlayer = true;
+    private boolean waitingForResponse = false;
 
-    Bundle extras;
-    double lat;
-    double lng;
-    String title;
-    String snippet;
-
-
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        stopRestPing = false;
-        toastShow = true;
+        waitingForResponse = false;
 
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 
-        if (status != ConnectionResult.SUCCESS) {
+        if (status != ConnectionResult.SUCCESS)
+        {
             int requestCode = 10;
             Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
             dialog.show();
-        } else {
-            SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
-            googleMap = fm.getMap();
-            googleMap.setMyLocationEnabled(true);
-            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            Criteria criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, true);
-            Location location = locationManager.getLastKnownLocation(provider);
+        }
+        else
+        {
+            if (googleMap == null)
+            {
+                SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
+                googleMap = fm.getMap();
+                googleMap.setMyLocationEnabled(true);
 
-            /*latitude = location.getLatitude();
-            longitude = location.getLongitude();
-
-            LatLng latLng = new LatLng(latitude, longitude);
-
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-            */
-
-            //addTestMarkerToMap();
-
-            if (location != null) {
-                onLocationChanged(location);
+                if (googleMap != null) {
+                    googleMap.setMyLocationEnabled(true);
+                }
             }
 
-            i = this.getIntent();
-            if (i != null)
+            intent = this.getIntent();
+
+            if (intent != null)
             {
                 if (Game.currentMisson.equals("s1")
                 ||  Game.currentMisson.equals("s2")
                 ||  Game.currentMisson.equals("s3"))
                 {
-                    extras = i.getExtras();
-                    lat = extras.getDouble("lat");
-                    lng = extras.getDouble("lng");
-                    title = extras.getString("title");
-                    snippet = extras.getString("snippet");
-                    addMarkerToMap(lat, lng, title, snippet);
+                    extras = intent.getExtras();
+
+                    if(extras != null)
+                    {
+                        markerLat = extras.getDouble("lat");
+                        markerLng = extras.getDouble("lng");
+                        markerTitle = extras.getString("title");
+                        markerSnippet = extras.getString("snippet");
+                    }
+                    addMarkerToMap(markerLat, markerLng, markerTitle, markerSnippet);
                 }
             }
-            locationManager.requestLocationUpdates(provider, 1500, 0, this);
         }
     }
 
-    private void addTestMarkerToMap() {
-        LatLng pos = new LatLng(56.172675, 10.186526);
-        hqLocation = new Location("Test");
-        hqLocation.setLatitude(56.172675);
-        hqLocation.setLongitude(10.186526);
-
-        googleMap.addMarker(new MarkerOptions()
-            .title("MalCorp")
-            .snippet("MalCorp HQ")
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-            .position(pos)
-        );
-    }
-
-    public void addMarkerToMap(double lat, double lng, String title, String snippet) {
+    public void addMarkerToMap(double lat, double lng, String title, String snippet)
+    {
         LatLng pos = new LatLng(lat, lng);
 
         MarkerOptions marker = new MarkerOptions()
-                .title(title)
-                .snippet(snippet)
-                .position(pos);
-        googleMap.addMarker(marker);
+            .title(title)
+            .snippet(snippet)
+            .position(pos);
 
+        googleMap.addMarker(marker);
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
+    public void onLocationChanged(Location location)
+    {
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
 
         LatLng latLng = new LatLng(latitude, longitude);
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        if(mapFollowPlayer)
+        {
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+            mapFollowPlayer = false;
+        }
 
         Location markerLocation = new Location(Game.currentMisson);
-        markerLocation.setLatitude(lat);
-        markerLocation.setLongitude(lng);
+        markerLocation.setLatitude(markerLat);
+        markerLocation.setLongitude(markerLng);
 
-        Toast.makeText(getBaseContext(), "Loc. change" , Toast.LENGTH_SHORT).show();
+        float distanceToMarker = location.distanceTo(markerLocation);
 
-        if (location != null) {
-
-            distance = location.distanceTo(markerLocation);
-
-            if (distance < distToMarker) {
-
-                Toast.makeText(getBaseContext(), "location in range", Toast.LENGTH_SHORT).show();
-
-                if (Game.currentMisson.equals("s1")
-                ||  Game.currentMisson.equals("s2")
-                ||  Game.currentMisson.equals("s3"))
+        if (distanceToMarker < 10)
+        {
+            if (Game.currentMisson.equals("s1")
+            ||  Game.currentMisson.equals("s2")
+            ||  Game.currentMisson.equals("s3"))
+            {
+                if(!waitingForResponse)
                 {
+                    waitingForResponse = true;
+
                     requestPost("http://marvin.idyia.dk/player/hasArrivedAtS",
                         new HashMap<String, String>() {{
                             put("sId", Game.currentMisson);
@@ -178,51 +152,63 @@ public class MapsScreen extends RestServer implements LocationListener {
                         }},
                         new PlayerHasArrivedSCallback());
                 }
-
             }
-            else
-            {
-                Toast.makeText(getBaseContext(), "dist: " + Float.toString(distance) , Toast.LENGTH_SHORT).show();
-            }
+        }
+        else
+        {
+            Toast.makeText(getBaseContext(), "Dist: " + Float.toString(distanceToMarker), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
+    public void onStop()
+    {
+        super.onStop();
     }
 
     @Override
-    public void onProviderEnabled(String s) {
+    public void onConnectionFailed(ConnectionResult result){ }
 
+    @Override
+    public void onConnected(Bundle connectionHint)
+    {
+        locationClient.requestLocationUpdates(request, this);
     }
 
     @Override
-    public void onProviderDisabled(String s) {
+    public void onDisconnected() { }
 
-    }
-
-    public void onPause() {
-        super.onPause();
-        if (locationManager != null) {
-            locationManager.removeUpdates(this);
-        }
-    }
-
+    @Override
     public void onResume() {
         super.onResume();
-        if (locationManager != null) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1, this);
+        setupLocationClientIfRequested();
+        locationClient.connect();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        locationClient.disconnect();
+    }
+
+    private void setupLocationClientIfRequested()
+    {
+        if(locationClient == null)
+        {
+            locationClient = new LocationClient(this, this, this);
         }
     }
 
-    private class PlayerHasArrivedSCallback implements RestCallbackInterface {
-        public void onEndRequest(JSONObject result) {
-            try {
-
+    private class PlayerHasArrivedSCallback implements RestCallbackInterface
+    {
+        public void onEndRequest(JSONObject result)
+        {
+            try
+            {
                 String status = result.getString("status");
-                if (status.equals("200")) {
 
+                if (status.equals("200"))
+                {
                     JSONObject data = result.getJSONObject("data");
                     final String sId = data.getString("sId");
 
@@ -260,10 +246,12 @@ public class MapsScreen extends RestServer implements LocationListener {
         }
     }
 
-    private class HaveBothArrivedSCallback implements RestCallbackInterface {
-        public void onEndRequest(JSONObject result) {
-            try {
-
+    private class HaveBothArrivedSCallback implements RestCallbackInterface
+    {
+        public void onEndRequest(JSONObject result)
+        {
+            try
+            {
                 String status = result.getString("status");
 
                 if (status.equals("200")) {
@@ -271,13 +259,11 @@ public class MapsScreen extends RestServer implements LocationListener {
                     JSONObject data = result.getJSONObject("data");
                     String playerAArrived = data.getString("playerAArrived");
                     String playerBArrived = data.getString("playerBArrived");
+                    final String sId = data.getString("sId");
 
                     if(playerAArrived.equals("1") && playerBArrived.equals("1"))
                     {
-                        stopRestPing = true;
-                        timerTask.cancel();
-                        timer.cancel();
-
+                        Toast.makeText(getBaseContext(), "Both have arrived", Toast.LENGTH_SHORT).show();
                         if (Game.currentMisson.equals("s1"))
                         {
                             Intent i = new Intent(getApplicationContext(), LoadingScreen.class);
@@ -304,23 +290,25 @@ public class MapsScreen extends RestServer implements LocationListener {
                                 .show();
                         }
                     }
-                    else if(toastShow && (playerAArrived.equals("1") && Game.playerOne && playerBArrived.equals("0")) || (playerAArrived.equals("0") && playerBArrived.equals("1") && !Game.playerOne))
-                    {
-                        toastShow = false;
-                        //Toast.makeText(getBaseContext(), "You have arrived, wait for your partner.", Toast.LENGTH_SHORT).show();
-                    }
                     else
                     {
-                        Toast.makeText(getBaseContext(), "You have arrived, wait for your partner.", Toast.LENGTH_SHORT).show();
-
-                        requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + Game.currentMisson,
-                                new HaveBothArrivedSCallback());
+                        if(!arrivedAtMarker)
+                        {
+                            arrivedAtMarker = true;
+                            Toast.makeText(getBaseContext(), "You have arrived, wait for your partner.", Toast.LENGTH_LONG).show();
+                        }
+                        requestGet("http://marvin.idyia.dk/game/haveBothArrivedS/" + sId,
+                             new HaveBothArrivedSCallback());
                     }
                 }
-            } catch (JSONException e) {
+            }
+            catch (JSONException e)
+            {
                 e.printStackTrace();
                 Toast.makeText(getBaseContext(), "HaveBothArrivedSCallback; JSON " + e, Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
                 Toast.makeText(getBaseContext(), "HaveBothArrivedSCallback; status " + e, Toast.LENGTH_SHORT).show();
             }
