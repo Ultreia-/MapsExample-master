@@ -1,6 +1,9 @@
 package com.marvin.mapsexample.FinderClasses;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,9 +15,12 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
+import com.marvin.mapsexample.DialClasses.DialTest;
 import com.marvin.mapsexample.HelperPackage.Game;
 import com.marvin.mapsexample.HelperPackage.RestCallbackInterface;
 import com.marvin.mapsexample.HelperPackage.RestServer;
+import com.marvin.mapsexample.MapsScreen;
+import com.marvin.mapsexample.SignalRedirect.InitiatePaintView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -137,15 +143,34 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
                                 scrambleInt,
                                 Integer.parseInt(amplitude)+32);
 
-                        if(Game.coorGoalPoint.equals(Game.coorFinder.x, Game.coorFinder.y));
+                        if(Game.coorGoalPoint.equals(Game.coorFinder.x, Game.coorFinder.y))
                         {
-                            
+                            new AlertDialog.Builder(context)
+                                .setTitle("You have arrived at the RFID scanner")
+                                .setMessage("Press ok to interact")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent i;
+                                        i = new Intent(context, InitiatePaintView.class);
+                                        context.startActivity(i);
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+
+                            restServer.requestPost("http://marvin.idyia.dk/game/signalFrequencyFound",
+                                new HashMap<String, String>() {{
+                                }},
+                                new DeadCallback());
+                        }
+                        else
+                        {
+                            restServer.requestPost("http://marvin.idyia.dk/game/checkScrambleData",
+                                new HashMap<String, String>() {{
+                                }},
+                                new DeadCallback());
                         }
 
-                        restServer.requestPost("http://marvin.idyia.dk/game/checkScrambleData",
-                            new HashMap<String, String>() {{
-                            }},
-                            new CheckScrambleDataCallback());
                     }
 
                     new Handler().postDelayed(new Runnable() {
@@ -172,7 +197,7 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
         }
     }
 
-    private class CheckScrambleDataCallback implements RestCallbackInterface
+    private class DeadCallback implements RestCallbackInterface
     {
         public void onEndRequest(JSONObject result)
         {
@@ -188,12 +213,12 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
             catch (JSONException e)
             {
                 e.printStackTrace();
-                Toast.makeText(context, "CheckScrambleDataCallback; JSON " + e, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "DeadCallback; JSON " + e, Toast.LENGTH_LONG).show();
             }
             catch (Exception e)
             {
                 e.printStackTrace();
-                Toast.makeText(context, "CheckScrambleDataCallback; status " + e, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "DeadCallback; status " + e, Toast.LENGTH_LONG).show();
             }
         }
     }

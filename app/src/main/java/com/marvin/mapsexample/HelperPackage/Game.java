@@ -33,11 +33,8 @@ public class Game {
     public static String playerTwoVirusCommand = "exe";
 
     //SR 2
-    public static String sr2_amplitude = "-15";
-    public static String sr2_scramble = "0.7";
-
-    public static Point coorFinder = new Point(10, 32);
-    public static Point coorGoalPoint = new Point(10, 32);
+    public static Point coorFinder = new Point(14, 17);
+    public static Point coorGoalPoint = new Point(1, 27);
 
 
 }

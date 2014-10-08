@@ -29,7 +29,7 @@ public class OSScreen extends RestServer{
         {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                /*
+
                 new AlertDialog.Builder(OSScreen.this)
                     .setTitle("Internal Memo")
                     .setMessage("If you read this, you have been chosen to carry out a task of great importance ... ")
@@ -51,30 +51,8 @@ public class OSScreen extends RestServer{
                         }
                     })
                     .setIcon(android.R.drawable.ic_dialog_email)
-                    .show();*/
-                    new AlertDialog.Builder(OSScreen.this)
-                        .setTitle("Message from Robert")
-                        .setMessage("Well done agents")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
-                        {
-                            public void onClick(DialogInterface dialog, int which)
-                            {
-                                Intent i = new Intent(OSScreen.this, MapsScreen.class);
-                                Bundle b = new Bundle();
+                    .show();
 
-                                Game.currentMission = "2sr";
-
-                                b.putDouble("lat", 56.172917);
-                                b.putDouble("lng", 10.186582);
-                                b.putString("title", "RFID scanner");
-                                b.putString("snippet", "Go and scramble this RFID scanner to protect the privacy of the people");
-                                i.putExtras(b);
-
-                                startActivity(i);
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_email)
-                        .show();
                 }
             }, 3000);
 
