@@ -90,7 +90,6 @@ public class UploadingScreen extends RestServer{
                 }
             }
         }).start();
-
     }
 
     private class PlayerHasCompletedSCallback implements RestCallbackInterface {

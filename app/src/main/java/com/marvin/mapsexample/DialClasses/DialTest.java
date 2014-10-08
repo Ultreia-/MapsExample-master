@@ -15,6 +15,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.marvin.mapsexample.BasicHackScreen;
 import com.marvin.mapsexample.HelperPackage.Game;
 import com.marvin.mapsexample.HelperPackage.RestCallbackInterface;
 import com.marvin.mapsexample.HelperPackage.RestServer;
@@ -69,6 +70,20 @@ public class DialTest extends RestServer implements DialModel.Listener, SensorEv
 
             }
         });
+
+        new AlertDialog.Builder(DialTest.this)
+            .setTitle("Message from Robert")
+            .setMessage("Hello agent! You must try to find the right signal frequency and scramble rate of the RFID scanner ...")
+            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+            {
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    Intent i = new Intent(getApplicationContext(), BasicHackScreen.class);
+                    startActivity(i);
+                }
+            })
+            .setIcon(android.R.drawable.ic_dialog_email)
+            .show();
     }
 
     @Override

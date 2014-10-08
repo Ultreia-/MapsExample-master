@@ -20,7 +20,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.marvin.mapsexample.DialClasses.DialTest;
-import com.marvin.mapsexample.FinderClasses.CoordinateFinder;
 import com.marvin.mapsexample.FinderClasses.InitiateCoordinateFinder;
 import com.marvin.mapsexample.HelperPackage.Game;
 import com.marvin.mapsexample.HelperPackage.RestCallbackInterface;
@@ -274,8 +273,19 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                         }
                         else if (Game.currentMission.equals("s2"))
                         {
-                            Intent i = new Intent(getApplicationContext(), UploadingScreen.class);
-                            startActivity(i);
+                            new AlertDialog.Builder(MapsScreen.this)
+                                .setTitle("You have arrived at the uploading spot")
+                                .setMessage("Press ok to start uploading package")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                                {
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                        Intent i = new Intent(getApplicationContext(), UploadingScreen.class);
+                                        startActivity(i);
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
                         }
                         else if (Game.currentMission.equals("s3"))
                         {
@@ -297,7 +307,7 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                         {
                             new AlertDialog.Builder(MapsScreen.this)
                                 .setTitle("You have arrived at the RFID scanner")
-                                .setMessage("Press ok to interact")
+                                .setMessage("Press ok to start scrambling")
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
                                 {
                                     public void onClick(DialogInterface dialog, int which)
@@ -342,8 +352,6 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                         }
                     }
                 }
-
-
             }
             catch (JSONException e)
             {
