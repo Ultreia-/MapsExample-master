@@ -129,7 +129,7 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                     {
                         new AlertDialog.Builder(MapsScreen.this)
                             .setTitle("Scramble RFID scanner")
-                            .setMessage("We need you to scramble this RFID scanner ... ")
+                            .setMessage("We need you to scramble this RFID scanner to help some captives escape to safety.")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
                             {
                                 public void onClick(DialogInterface dialog, int which)
@@ -337,7 +337,7 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                         {
                             new AlertDialog.Builder(MapsScreen.this)
                                 .setTitle("Message from Robert")
-                                .setMessage("Hello again agent ... You have arrived at the terminal ... To execute your part of the virus, you have to run following command in the terminal ... ")
+                                .setMessage("This is a MalCorp maintenance terminal. We have been fighting these guys for years. Each of you have to run a command in the terminal to execute the final stages of a virus. Your command to execute is the following: " + ((Game.playerOne) ? Game.playerOneVirusCommand : Game.playerTwoVirusCommand))
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
                                 {
                                     public void onClick(DialogInterface dialog, int which)

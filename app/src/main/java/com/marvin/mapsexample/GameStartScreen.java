@@ -27,7 +27,7 @@ public class GameStartScreen extends RestServer {
 
                 AlertDialog.Builder ok = new AlertDialog.Builder(GameStartScreen.this);
                 ok.setTitle("Help!!");
-                ok.setMessage("Message from Jim!");
+                ok.setMessage("Jim here. Can't say much, need help! I will send you my location, please hurry!");
                 ok.setCancelable(false);
                 ok.setPositiveButton("Ok", new DialogInterface.OnClickListener()
                 {

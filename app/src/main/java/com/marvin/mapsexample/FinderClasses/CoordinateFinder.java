@@ -40,6 +40,8 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
     Paint goalPaint;
     CoordinateFinderThread coordinateFinderThread;
 
+    private boolean frequencyFound = false;
+
     int gridNumberX;
     int gridNumberY;
 
@@ -72,6 +74,20 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
         goalPaint.setColor(Color.RED);
         goalPaint.setStyle(Paint.Style.STROKE);
         goalPaint.setStrokeWidth(20);
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                new AlertDialog.Builder(context)
+                    .setTitle("Message from Robert")
+                    .setMessage("Hello agent! You must give your partner feedback. You have completed the task when the red dot is in the center of the circle.")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_email)
+                    .show();
+            }
+        }, 3000);
 
         checkForNewScrambleData();
     }
@@ -146,20 +162,25 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
                         int xPyth = Game.coorGoalPoint.x-Game.coorFinder.x;
                         int yPyth = Game.coorGoalPoint.y-Game.coorFinder.y;
 
-                        if(Math.sqrt((xPyth*xPyth)+(yPyth*yPyth))> 10) //Game.coorGoalPoint.equals(Game.coorFinder.x, Game.coorFinder.y)
+                        if(Math.sqrt((xPyth*xPyth)+(yPyth*yPyth)) < 10 && !frequencyFound) //Game.coorGoalPoint.equals(Game.coorFinder.x, Game.coorFinder.y)
                         {
-                            new AlertDialog.Builder(context)
-                                .setTitle("You have arrived at the RFID scanner")
-                                .setMessage("Press ok to interact")
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent i;
-                                        i = new Intent(context, InitiatePaintView.class);
-                                        context.startActivity(i);
-                                    }
-                                })
-                                .setIcon(android.R.drawable.ic_dialog_info)
-                                .show();
+                            frequencyFound = true;
+                            new Handler().postDelayed(new Runnable() {
+                                public void run() {
+                                new AlertDialog.Builder(context)
+                                    .setTitle("You found the right frequency!")
+                                    .setMessage("Now redirect the signal.")
+                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent i;
+                                            i = new Intent(context, InitiatePaintView.class);
+                                            context.startActivity(i);
+                                        }
+                                    })
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .show();
+                                }
+                            }, 3000);
 
                             restServer.requestPost("http://marvin.idyia.dk/game/signalFrequencyFound",
                                 new HashMap<String, String>() {{

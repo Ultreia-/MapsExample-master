@@ -71,19 +71,19 @@ public class DialTest extends RestServer implements DialModel.Listener, SensorEv
             }
         });
 
-        new AlertDialog.Builder(DialTest.this)
-            .setTitle("Message from Robert")
-            .setMessage("Hello agent! You must try to find the right signal frequency and scramble rate of the RFID scanner ...")
-            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
-            {
-                public void onClick(DialogInterface dialog, int which)
-                {
-                    Intent i = new Intent(getApplicationContext(), BasicHackScreen.class);
-                    startActivity(i);
-                }
-            })
-            .setIcon(android.R.drawable.ic_dialog_email)
-            .show();
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                new AlertDialog.Builder(DialTest.this)
+                        .setTitle("Message from Robert")
+                        .setMessage("Hello agent! You must try to find the right signal frequency and scramble rate of the RFID scanner")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_email)
+                        .show();
+            }
+        }, 3000);
     }
 
     @Override

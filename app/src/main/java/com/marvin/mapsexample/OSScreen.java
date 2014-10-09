@@ -32,7 +32,7 @@ public class OSScreen extends RestServer{
 
                 new AlertDialog.Builder(OSScreen.this)
                     .setTitle("Internal Memo")
-                    .setMessage("If you read this, you have been chosen to carry out a task of great importance ... ")
+                    .setMessage("If you are reading this, something went wrong. This OS contains one of two parts of a vital package you must deliver. Follow the coordinates.")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
 
@@ -64,7 +64,7 @@ public class OSScreen extends RestServer{
 
                 new AlertDialog.Builder(OSScreen.this)
                     .setTitle("Message from Robert")
-                    .setMessage("Hello agents ... Execute Virus plx ... ")
+                    .setMessage("Hello. I don't know who you are, but apparently Jim trusts you. I don't want to ask this of you, but we don't have a choice. Go to the location provided on your map. I will contact you again when you arrive.")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int which) {
@@ -94,34 +94,34 @@ public class OSScreen extends RestServer{
                 public void run() {
 
                     new AlertDialog.Builder(OSScreen.this)
-                            .setTitle("Message from Robert")
-                            .setMessage("Well done agents")
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                        .setTitle("Message from Robert")
+                        .setMessage("Well done agents")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int which)
                             {
-                                public void onClick(DialogInterface dialog, int which)
-                                {
-                                    Intent i = new Intent(OSScreen.this, MapsScreen.class);
-                                    Bundle b = new Bundle();
+                                Intent i = new Intent(OSScreen.this, MapsScreen.class);
+                                Bundle b = new Bundle();
 
-                                    Game.currentMission = "1cs-2sr";
+                                Game.currentMission = "1cs-2sr";
 
-                                    b.putDouble("lat", 56.173105);
-                                    b.putDouble("lng", 10.184879);
-                                    b.putString("title", "RFID scanner");
-                                    b.putString("snippet", "Go and scramble this RFID scanner to protect the privacy of the people");
+                                b.putDouble("lat", 56.173105);
+                                b.putDouble("lng", 10.184879);
+                                b.putString("title", "RFID scanner");
+                                b.putString("snippet", "Go and scramble this RFID scanner to protect the privacy of the people");
 
-                                    b.putDouble("lat-2", 56.173462);
-                                    b.putDouble("lng-2", 10.187035);
-                                    b.putString("title-2", "RFID scanner");
-                                    b.putString("snippet-2", "Go and scramble this RFID scanner to protect the privacy of the people");
+                                b.putDouble("lat-2", 56.173462);
+                                b.putDouble("lng-2", 10.187035);
+                                b.putString("title-2", "RFID scanner");
+                                b.putString("snippet-2", "Go and scramble this RFID scanner to protect the privacy of the people");
 
-                                    i.putExtras(b);
-                                    
-                                    startActivity(i);
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_email)
-                            .show();
+                                i.putExtras(b);
+
+                                startActivity(i);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_email)
+                        .show();
                 }
             }, 3000);
         }
@@ -132,7 +132,7 @@ public class OSScreen extends RestServer{
 
                 new AlertDialog.Builder(OSScreen.this)
                     .setTitle("Message from Robert")
-                    .setMessage("Well done agents")
+                    .setMessage("Well done! That was just in the nick of time! We could use people like you in The White Compass. Would you care to join us in our course to liberate the world? I already have two missions, you can chose from.")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int which)
@@ -157,7 +157,23 @@ public class OSScreen extends RestServer{
             }, 3000);
         }
         else if (Game.currentMission.equals("2sr")) {
-            Toast.makeText(getBaseContext(), "U have sr", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+
+                    new AlertDialog.Builder(OSScreen.this)
+                            .setTitle("Message from Robert")
+                            .setMessage("Well done agents, you scrambled the RFID scanner")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog, int which)
+                                {
+
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_email)
+                            .show();
+                }
+            }, 3000);
         }
 
         TextView text = (TextView) findViewById(R.id.textView);
