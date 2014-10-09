@@ -18,6 +18,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.marvin.mapsexample.DialClasses.DialTest;
 import com.marvin.mapsexample.FinderClasses.InitiateCoordinateFinder;
@@ -84,27 +85,33 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
 
             if (intent != null)
             {
-                if (Game.currentMission.equals("s1")
-                ||  Game.currentMission.equals("s2")
-                ||  Game.currentMission.equals("s3")
-                ||  Game.currentMission.equals("2sr"))
-                {
-                    extras = intent.getExtras();
+                extras = intent.getExtras();
 
-                    if(extras != null)
+                if(extras != null)
+                {
+                    markerLat = extras.getDouble("lat");
+                    markerLng = extras.getDouble("lng");
+                    markerTitle = extras.getString("title");
+                    markerSnippet = extras.getString("snippet");
+
+                    addMarkerToMap(markerLat, markerLng, markerTitle, markerSnippet, false);
+
+                    if(extras.getString("title-2") != null)
                     {
-                        markerLat = extras.getDouble("lat");
-                        markerLng = extras.getDouble("lng");
-                        markerTitle = extras.getString("title");
-                        markerSnippet = extras.getString("snippet");
+                        markerLat = extras.getDouble("lat-2");
+                        markerLng = extras.getDouble("lng-2");
+                        markerTitle = extras.getString("title-2");
+                        markerSnippet = extras.getString("snippet-2");
+
+                        addMarkerToMap(markerLat, markerLng, markerTitle, markerSnippet, true);
                     }
-                    addMarkerToMap(markerLat, markerLng, markerTitle, markerSnippet);
+                    Log.v("MARKER", Game.currentMission);
                 }
             }
         }
     }
 
-    public void addMarkerToMap(double lat, double lng, String title, String snippet)
+    public void addMarkerToMap(double lat, double lng, String title, String snippet, boolean addOnClickListener)
     {
         LatLng pos = new LatLng(lat, lng);
 
@@ -112,6 +119,45 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
             .title(title)
             .snippet(snippet)
             .position(pos);
+
+        if(addOnClickListener)
+        {
+            googleMap.setOnMarkerClickListener(
+                new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker)
+                    {
+                        new AlertDialog.Builder(MapsScreen.this)
+                            .setTitle("Scramble RFID scanner")
+                            .setMessage("We need you to scramble this RFID scanner ... ")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog, int which)
+                                {
+                                    Game.currentMission = "2sr";
+                                    Intent i = new Intent(getApplicationContext(), MapsScreen.class);
+
+                                    Bundle b = new Bundle();
+
+                                    b.putDouble("lat", 56.172917);
+                                    b.putDouble("lng", 10.186582);
+                                    b.putString("title", "RFID scanner");
+                                    b.putString("snippet", "Go and scramble this RFID scanner to protect the privacy of the people");
+                                    i.putExtras(b);
+
+                                    i.putExtras(b);
+
+                                    startActivity(i);
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_info)
+                            .show();
+
+                        return false;
+                    }
+                }
+            );
+        }
 
         googleMap.addMarker(marker);
     }

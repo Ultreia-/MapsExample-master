@@ -27,8 +27,10 @@ public class Game {
      */
 
     //S3
-    public static String playerOneVirusCommand = "open sesame";
-    public static String playerTwoVirusCommand = "run sesame -exe";
+    //public static String playerOneVirusCommand = "open sesame";
+    //public static String playerTwoVirusCommand = "run sesame -exe";
+    public static String playerOneVirusCommand = "";
+    public static String playerTwoVirusCommand = "";
 
     //SR 2
     public static Point coorFinder = new Point(14, 17);
