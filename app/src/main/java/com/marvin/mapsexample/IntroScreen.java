@@ -39,7 +39,7 @@ public class IntroScreen extends RestServer {
         //prepare dem buttons
         newGame = (Button) findViewById(R.id.new_game);
         joinGame = (Button) findViewById(R.id.join_game);
-        funcTestScreen = (Button) findViewById(R.id.func_test_screen);
+        //funcTestScreen = (Button) findViewById(R.id.func_test_screen);
         playerNameInputField = (EditText) findViewById(R.id.edittext);
 
         if(Game.player != null) playerNameInputField.setText(Game.player.getName());
@@ -91,13 +91,13 @@ public class IntroScreen extends RestServer {
             }
             }
         });
-
+        /*
         funcTestScreen.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
             Intent i = new Intent(getApplicationContext(), FunctionScreen.class);
             startActivity(i);
             }
-        });
+        });*/
     }
 
     private class NewGameCallback implements RestCallbackInterface {
