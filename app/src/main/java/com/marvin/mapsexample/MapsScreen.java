@@ -105,7 +105,6 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
 
                         addMarkerToMap(markerLat, markerLng, markerTitle, markerSnippet, true);
                     }
-                    Log.v("MARKER", Game.currentMission);
                 }
             }
         }
@@ -134,13 +133,13 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
                             {
                                 public void onClick(DialogInterface dialog, int which)
                                 {
-                                    Game.currentMission = "2sr";
                                     Intent i = new Intent(getApplicationContext(), MapsScreen.class);
-
                                     Bundle b = new Bundle();
 
-                                    b.putDouble("lat", 56.173557);
-                                    b.putDouble("lng", 10.188481);
+                                    Game.currentMission = "2sr";
+
+                                    b.putDouble("lat", 56.155309);
+                                    b.putDouble("lng", 10.207467);
                                     b.putString("title", "RFID scanner");
                                     b.putString("snippet", "Go and scramble this RFID scanner to protect the privacy of the people");
                                     i.putExtras(b);
@@ -184,7 +183,7 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
 
         float distanceToMarker = location.distanceTo(markerLocation);
 
-        if (distanceToMarker < 50)
+        if (distanceToMarker < 5)
         {
             if(!waitingForResponse)
             {
@@ -211,7 +210,10 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
         }
         else
         {
-            Toast.makeText(getBaseContext(), "Distance: " + Float.toString(distanceToMarker), Toast.LENGTH_SHORT).show();
+            if(!Game.currentMission.equals("1cs-2sr"))
+            {
+                Toast.makeText(getBaseContext(), "Distance to marker: " + Float.toString(distanceToMarker), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

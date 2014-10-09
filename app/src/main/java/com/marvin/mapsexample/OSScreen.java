@@ -41,8 +41,8 @@ public class OSScreen extends RestServer{
 
                         Game.currentMission = "s2";
 
-                        b.putDouble("lat", 56.172567);
-                        b.putDouble("lng", 10.188055);
+                        b.putDouble("lat", 56.156699);
+                        b.putDouble("lng", 10.201307);
                         b.putString("title", "Upload data");
                         b.putString("snippet", "Jim is being captured. Go and save him together");
                         i.putExtras(b);
@@ -74,8 +74,8 @@ public class OSScreen extends RestServer{
 
                             Game.currentMission = "s3";
 
-                            b.putDouble("lat", 56.172838);
-                            b.putDouble("lng", 10.188184);
+                            b.putDouble("lat", 56.156053);
+                            b.putDouble("lng", 10.197901);
                             b.putString("title", "Execute Virus");
                             b.putString("snippet", "Go and Execute Virus");
                             i.putExtras(b);
@@ -105,13 +105,15 @@ public class OSScreen extends RestServer{
 
                                 Game.currentMission = "1cs-2sr";
 
-                                b.putDouble("lat", 56.173106);
-                                b.putDouble("lng", 10.187478);
+                                //1CR MARKER
+                                b.putDouble("lat", 56.160163);
+                                b.putDouble("lng", 10.193414);
                                 b.putString("title", "Local surveillance central");
                                 b.putString("snippet", "Go and cut the power to this surveillance central to help some other agents escape.");
 
-                                b.putDouble("lat-2", 56.173557);
-                                b.putDouble("lng-2", 10.188481);
+                                //2SR MARKER
+                                b.putDouble("lat-2", 56.155309);
+                                b.putDouble("lng-2", 10.207467);
                                 b.putString("title-2", "RFID scanner");
                                 b.putString("snippet-2", "Go and scramble this RFID scanner to protect the privacy of the people.");
 
@@ -132,7 +134,7 @@ public class OSScreen extends RestServer{
 
                 new AlertDialog.Builder(OSScreen.this)
                     .setTitle("Message from Robert")
-                    .setMessage("PLACEHOLDER")
+                    .setMessage("PLACEHOLDER ")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int which)
