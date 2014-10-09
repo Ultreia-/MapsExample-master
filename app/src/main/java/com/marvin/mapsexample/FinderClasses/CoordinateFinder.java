@@ -143,7 +143,10 @@ public class CoordinateFinder extends SurfaceView implements SurfaceHolder.Callb
                                 scrambleInt,
                                 Integer.parseInt(amplitude)+32);
 
-                        if(Game.coorGoalPoint.equals(Game.coorFinder.x, Game.coorFinder.y))
+                        int xPyth = Game.coorGoalPoint.x-Game.coorFinder.x;
+                        int yPyth = Game.coorGoalPoint.y-Game.coorFinder.y;
+
+                        if(Math.sqrt((xPyth*xPyth)+(yPyth*yPyth))> 10) //Game.coorGoalPoint.equals(Game.coorFinder.x, Game.coorFinder.y)
                         {
                             new AlertDialog.Builder(context)
                                 .setTitle("You have arrived at the RFID scanner")
