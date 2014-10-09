@@ -139,8 +139,8 @@ public class MapsScreen extends RestServer implements GooglePlayServicesClient.O
 
                                     Bundle b = new Bundle();
 
-                                    b.putDouble("lat", 56.172917);
-                                    b.putDouble("lng", 10.186582);
+                                    b.putDouble("lat", 56.173557);
+                                    b.putDouble("lng", 10.188481);
                                     b.putString("title", "RFID scanner");
                                     b.putString("snippet", "Go and scramble this RFID scanner to protect the privacy of the people");
                                     i.putExtras(b);

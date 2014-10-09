@@ -41,8 +41,8 @@ public class OSScreen extends RestServer{
 
                         Game.currentMission = "s2";
 
-                        b.putDouble("lat", 56.172917);
-                        b.putDouble("lng", 10.186582);
+                        b.putDouble("lat", 56.172567);
+                        b.putDouble("lng", 10.188055);
                         b.putString("title", "Upload data");
                         b.putString("snippet", "Jim is being captured. Go and save him together");
                         i.putExtras(b);
@@ -74,8 +74,8 @@ public class OSScreen extends RestServer{
 
                             Game.currentMission = "s3";
 
-                            b.putDouble("lat", 56.172917);
-                            b.putDouble("lng", 10.186582);
+                            b.putDouble("lat", 56.172838);
+                            b.putDouble("lng", 10.188184);
                             b.putString("title", "Execute Virus");
                             b.putString("snippet", "Go and Execute Virus");
                             i.putExtras(b);
@@ -95,7 +95,7 @@ public class OSScreen extends RestServer{
 
                     new AlertDialog.Builder(OSScreen.this)
                         .setTitle("Message from Robert")
-                        .setMessage("Well done agents")
+                        .setMessage("Well done! That was just in the nick of time! We could use people like you in The White Compass. Would you care to join us in our course to liberate the world? I already have two missions, you can chose from.")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
                         {
                             public void onClick(DialogInterface dialog, int which)
@@ -105,15 +105,15 @@ public class OSScreen extends RestServer{
 
                                 Game.currentMission = "1cs-2sr";
 
-                                b.putDouble("lat", 56.173105);
-                                b.putDouble("lng", 10.184879);
-                                b.putString("title", "RFID scanner");
-                                b.putString("snippet", "Go and scramble this RFID scanner to protect the privacy of the people");
+                                b.putDouble("lat", 56.173106);
+                                b.putDouble("lng", 10.187478);
+                                b.putString("title", "Local surveillance central");
+                                b.putString("snippet", "Go and cut the power to this surveillance central to help some other agents escape.");
 
-                                b.putDouble("lat-2", 56.173462);
-                                b.putDouble("lng-2", 10.187035);
+                                b.putDouble("lat-2", 56.173557);
+                                b.putDouble("lng-2", 10.188481);
                                 b.putString("title-2", "RFID scanner");
-                                b.putString("snippet-2", "Go and scramble this RFID scanner to protect the privacy of the people");
+                                b.putString("snippet-2", "Go and scramble this RFID scanner to protect the privacy of the people.");
 
                                 i.putExtras(b);
 
@@ -132,7 +132,7 @@ public class OSScreen extends RestServer{
 
                 new AlertDialog.Builder(OSScreen.this)
                     .setTitle("Message from Robert")
-                    .setMessage("Well done! That was just in the nick of time! We could use people like you in The White Compass. Would you care to join us in our course to liberate the world? I already have two missions, you can chose from.")
+                    .setMessage("PLACEHOLDER")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int which)
@@ -140,11 +140,10 @@ public class OSScreen extends RestServer{
                             Intent i = new Intent(OSScreen.this, MapsScreen.class);
                             Bundle b = new Bundle();
 
-                            b.putDouble("lat", 56.172917);
-                            b.putDouble("lng", 10.186582);
+                            b.putDouble("lat", 56.173557);
+                            b.putDouble("lng", 10.188481);
                             b.putString("title", "RFID scanner");
-                            b.putString("snippet", "Go and scramble this RFID scanner to protect the privacy of the people");
-                            i.putExtras(b);
+                            b.putString("snippet", "PLACEHOLDER");
 
                             i.putExtras(b);
 
