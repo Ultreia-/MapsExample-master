@@ -105,7 +105,7 @@ public class OSScreen extends RestServer{
 
                                 Game.currentMission = "1cs-2sr";
 
-                                //1CR MARKER
+                                //1CS MARKER
                                 b.putDouble("lat", 56.160163);
                                 b.putDouble("lng", 10.193414);
                                 b.putString("title", "Local surveillance central");
@@ -127,7 +127,7 @@ public class OSScreen extends RestServer{
                 }
             }, 3000);
         }
-        else if (Game.currentMission.equals("1cs-2sr"))
+       /* else if (Game.currentMission.equals("1cs-2sr"))
         {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
@@ -156,7 +156,7 @@ public class OSScreen extends RestServer{
                     .show();
                 }
             }, 3000);
-        }
+        }*/
         else if (Game.currentMission.equals("2sr")) {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
