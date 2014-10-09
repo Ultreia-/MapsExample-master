@@ -124,11 +124,15 @@ public class IntroScreen extends RestServer {
                 }
                 else throw new Exception(status);
 
-            } catch (JSONException e) {
-                //e.printStackTrace();
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
                 Toast.makeText(getBaseContext(), "Could not create player; status 500", Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                //e.printStackTrace();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
                 Toast.makeText(getBaseContext(), "Could not create player; status "+e, Toast.LENGTH_SHORT).show();
             }
         }
@@ -151,12 +155,15 @@ public class IntroScreen extends RestServer {
                 }
                 else throw new Exception(status);
 
-            } catch (JSONException e) {
-                //e.printStackTrace();
+            } catch (JSONException e)
+            {
+                e.printStackTrace();
                 Toast.makeText(getBaseContext(), "Could not create game; status 500", Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                //e.printStackTrace();
-                Toast.makeText(getBaseContext(), "Could not create game; status "+e, Toast.LENGTH_SHORT).show();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Could not create game; status " + e, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -181,11 +188,11 @@ public class IntroScreen extends RestServer {
                 }else throw new Exception(status);
 
             } catch (JSONException e) {
-                //e.printStackTrace();
+                e.printStackTrace();
                 Toast.makeText(getBaseContext(), "Could not create player; status 500", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
-                //e.printStackTrace();
-                Toast.makeText(getBaseContext(), "Could not create player; status "+e, Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Could not create player; status " + e, Toast.LENGTH_SHORT).show();
             }
         }
     }
